@@ -1,5 +1,9 @@
 # mcandre/packer-templates: Configurations for generating Vagrant base boxes
 
+# VAGRANT CLOUD
+
+https://app.vagrantup.com/mcandre
+
 # EXAMPLE
 
 ```console
