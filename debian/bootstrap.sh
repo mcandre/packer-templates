@@ -34,6 +34,8 @@ apt-get -y --purge remove "linux-headers-$(uname -r)" build-essential dkms && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Ensure disk is preserved
+# Shrink and preserve disk
 
-sync
+dd if=/dev/zero of=/EMPTY bs=1M; \
+    rm -f /EMPTY && \
+    sync
