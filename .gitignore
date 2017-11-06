@@ -1,0 +1,14 @@
+output-virtualbox-iso/
+# Created by https://www.gitignore.io/api/packer,vagrant
+
+### Packer ###
+# Cache objects
+packer_cache/
+
+# For built boxes
+*.box
+
+### Vagrant ###
+.vagrant/
+
+# End of https://www.gitignore.io/api/packer,vagrant
