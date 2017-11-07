@@ -17,7 +17,7 @@ $ vagrant box list
 mcandre/debian                           (virtualbox, 0)
 
 $ cd test
-$ vagrant destroy -f; vagrant up
+$ vagrant up
 $ vagrant ssh -c 'uname -a'
 Linux debian 4.9.0-4-amd64 #1 SMP Debian 4.9.51-1 (2017-09-28) x86_64 GNU/Linux
 $ vagrant ssh -c 'ls /vagrant'
