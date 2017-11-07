@@ -23,6 +23,7 @@ apt-get purge -y \
     whereami \
     whiptail \
     make-guile \
+    lvm2 \
     eject \
     discover \
     dmidecode \
