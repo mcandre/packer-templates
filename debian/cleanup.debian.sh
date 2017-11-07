@@ -22,9 +22,11 @@ apt-get purge -y \
     nano \
     whereami \
     whiptail \
-    make \
+    make-guile \
     eject \
+    discover \
     dmidecode \
+    tcpd \
     busybox \
     installation-report \
     wireless-tools \
