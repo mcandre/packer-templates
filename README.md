@@ -11,7 +11,7 @@ $ cd debian
 $ make
 time packer build -force debian.json
 ...
-      557.26 real        18.64 user         6.74 sys
+      556.88 real        18.34 user         7.32 sys
 $ vagrant box add -f --name mcandre/debian debian-virtualbox.box
 $ vagrant box list
 mcandre/debian                           (virtualbox, 0)

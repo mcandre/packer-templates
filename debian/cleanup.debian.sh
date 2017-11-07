@@ -22,7 +22,10 @@ apt-get purge -y \
     nano \
     whereami \
     whiptail \
+    perl \
     make-guile \
+    kbd \
+    keyboard-configuration \
     lvm2 \
     eject \
     discover \
