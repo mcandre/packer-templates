@@ -15,6 +15,8 @@ apt-get remove --purge -y \
     libxcb1 \
     libx11-6 \
     libxext6 \
+    man-db \
+    nano \
     installation-report \
     wireless-tools \
     wpasupplicant &&
@@ -39,12 +41,20 @@ apt-get remove --purge -y \
     apt-get clean &&
     rm -rf /var/lib/apt/lists/*
 
-# Delete legacy junk
+# Delete leftover documentation
 
-rm -rf /usr/share/groff/* \
-    /usr/share/info/* \
-    /usr/share/lintian/* \
-    /usr/share/linda/*
+find /usr/share/doc -depth -type f ! -name copyright |
+    xargs rm ||
+    echo 'Deleted non-copyright documentation' &&
+    find /usr/share/doc -empty |
+    xargs rmdir ||
+    echo 'Delted empty documentation' &&
+    rm -rf /usr/share/man/* \
+        /usr/share/groff/* \
+        /usr/share/info/* \
+        /usr/share/lintian/* \
+        /usr/share/linda/* \
+        /var/cache/man/*
 
 # Delete Vagrant junk
 
@@ -57,7 +67,6 @@ mkdir /etc/udev/rules.d/70-persistent-net.rules &&
         /var/lib/dhcp/* \
         /var/lib/dhcp3/* &&
     echo 'pre-up sleep 2' >>/etc/network/interfaces &&
-    sed -i 's/#UseDNS no/UseDNS no/' /etc/ssh/sshd_config &&
     sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub &&
     grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -73,7 +82,7 @@ rm -rf /tmp/*
 # Wipe rootfs
 
 count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
-    count="$(($count-1))" &&
+    count="$(($count - 1))" &&
     dd if=/dev/zero of=/tmp/whitespace bs=1024 count="$count" ||
     echo 'Zeroed rootfs' &&
     rm /tmp/whitespace
@@ -81,7 +90,7 @@ count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
 # Wipe boot partition
 
 count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
-    count="$(($count-1))" &&
+    count="$(($count - 1))" &&
     dd if=/dev/zero of=/boot/whitespace bs=1024 count="$count" ||
     echo 'Zeroed boot partition' &&
     rm /boot/whitespace
