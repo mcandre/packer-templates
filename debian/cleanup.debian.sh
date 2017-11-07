@@ -3,6 +3,7 @@
 # Empty apt cache
 
 apt-get remove --purge -y \
+    wget \
     libx11-data \
     xauth \
     libxmuu1 \
@@ -14,7 +15,7 @@ apt-get remove --purge -y \
     wpasupplicant &&
     dpkg --list |
     awk '{ print $2 }' |
-    grep -- '-dev$' |
+    grep -- '-dev' |
     xargs apt-get -y purge &&
     dpkg --list |
     egrep 'linux-image-[0-9]' |
@@ -68,14 +69,16 @@ rm -rf /tmp/*
 
 count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count-1))" &&
-    dd if=/dev/zero of=/tmp/whitespace bs=1024 count="$count" &&
+    dd if=/dev/zero of=/tmp/whitespace bs=1024 count="$count" ||
+    echo 'Zeroed rootfs' &&
     rm /tmp/whitespace
 
 # Wipe boot partition
 
 count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count-1))" &&
-    dd if=/dev/zero of=/boot/whitespace bs=1024 count="$count" &&
+    dd if=/dev/zero of=/boot/whitespace bs=1024 count="$count" ||
+    echo 'Zeroed boot partition' &&
     rm /boot/whitespace
 
 # Wipe swap space
@@ -89,7 +92,7 @@ swapuuid="$(/sbin/blkid -o value -l -s UUID -t TYPE=swap)" &&
 
 # Shrink and preserve disk
 
-dd if=/dev/zero of=/EMPTY bs=1M ||
+dd if=/dev/zero of=/whitespace bs=1M ||
     echo 'Zeroed disk' &&
-    rm -f /EMPTY &&
+    rm -f /whitespace &&
     sync

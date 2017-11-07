@@ -35,9 +35,9 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
       "scripts": [
-        "authenticate-vagrant.sh",
-        "install-virtualbox-guest-plugins.sh",
-        "cleanup.sh"
+        "authenticate-vagrant.debian.sh",
+        "virtualbox-install-drivers.debian.sh",
+        "cleanup.debian.sh"
       ]
     }
   ],

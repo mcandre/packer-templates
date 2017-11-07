@@ -9,7 +9,9 @@ https://app.vagrantup.com/mcandre
 ```console
 $ cd debian
 $ make
+time packer build -force debian.json
 ...
+      558.26 real        20.02 user         6.83 sys
 $ vagrant box add -f --name mcandre/debian debian-virtualbox.box
 $ vagrant box list
 mcandre/debian                           (virtualbox, 0)

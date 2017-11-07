@@ -2,8 +2,8 @@ BOXES=debian-virtualbox.box
 
 all: $(BOXES)
 
-$(BOXES): debian.json
-	packer build -force debian.json
+$(BOXES): debian.json http/preseed.cfg *.sh
+	time packer build -force debian.json
 
 clean: clean-boxes clean-artifacts
 
