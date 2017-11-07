@@ -17,6 +17,10 @@ apt-get remove --purge -y \
     libxext6 \
     man-db \
     nano \
+    whereami \
+    whiptail \
+    make \
+    eject \
     installation-report \
     wireless-tools \
     wpasupplicant &&
@@ -36,10 +40,12 @@ apt-get remove --purge -y \
     dpkg --list |
     grep '^rc' |
     awk '{ print $2 }' |
-    xargs apt-get -y purge &&
+    xargs apt-get purge -y &&
     apt-get autoclean -y &&
-    apt-get clean &&
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean -y &&
+    rm -rf /var/lib/apt/lists/* \
+        /var/cache/apt/pkgcache.bin \
+        /var/cache/apt/srcpkgcache.bin
 
 # Delete leftover documentation
 
