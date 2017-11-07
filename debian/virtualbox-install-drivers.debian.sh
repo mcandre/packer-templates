@@ -1,7 +1,8 @@
 #!/bin/sh
 VIRTUALBOX_VERSION="$(cat /home/vagrant/.vbox_version)"
 
-apt-get install -y "linux-headers-$(uname -r)" build-essential &&
+apt-get update &&
+    apt-get install -y "linux-headers-$(uname -r)" build-essential &&
     mkdir /tmp/VirtualBox &&
     mount -o loop "/home/vagrant/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso" /tmp/VirtualBox &&
     yes | sh /tmp/VirtualBox/VBoxLinuxAdditions.run &&

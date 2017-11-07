@@ -26,8 +26,7 @@
       ],
       "shutdown_command": "sudo halt -p",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version",
-      "headless": true
+      "virtualbox_version_file": ".vbox_version"
     }
   ],
   "provisioners": [

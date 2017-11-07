@@ -3,7 +3,10 @@
 # Empty apt cache
 
 apt-get remove --purge -y \
-    wget \
+    task-laptop \
+    task-english \
+    bsdmainutils \
+    pciutils \
     libx11-data \
     xauth \
     libxmuu1 \
