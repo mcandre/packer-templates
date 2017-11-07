@@ -14,4 +14,4 @@ apt-get update &&
     rm -rf VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.? &&
     rm -rf /usr/src/virtualbox-ose-guest* &&
     rm -rf /usr/src/vboxguest* &&
-    apt-get remove --purge -y "linux-headers-$(uname -r)" build-essential
+    apt-get purge -y "linux-headers-$(uname -r)" build-essential

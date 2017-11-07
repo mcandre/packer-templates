@@ -2,9 +2,12 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-# Empty apt cache
+# Remove non-critical packages and clear cache
 
-apt-get remove --purge -y \
+apt-mark manual openssh-server &&
+apt-get purge -y \
+    tasksel \
+    tasksel-data \
     task-laptop \
     task-english \
     bsdmainutils \
@@ -21,13 +24,15 @@ apt-get remove --purge -y \
     whiptail \
     make \
     eject \
+    dmidecode \
+    busybox \
     installation-report \
     wireless-tools \
     wpasupplicant &&
     dpkg --list |
     awk '{ print $2 }' |
     grep -- '-dev' |
-    xargs apt-get -y purge &&
+    xargs apt-get purge -y &&
     dpkg --list |
     egrep 'linux-image-[0-9]' |
     awk '{ print $3,$2 }' |
@@ -35,8 +40,8 @@ apt-get remove --purge -y \
     tail -n +2 |
     grep -v "$(uname -r)" |
     awk '{ print $2 }' |
-    xargs apt-get -y purge &&
-    apt-get --purge -y autoremove &&
+    xargs apt-get purge -y &&
+    apt-get autoremove --purge -y &&
     dpkg --list |
     grep '^rc' |
     awk '{ print $2 }' |
