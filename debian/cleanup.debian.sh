@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export DEBIAN_FRONTEND=noninteractive
+
 # Empty apt cache
 
 apt-get remove --purge -y \

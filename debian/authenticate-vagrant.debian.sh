@@ -1,4 +1,7 @@
 #!/bin/sh
+
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update &&
     apt-get install -y wget ca-certificates &&
     mkdir -p /home/vagrant/.ssh &&

@@ -1,6 +1,8 @@
 #!/bin/sh
 VIRTUALBOX_VERSION="$(cat /home/vagrant/.vbox_version)"
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update &&
     apt-get install -y "linux-headers-$(uname -r)" build-essential &&
     mkdir /tmp/VirtualBox &&
