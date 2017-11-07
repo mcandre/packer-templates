@@ -20,6 +20,8 @@
         "keyboard-configuration/xkb-keymap=us ",
         "netcfg/get_hostname={{.Name}} ",
         "netcfg/get_domain=vagrantup.com ",
+        "debconf/frontend=noninteractive ",
+        "fb=false ",
         "<enter><wait>"
       ],
       "shutdown_command": "sudo halt -p",
@@ -33,7 +35,9 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
       "scripts": [
-        "bootstrap.sh"
+        "authenticate-vagrant.sh",
+        "install-virtualbox-guest-plugins.sh",
+        "cleanup.sh"
       ]
     }
   ],

@@ -13,7 +13,10 @@ clean-boxes:
 clean-artifacts:
 	-rm -rf packer_cache
 
-lint: packer-validate
+lint: packer-validate shfmt
 
 packer-validate:
 	find . -name '*.json' -exec packer validate {} \;
+
+shfmt:
+	find . -name '*.sh' -print | xargs shfmt -w -i 4

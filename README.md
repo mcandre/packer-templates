@@ -10,7 +10,7 @@ https://app.vagrantup.com/mcandre
 $ cd debian
 $ make
 ...
-$ vagrant box add [-f] --name mcandre/debian debian-virtualbox.box
+$ vagrant box add -f --name mcandre/debian debian-virtualbox.box
 $ vagrant box list
 mcandre/debian                           (virtualbox, 0)
 
@@ -19,7 +19,7 @@ $ vagrant up
 $ vagrant ssh -c 'uname -a'
 Linux debian 4.9.0-4-amd64 #1 SMP Debian 4.9.51-1 (2017-09-28) x86_64 GNU/Linux
 $ vagrant ssh -c 'ls /vagrant'
-bootstrap.sh  flag.txt  Vagrantfile
+bootstrap.sh  flag.txt	Vagrantfile
 ```
 
 # REQUIREMENTS
@@ -32,3 +32,4 @@ bootstrap.sh  flag.txt  Vagrantfile
 
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
+* [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
