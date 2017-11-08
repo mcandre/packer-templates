@@ -29,6 +29,8 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [Packer](https://www.packer.io/)
 * [Vagrant](https://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [bzip2](http://www.bzip.org)
+* [wget](https://www.gnu.org/software/wget/)
 
 ## Optional
 

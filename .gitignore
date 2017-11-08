@@ -1,3 +1,5 @@
+*.iso
+*.bz2
 output-virtualbox-iso/
 # Created by https://www.gitignore.io/api/packer,vagrant
 

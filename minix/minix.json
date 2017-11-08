@@ -1,0 +1,53 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "minix",
+      "iso_url": "minix_R3.3.0-588a35b.iso",
+      "iso_checksum_type": "md5",
+      "iso_checksum": "78cc6093bc9e68c74f32f37e144451bd",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "boot_command": [
+        "<enter><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "setup<enter><enter><wait>",
+        "<enter><enter><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait5>",
+        "yes<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "reboot<enter><wait10>",
+        "<enter><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "pkgin update<enter><enter><wait5>",
+        "pkgin install openssh<enter><enter><wait5>",
+        "sh /usr/pkg/etc/rc.d/sshd start<enter>"
+      ],
+      "shutdown_command": "sudo halt -p"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+      "scripts": [
+        "authenticate-vagrant.minix.sh",
+        "cleanup.minix.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "minix-{{.Provider}}.box",
+      "compression_level": "9"
+    }
+  ]
+}
