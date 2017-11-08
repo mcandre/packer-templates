@@ -46,6 +46,7 @@
         "yes | pkgin update<enter><wait5>",
         "yes | pkgin install openssh<enter><wait5>",
         "mkdir -p /etc/rc.d<enter><wait>",
+        "cp /usr/pkg/etc/rc.d/sshd /etc/rc.d/<enter><wait>",
         "echo -ne \"sshd=YES\n\" >>/etc/rc.conf<enter><wait>",
         "/etc/rc.d/sshd start<enter>"
       ],

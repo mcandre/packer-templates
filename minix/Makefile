@@ -4,7 +4,7 @@ BOXES=minix-virtualbox.box
 
 all: $(BOXES)
 
-$(BOXES): minix.json *.sh $(ISO) Vagrantfile
+$(BOXES): minix.json *.sh $(ISO)
 	time packer build -force minix.json
 
 minix_R3.3.0-588a35b.iso.bz2:
