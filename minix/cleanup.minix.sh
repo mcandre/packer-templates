@@ -1,14 +1,18 @@
 #!/bin/sh
 
-# Shrink home partition
+# Clear temporary files
 
-dd if=/dev/zero of=/home/whitespace bs=1M ||
-    echo 'Zeroed home partition' &&
-    rm -f /home/whitespace
+rm -rf /tmp/*
 
-# Shrink root partition and persist disks
-
-dd if=/dev/zero of=/whitespace bs=1M ||
-    echo 'Zeroed disk' &&
-    rm -f /whitespace &&
-    sync
+# # Shrink home partition
+#
+# dd if=/dev/zero of=/home/whitespace bs=1M ||
+#     echo 'Zeroed home partition' &&
+#     rm -f /home/whitespace
+#
+# # Shrink root partition and persist disks
+#
+# dd if=/dev/zero of=/whitespace bs=1M ||
+#     echo 'Zeroed disk' &&
+#     rm -f /whitespace &&
+#     sync
