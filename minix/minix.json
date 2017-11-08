@@ -44,7 +44,7 @@
         "chmod 0600 /home/vagrant/.ssh/authorized_keys<enter><wait>",
         "yes | pkgin update<enter><wait10>",
         "yes | pkgin install openssh<enter><wait10>",
-        "sh /usr/pkg/etc/rc.d/sshd start<enter><wait>"
+        "sh /usr/pkg/etc/rc.d/sshd onestart<enter><wait>"
       ],
       "shutdown_command": "su root -c '/sbin/halt -p'"
     }
