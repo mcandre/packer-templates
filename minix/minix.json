@@ -44,10 +44,6 @@
         "chmod 0600 /home/vagrant/.ssh/authorized_keys<enter><wait>",
         "yes | pkgin update<enter><wait10>",
         "yes | pkgin install openssh<enter><wait10>",
-        "echo 'sshd=YES' >>/etc/rc.conf<enter><wait>",
-        "echo 'UseDNS no' >>/usr/pkg/etc/ssh/sshd_config<enter><wait>",
-        "mkdir -p /etc/rc.d<enter><wait>",
-        "cp /usr/pkg/etc/rc.d/sshd /etc/rc.d/<enter><wait>",
         "sh /usr/pkg/etc/rc.d/sshd start<enter><wait>"
       ],
       "shutdown_command": "su root -c '/sbin/halt -p'"
@@ -58,6 +54,7 @@
       "type": "shell",
       "execute_command": "{{.Vars}} su -m root -c 'sh \"{{.Path}}\"'",
       "scripts": [
+        "boot-sshd.minix.sh",
         "cleanup.minix.sh"
       ]
     }

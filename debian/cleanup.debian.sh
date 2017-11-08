@@ -88,10 +88,9 @@ mkdir /etc/udev/rules.d/70-persistent-net.rules &&
     sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub &&
     grub-mkconfig -o /boot/grub/grub.cfg
 
-# Clear logs
+# Clear log files
 
-find /var/log -type f |
-    while read f; do echo -ne '' >"$f"; done
+find /var/log -type f | xargs truncate -s 0
 
 # Clear temporary files
 
