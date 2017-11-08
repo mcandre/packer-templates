@@ -1,6 +1,6 @@
 .PHONY: installed-box
 
-ISO=minix_R3.3.0-588a35b.iso
+ISO=minix_R3.4.0rc6-d5e4fc0.iso
 
 BOX=minix-virtualbox.box
 
@@ -12,11 +12,11 @@ installed-box: $(BOX)
 $(BOX): minix.json *.sh $(ISO)
 	time packer build -force minix.json
 
-minix_R3.3.0-588a35b.iso.bz2:
-	wget http://download.minix3.org/iso/minix_R3.3.0-588a35b.iso.bz2
+$(ISO).bz2:
+	wget http://download.minix3.org/iso/snapshot/minix_R3.4.0rc6-d5e4fc0.iso.bz2
 
-$(ISO): minix_R3.3.0-588a35b.iso.bz2
-	bunzip2 -k minix_R3.3.0-588a35b.iso.bz2
+$(ISO): $(ISO).bz2
+	bunzip2 -k $(ISO).bz2
 
 clean: clean-boxes clean-artifacts clean-isos
 
