@@ -67,7 +67,8 @@
     {
       "type": "vagrant",
       "output": "minix-{{.Provider}}.box",
-      "compression_level": "9"
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
     }
   ]
 }
