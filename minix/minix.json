@@ -47,7 +47,7 @@
         "yes | pkgin install openssh<enter><wait5>",
         "sh /usr/pkg/etc/rc.d/sshd start<enter>"
       ],
-      "shutdown_command": "/sbin/halt -p"
+      "shutdown_command": "su root -c '/sbin/halt -p'"
     }
   ],
   "provisioners": [
