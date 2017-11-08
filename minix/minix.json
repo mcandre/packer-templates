@@ -45,7 +45,9 @@
         "chmod 0600 /home/vagrant/.ssh/authorized_keys<enter><wait>",
         "yes | pkgin update<enter><wait5>",
         "yes | pkgin install openssh<enter><wait5>",
-        "sh /usr/pkg/etc/rc.d/sshd start<enter>"
+        "mkdir -p /etc/rc.d<enter><wait>",
+        "echo -ne \"sshd=YES\n\" >>/etc/rc.conf<enter><wait>",
+        "/etc/rc.d/sshd start<enter>"
       ],
       "shutdown_command": "su root -c '/sbin/halt -p'"
     }
@@ -63,8 +65,7 @@
     {
       "type": "vagrant",
       "output": "minix-{{.Provider}}.box",
-      "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
+      "compression_level": "9"
     }
   ]
 }
