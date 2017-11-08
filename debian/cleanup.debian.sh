@@ -84,6 +84,7 @@ mkdir /etc/udev/rules.d/70-persistent-net.rules &&
         /var/lib/dhcp/* \
         /var/lib/dhcp3/* &&
     echo 'pre-up sleep 2' >>/etc/network/interfaces &&
+    echo 'UseDNS no' >>/etc/ssh/sshd_config &&
     sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub &&
     grub-mkconfig -o /boot/grub/grub.cfg
 

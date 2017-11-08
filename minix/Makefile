@@ -1,10 +1,15 @@
+.PHONY: installed-box
+
 ISO=minix_R3.3.0-588a35b.iso
 
-BOXES=minix-virtualbox.box
+BOX=minix-virtualbox.box
 
-all: $(BOXES)
+all: installed-box
 
-$(BOXES): minix.json *.sh $(ISO)
+installed-box: $(BOX)
+	vagrant box add -f mcandre/minix $(BOX)
+
+$(BOX): minix.json *.sh $(ISO)
 	time packer build -force minix.json
 
 minix_R3.3.0-588a35b.iso.bz2:
