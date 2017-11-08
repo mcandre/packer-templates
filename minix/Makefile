@@ -9,7 +9,7 @@ all: installed-box
 installed-box: $(BOX)
 	vagrant box add -f mcandre/minix $(BOX)
 
-$(BOX): minix.json *.sh $(ISO)
+$(BOX): minix.json *.sh $(ISO) Vagrantfile
 	time packer build -force minix.json
 
 $(ISO).bz2:
