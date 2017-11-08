@@ -10,6 +10,7 @@
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
       "http_directory": "http",
       "boot_command": [
         "<esc><wait>",

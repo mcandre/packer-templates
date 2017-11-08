@@ -1,3 +1,2 @@
 #!/bin/sh
-sudo apt-get update &&
-    sudo apt-get install -y curl
+su root -c 'echo -ne "\n" | pkgin update && echo -ne "\n" | pkgin install curl'

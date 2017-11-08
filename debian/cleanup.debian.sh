@@ -96,7 +96,7 @@ find /var/log -type f |
 
 rm -rf /tmp/*
 
-# Wipe rootfs
+# Shrink rootfs
 
 count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count - 1))" &&
@@ -104,7 +104,7 @@ count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     echo 'Zeroed rootfs' &&
     rm /tmp/whitespace
 
-# Wipe boot partition
+# Shrink boot partition
 
 count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count - 1))" &&
@@ -112,7 +112,7 @@ count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     echo 'Zeroed boot partition' &&
     rm /boot/whitespace
 
-# Wipe swap space
+# Shrink swap space
 
 swapuuid="$(/sbin/blkid -o value -l -s UUID -t TYPE=swap)" &&
     swappart="$(readlink -f "/dev/disk/by-uuid/${swapuuid}")" &&
@@ -121,7 +121,7 @@ swapuuid="$(/sbin/blkid -o value -l -s UUID -t TYPE=swap)" &&
     echo 'Zeroed swap space' &&
     /sbin/mkswap -U "$swapuuid" "$swappart"
 
-# Shrink and preserve disk
+# Shrink root partition and persist disks
 
 dd if=/dev/zero of=/whitespace bs=1M ||
     echo 'Zeroed disk' &&

@@ -9,6 +9,9 @@
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
+      "disk_size": 1000,
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
       "boot_command": [
         "<enter><wait10><wait10><wait10><wait10>",
         "root<enter><wait>",
@@ -26,19 +29,32 @@
         "reboot<enter><wait10>",
         "<enter><wait10><wait10><wait10>",
         "root<enter><wait>",
-        "pkgin update<enter><enter><wait5>",
-        "pkgin install openssh<enter><enter><wait5>",
+        "group add wheel<enter><wait>",
+        "user add -m -g wheel vagrant<enter><wait>",
+        "passwd vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "mkdir -p /home/vagrant/.ssh<enter><wait>",
+        "vi /home/vagrant/.ssh/authorized_keys<enter><wait>",
+        "i<wait>",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key<esc><wait>",
+        ":wq<enter><wait>",
+        "chown -R vagrant: /home/vagrant/.ssh<enter><wait>",
+        "chmod 0700 /home/vagrant/.ssh<enter><wait>",
+        "chmod 0600 /home/vagrant/.ssh/authorized_keys<enter><wait>",
+        "yes | pkgin update<enter><wait5>",
+        "yes | pkgin install openssh<enter><wait5>",
         "sh /usr/pkg/etc/rc.d/sshd start<enter>"
       ],
-      "shutdown_command": "sudo halt -p"
+      "shutdown_command": "/sbin/halt -p"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+      "execute_command": "{{.Vars}} su -m root -c 'sh \"{{.Path}}\"'",
       "scripts": [
-        "authenticate-vagrant.minix.sh",
         "cleanup.minix.sh"
       ]
     }
