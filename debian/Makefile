@@ -1,13 +1,14 @@
 .PHONY: installed-box
 
-BOX=debian-virtualbox.box
+BOXES=debian-virtualbox.box debian-libvirt.box
 
 all: installed-box
 
-installed-box: $(BOX)
-	vagrant box add -f mcandre/debian $(BOX)
+installed-box: $(BOXES)
+	vagrant box add -f mcandre/debian --provider virtualbox debian-virtualbox.box
+	vagrant box add -f mcandre/debian --provider libvirt debian-libvirt.box
 
-$(BOX): debian.json http/preseed.cfg *.sh
+$(BOXES): debian.json http/preseed.cfg *.sh
 	time packer build -force debian.json
 
 clean: clean-boxes clean-artifacts

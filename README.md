@@ -12,7 +12,8 @@ $ make
 time packer build -force debian.json
 ...
       529.04 real        20.08 user        11.78 sys
-vagrant box add -f --name mcandre/debian debian-virtualbox.box
+vagrant box add -f --name mcandre/debian --provider virtualbox debian-virtualbox.box
+vagrant box add -f --name mcandre/debian --provider libvirt debian-libvirt.box
 ...
 
 $ vagrant box list
@@ -31,6 +32,7 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [Packer](https://www.packer.io/)
 * [Vagrant](https://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [qemu](https://www.qemu.org/) with SDL(2) enabled
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
 

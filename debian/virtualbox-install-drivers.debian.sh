@@ -1,4 +1,12 @@
 #!/bin/sh
+
+case "$PACKER_BUILDER_TYPE" in
+    virtualbox-*)
+        ;;
+    *)
+        exit
+esac
+
 VIRTUALBOX_VERSION="$(cat /home/vagrant/.vbox_version)"
 
 export DEBIAN_FRONTEND=noninteractive
