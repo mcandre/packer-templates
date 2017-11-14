@@ -1,11 +1,12 @@
 .PHONY: installed-box
 
-BOX=debian-virtualbox.box
+BOXES=debian-virtualbox.box debian-vmware.box
 
 all: installed-box
 
-installed-box: $(BOX)
-	vagrant box add -f mcandre/debian $(BOX)
+installed-box: $(BOXES)
+	vagrant box add -f --name mcandre/debian --provider virtualbox debian-virtualbox.box
+	vagrant box add -f --name mcandre/debian --provider vmware_desktop debian-vmware.box
 
 $(BOX): debian.json http/preseed.cfg *.sh
 	time packer build -force debian.json

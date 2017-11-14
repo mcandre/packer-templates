@@ -73,10 +73,6 @@ find /usr/share/doc -depth -type f ! -name copyright |
         /usr/share/linda/* \
         /var/cache/man/*
 
-# Delete Vagrant junk
-
-rm /home/vagrant/.vbox_version
-
 # Clear network cache, help DHCP load, accelerate vagrant ssh, accelerate GRUB
 
 mkdir /etc/udev/rules.d/70-persistent-net.rules &&
