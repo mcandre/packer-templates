@@ -2,14 +2,15 @@
 
 ISO=minix_R3.4.0rc6-d5e4fc0.iso
 
-BOX=minix-virtualbox.box
+BOXES=minix-virtualbox.box minix-vmware.box
 
 all: installed-box
 
-installed-box: $(BOX)
-	vagrant box add -f mcandre/minix $(BOX)
+installed-box: $(BOXES)
+	vagrant box add -f --name mcandre/minix --provider virtualbox minix-virtualbox.box
+	vagrant box add -f --name mcandre/minix --provider vmware_desktop minix-vmware.box
 
-$(BOX): minix.json *.sh $(ISO) Vagrantfile
+$(BOXES): minix.json *.sh $(ISO) Vagrantfile
 	time packer build -force minix.json
 
 $(ISO).bz2:
