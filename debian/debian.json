@@ -40,7 +40,7 @@
       "iso_checksum": "ebfe25dc593967e39349b205480b0ec0103ef4a0468c602f4857e13d06d407bfe876162399e0e8d4dea5675953dc37ab585316f307ccf9f4440124b4f719df04",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "3600s",
+      "ssh_wait_timeout": "11400s",
       "disk_size": 8000,
       "qemuargs": [
         ["-m", "1024M"]
@@ -70,6 +70,7 @@
         "debconf-fix.sh",
         "authenticate-vagrant.debian.sh",
         "virtualbox-install-drivers.debian.sh",
+        "fix-libvirt-networking.debian.sh",
         "cleanup.debian.sh"
       ]
     }

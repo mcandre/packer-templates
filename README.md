@@ -31,13 +31,34 @@ bootstrap.sh  flag.txt	Vagrantfile
 
 * [Packer](https://www.packer.io/)
 * [Vagrant](https://www.vagrantup.com/)
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* [qemu](https://www.qemu.org/) with SDL(2) enabled
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
 
 ## Optional
 
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
+* [qemu](https://www.qemu.org/) with SDL(2) enabled
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
 * [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
+
+# VIRTUALBOX NOTES
+
+Have fun! Vagrant includes VirtualBox support by default as a first tier provider, so packing and running VirtualBox VM's is fairly straightforward in terms of installation requirements (Vagrant, VirtualBox), configuration (no manual configuration required), and execution (just run `vagrant`... commands).
+
+One cleanup tip: As with all Vagrant hypervisors, VirtualBox sometimes leaves virtual machine data around when `vagrant destroy [-f]`, or a signal interrupted `vagrant up` should have deleted these artifacts. When this happens, the user can launch the VirtualBox application and delete these files manually. VirtualBox will likely complain with multiple error prompts, but these can largely be ignored.
+
+# QEMU/LIBVERT NOTES
+
+qemu AKA libvirt boxes are fragile, requiring more care than VirtualBox or VMware providers. libvirt support for macOS hosts is nascent, so packing and running libvirt boxes is best performed from Linux hosts such as Debian, Ubuntu, or RHEL derivatives. qemu is slower than other hypervisors, especially when KVM is unavailable. This dramatically increases the time required for both packing and running qemu/libvirt boxes. Read: `vagrant up --provider libvirt && vagrant ssh -c 'uname -a'` for mcandre/debian takes several minutes, and `packer build -only qemu debian.json` takes over 3 hours. Speed demon!
+
+The process for properly installing the vagrant-libvirt plugin is rather involved, requiring multiple separate packages to be setup. See the vagrant-libvirt [README](https://github.com/vagrant-libvirt/vagrant-libvirt/blob/master/README.md) for more detail.
+
+Once vagrant-libvirt is fully installed with native extensions, the host should be configured to avoid hibernation for at least 4 hours, in order to ensure that the packer build completes without network interruption.
+
+In addition, libvirt requires additional manual configuration in order to correctly integrate with Vagrant via vagrant-libvirt:
+
+* The libvirt-bin and libvirt-guests services should be running. Consult your host operating system's init system.
+* The user running Vagrant must have sufficient permission to access the libvirt socket, such as adding the user to the `libvirtd` UNIX group.
+* Guest operating systems must name their network adapters according to the legacy Linux scheme in order to integrate with vagrant-libvirt and obtain an IP address. See fix-libvirt-networking.debian.sh in debian/ for an example GRUB configuration to enforce this policy in the guest OS at packing time.
