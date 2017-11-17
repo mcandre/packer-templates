@@ -1,7 +1,6 @@
 *.iso
 *.bz2
-output-virtualbox-iso/
-output-vmware-iso/
+output-*/
 # Created by https://www.gitignore.io/api/packer,vagrant
 
 ### Packer ###

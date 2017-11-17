@@ -1,15 +1,26 @@
-.PHONY: installed-box
+.PHONY: install-boxes install-box-virtualbox install-box-vmware install-box-libvirt
 
-BOXES=debian-virtualbox.box debian-vmware.box
+all: install-boxes
 
-all: installed-box
+install-boxes: install-box-virtualbox install-box-vmware install-box-libvirt
 
-installed-box: $(BOXES)
+install-box-virtualbox: debian-virtualbox.box
 	vagrant box add -f --name mcandre/debian --provider virtualbox debian-virtualbox.box
+
+install-box-vmware: debian-vmware.box
 	vagrant box add -f --name mcandre/debian --provider vmware_desktop debian-vmware.box
 
-$(BOX): debian.json http/preseed.cfg *.sh
-	time packer build -force debian.json
+install-box-libvirt: debian-libvirt.box
+	vagrant box add -f --name mcandre/debian --provider libvirt debian-libvirt.box
+
+debian-virtualbox.box: debian.json http/preseed.cfg *.sh
+	time packer build -force -only virtualbox debian.json
+
+debian-vmware.box: debian.json http/preseed.cfg *.sh
+	time packer build -force -only vmware-iso debian.json
+
+debian-libvirt.box: debian.json http/preseed.cfg *.sh
+	time packer build -force -only qemu debian.json
 
 clean: clean-boxes clean-artifacts
 

@@ -1,11 +1,10 @@
 #!/bin/sh
 
 case "$PACKER_BUILDER_TYPE" in
-    virtualbox*)
+    virtualbox-*)
         ;;
     *)
         exit
-        ;;
 esac
 
 VIRTUALBOX_VERSION="$(cat /home/vagrant/.vbox_version)"

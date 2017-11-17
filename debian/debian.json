@@ -25,7 +25,7 @@
         "netcfg/get_hostname={{.Name}} ",
         "netcfg/get_domain=vagrantup.com ",
         "debconf/frontend=noninteractive ",
-        "fb=false",
+        "fb=false ",
         "<enter><wait>"
       ],
       "shutdown_command": "sudo halt -p",
@@ -62,6 +62,35 @@
       ],
       "shutdown_command": "sudo halt -p",
       "tools_upload_flavor": "linux"
+    },
+    {
+      "type": "qemu",
+      "vm_name": "debian",
+      "iso_url": "http://cdimage.debian.org/cdimage/release/9.2.1/amd64/iso-cd/debian-9.2.1-amd64-netinst.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "ebfe25dc593967e39349b205480b0ec0103ef4a0468c602f4857e13d06d407bfe876162399e0e8d4dea5675953dc37ab585316f307ccf9f4440124b4f719df04",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "11400s",
+      "disk_size": 8000,
+      "qemuargs": [
+        ["-m", "1024M"]
+      ],
+      "http_directory": "http",
+      "boot_command": [
+        "<esc><wait>",
+        "install ",
+        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
+        "locale=en_US ",
+        "kbd-chooser/method=us ",
+        "keyboard-configuration/xkb-keymap=us ",
+        "netcfg/get_hostname={{.Name}} ",
+        "netcfg/get_domain=vagrantup.com ",
+        "debconf/frontend=noninteractive ",
+        "fb=false",
+        "<enter><wait>"
+      ],
+      "shutdown_command": "sudo halt -p"
     }
   ],
   "provisioners": [
@@ -73,6 +102,7 @@
         "authenticate-vagrant.debian.sh",
         "virtualbox-install-drivers.debian.sh",
         "vmware-install-drivers.debian.sh",
+        "fix-libvirt-networking.debian.sh",
         "cleanup.debian.sh"
       ]
     }
