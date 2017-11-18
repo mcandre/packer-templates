@@ -67,6 +67,14 @@ In addition, libvirt requires additional manual configuration in order to correc
 * Guest operating systems must name their network adapters according to the legacy Linux scheme in order to integrate with vagrant-libvirt and obtain an IP address. See fix-libvirt-networking.debian.sh in debian/ for an example GRUB configuration to enforce this policy in the guest OS at packing time.
 * libvirt may come preconfigured with extraneous networks and volumes that conflict with vagrant-libvirt. See `virsh net-list` and `virsh vol-list --pool default` to examine these resources.
 
+### Hyper-V
+
+Packing and running virtual machines with Hyper-V requires:
+
+* Windows 8 Professional or higher (in version and/or feature set)
+* The Hyper-V Windows Feature must be [enabled](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v)
+* The current user should be added as an active member in the [Hyper-V Administrators](https://blogs.msdn.microsoft.com/virtual_pc_guy/2016/05/30/adding-yourself-to-the-hyper-v-administrators-group-with-powershell/) group
+
 ## Optional
 
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
