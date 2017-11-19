@@ -31,7 +31,6 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
       "scripts": [
-        "virtualbox-install-drivers.freebsd.sh",
         "cleanup.freebsd.sh"
       ]
     }
