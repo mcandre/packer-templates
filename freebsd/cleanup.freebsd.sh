@@ -7,9 +7,7 @@ echo 'autoboot_delay="0"' >>/boot/loader.conf
 pkg clean -y
 
 # Clear log files
-
 find /var/log -type f | xargs truncate -s 0
 
 # Clear temporary files
-
 rm -rf /tmp/*
