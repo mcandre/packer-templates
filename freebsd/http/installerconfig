@@ -19,17 +19,11 @@ echo 'nameserver 8.8.8.8' >/etc/resolv.conf &&
 
 sysrc sshd_enable="YES"
 
-# Configure vagrant user for sudo and ssh
+# Configure vagrant user for sudo
 
 ASSUME_ALWAYS_YES=yes pkg update &&
-    pkg install -y sudo wget ca_root_nss &&
+    pkg install -y sudo &&
     echo 'vagrant' | pw useradd vagrant -h 0 -m &&
     pw group mod wheel -m vagrant &&
     echo 'Defaults:vagrant !requiretty' >>/usr/local/etc/sudoers &&
-    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/usr/local/etc/sudoers &&
-    mkdir -p /home/vagrant/.ssh &&
-    wget -O /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub &&
-    chown -R vagrant:vagrant /home/vagrant/.ssh &&
-    chmod 0700 /home/vagrant/.ssh &&
-    chmod 0600 /home/vagrant/.ssh/authorized_keys &&
-    pkg delete -y wget ca_root_nss
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/usr/local/etc/sudoers
