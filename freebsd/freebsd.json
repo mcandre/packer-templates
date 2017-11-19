@@ -23,7 +23,7 @@
         "fetch -o /tmp/installerconfig http://{{ .HTTPIP }}:{{ .HTTPPort }}/installerconfig<enter><wait>",
         "bsdinstall script /tmp/installerconfig && reboot<enter>"
       ],
-      "shutdown_command": "sudo poweroff"
+      "shutdown_command": "sudo halt -p"
     }
   ],
   "provisioners": [
