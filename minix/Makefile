@@ -1,16 +1,16 @@
-.PHONY: installed-box
+.PHONY: install-boxes install-box-virtualbox
 
 ISO=minix_R3.4.0rc6-d5e4fc0.iso
 
-BOX=minix-virtualbox.box
+all: install-boxes
 
-all: installed-box
+install-boxes: install-box-virtualbox
 
-installed-box: $(BOX)
+install-box-virtualbox: minix-virtualbox.box
 	vagrant box add -f mcandre/minix $(BOX)
 
-$(BOX): minix.json *.sh $(ISO) Vagrantfile
-	time packer build -force minix.json
+minix-virtualbox.box: minix.json *.sh $(ISO) Vagrantfile
+	time packer build -force -only virtualbox-iso minix.json
 
 $(ISO).bz2:
 	wget http://download.minix3.org/iso/snapshot/minix_R3.4.0rc6-d5e4fc0.iso.bz2

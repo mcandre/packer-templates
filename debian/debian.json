@@ -99,7 +99,7 @@
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
       "scripts": [
         "debconf-fix.sh",
-        "authenticate-vagrant.debian.sh",
+        "ssh-configure-vagrant-key.debian.sh",
         "fix-libvirt-networking.debian.sh",
         "cleanup.debian.sh"
       ]
