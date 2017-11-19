@@ -100,8 +100,6 @@
       "scripts": [
         "debconf-fix.sh",
         "authenticate-vagrant.debian.sh",
-        "virtualbox-install-drivers.debian.sh",
-        "vmware-install-drivers.debian.sh",
         "fix-libvirt-networking.debian.sh",
         "cleanup.debian.sh"
       ]
