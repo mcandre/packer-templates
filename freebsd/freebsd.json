@@ -1,0 +1,47 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "FreeBSD_64",
+      "vm_name": "freebsd",
+      "iso_url": "https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/11.1/FreeBSD-11.1-RELEASE-amd64-disc1.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "cd35b6b406724416c436ae5eb73943d8248e267aee608c0539a969ae79e0201e6590a9ad7550162fecfb21d577ff40edafbf934ab45fda61c8f3d2c30c1f1e05",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"]
+      ],
+      "http_directory": "http",
+      "boot_command": [
+        "2<enter><wait10><wait10>",
+        "<enter><wait>",
+        "mdmfs -s 100m md1 /tmp<enter><wait>",
+        "dhclient -p /tmp/dhclient.pid -l /tmp/dhclient.lease em0<enter><wait5>",
+        "fetch -o /tmp/installerconfig http://{{ .HTTPIP }}:{{ .HTTPPort }}/installerconfig<enter><wait>",
+        "bsdinstall script /tmp/installerconfig && reboot<enter>"
+      ],
+      "shutdown_command": "sudo poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+      "scripts": [
+        "virtualbox-install-drivers.freebsd.sh",
+        "cleanup.freebsd.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "freebsd-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ]
+}

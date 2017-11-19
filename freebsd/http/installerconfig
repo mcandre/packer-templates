@@ -1,0 +1,35 @@
+DISTRIBUTIONS="kernel.txz base.txz lib32.txz"
+
+for device in vtbd0 ada0 da0; do
+    if [ -e "/dev/${device}" ]; then
+        PARTITIONS="$device"
+        break
+    fi
+done
+
+#!/bin/sh
+
+# Enable DHCP for default network adapter
+
+echo 'nameserver 8.8.8.8' >/etc/resolv.conf &&
+    adapter="$(ifconfig -l | cut -d' ' -f1)" &&
+    sysrc "ifconfig_${adapter}"="dhcp"
+
+# Enable SSH server
+
+sysrc sshd_enable="YES"
+
+# Configure vagrant user for sudo and ssh
+
+ASSUME_ALWAYS_YES=yes pkg update &&
+    pkg install -y sudo wget ca_root_nss &&
+    echo 'vagrant' | pw useradd vagrant -h 0 -m &&
+    pw group mod wheel -m vagrant &&
+    echo 'Defaults:vagrant !requiretty' >>/usr/local/etc/sudoers &&
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/usr/local/etc/sudoers &&
+    mkdir -p /home/vagrant/.ssh &&
+    wget -O /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub &&
+    chown -R vagrant:vagrant /home/vagrant/.ssh &&
+    chmod 0700 /home/vagrant/.ssh &&
+    chmod 0600 /home/vagrant/.ssh/authorized_keys &&
+    pkg delete -y wget ca_root_nss
