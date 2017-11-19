@@ -14,7 +14,7 @@ install-box-libvirt: debian-libvirt.box
 	vagrant box add -f --name mcandre/debian --provider libvirt debian-libvirt.box
 
 debian-virtualbox.box: debian.json http/preseed.cfg *.sh
-	time packer build -force -only virtualbox debian.json
+	time packer build -force -only virtualbox-iso debian.json
 
 debian-vmware.box: debian.json http/preseed.cfg *.sh
 	time packer build -force -only vmware-iso debian.json
