@@ -10,7 +10,8 @@ pkgin clean
 
 # Clear log files
 
-find /var/log -type f | xargs truncate -s 0
+find /var/log -type f |
+    xargs truncate -s 0
 
 # Clear temporary files
 

@@ -40,7 +40,7 @@
         "yes | pkgin update<enter><wait10>",
         "yes | pkgin install openssh<enter><wait10>",
         "mkdir -p /etc/rc.d && cp /usr/pkg/etc/rc.d/sshd /etc/rc.d/ && echo 'sshd=YES' >>/etc/rc.conf<enter><wait>",
-        "reboot<enter>"
+        "sh /usr/pkg/etc/rc.d/sshd onestart<enter>"
       ],
       "shutdown_command": "su root -c '/sbin/halt -p'"
     }
