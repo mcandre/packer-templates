@@ -47,7 +47,10 @@ One cleanup tip: As with all Vagrant hypervisors, VirtualBox sometimes leaves vi
 
 ### VMware
 
+* vagrant-vmware-fusion/vagrant-vmware-workstation with a [license](https://www.vagrantup.com/docs/vmware/installation.html) installed
 * [VMware](https://www.vmware.com/) (e.g. Player, Fusion, Workstation)
+
+VMware boxes can be packed without a Vagrant plugin, but running the boxes to test them requires a paid license, even for users who have already paid for VMware. Go figure.
 
 ### qemu/libvirt
 
