@@ -28,11 +28,5 @@ rm -rf /tmp/*
 swappart=$(swapctl -l | awk '!/^Device/ { print $1 }') &&
     swapctl -d "$swappart" &&
     dd if=/dev/zero of="$swappart" bs=1M ||
-    echo 'Zeroed swap space'
-
-# Shrink root partition and persist disks
-
-dd if=/dev/zero of=/whitespace bs=1M ||
-    echo 'Zeroed disk' &&
-    rm -f /whitespace &&
+    echo 'Zeroed swap space' &&
     sync

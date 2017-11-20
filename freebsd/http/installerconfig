@@ -15,15 +15,21 @@ echo 'nameserver 8.8.8.8' >/etc/resolv.conf &&
     adapter="$(ifconfig -l | cut -d' ' -f1)" &&
     sysrc "ifconfig_${adapter}"="dhcp"
 
-# Enable SSH server
+# Configure NTP
 
-sysrc sshd_enable="YES"
+ASSUME_ALWAYS_YES=yes pkg update &&
+    pkg install -y ntp &&
+    sysrc ntpd_enable="YES" &&
+    sysrc ntpdate_enable="YES"
 
 # Configure vagrant user for sudo
 
-ASSUME_ALWAYS_YES=yes pkg update &&
-    pkg install -y sudo &&
+pkg install -y sudo &&
     echo 'vagrant' | pw useradd vagrant -h 0 -m &&
     pw group mod wheel -m vagrant &&
     echo 'Defaults:vagrant !requiretty' >>/usr/local/etc/sudoers &&
     echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/usr/local/etc/sudoers
+
+# Enable SSH server
+
+sysrc sshd_enable="YES"
