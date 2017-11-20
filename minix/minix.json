@@ -10,6 +10,7 @@
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
       "disk_size": 1000,
+      "guest_additions_mode": "disable",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"]
       ],

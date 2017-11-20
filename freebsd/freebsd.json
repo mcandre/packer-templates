@@ -11,12 +11,13 @@
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
       "disk_size": 8000,
+      "guest_additions_mode": "disable",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"]
       ],
       "http_directory": "http",
       "boot_command": [
-        "2<enter><wait10><wait10>",
+        "s<enter><wait10><wait10>",
         "<enter><wait>",
         "mdmfs -s 100m md1 /tmp<enter><wait>",
         "dhclient -p /tmp/dhclient.pid -l /tmp/dhclient.lease em0<enter><wait5>",
