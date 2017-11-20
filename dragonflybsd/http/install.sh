@@ -1,0 +1,104 @@
+#!/bin/sh
+
+disk=ad0
+hostname=dragonflybsd
+
+# Partition disk
+
+dd if=/dev/zero of="/dev/${disk}" bs=32k count=16 &&
+    fdisk -IB "$disk" &&
+    disklabel64 -r -w "${disk}s1" auto &&
+    disklabel64 -B "${disk}s1" &&
+    disklabel64 "${disk}s1" >/tmp/label &&
+    cat >>/tmp/label <<EOF
+a: 768m 0 4.2BSD
+b: 2g * swap
+d: * * HAMMER
+EOF
+
+disklabel64 -R "${disk}s1" /tmp/label &&
+    newfs "/dev/${disk}s1a" &&
+    newfs_hammer -f -L ROOT "/dev/${disk}s1d" &&
+    mount_hammer "/dev/${disk}s1d" /mnt &&
+    mkdir /mnt/boot &&
+    mount "/dev/${disk}s1a" /mnt/boot &&
+    mkdir /mnt/pfs &&
+    hammer pfs-master /mnt/pfs/usr &&
+    hammer pfs-master /mnt/pfs/usr.obj &&
+    hammer pfs-master /mnt/pfs/var &&
+    hammer pfs-master /mnt/pfs/var.crash &&
+    hammer pfs-master /mnt/pfs/var.tmp &&
+    hammer pfs-master /mnt/pfs/tmp &&
+    hammer pfs-master /mnt/pfs/home &&
+    mkdir /mnt/usr &&
+    mkdir /mnt/var &&
+    mkdir /mnt/tmp &&
+    mkdir /mnt/home &&
+    mount_null /mnt/pfs/usr /mnt/usr &&
+    mount_null /mnt/pfs/var /mnt/var &&
+    mount_null /mnt/pfs/tmp /mnt/tmp &&
+    mount_null /mnt/pfs/home /mnt/home &&
+    mkdir /mnt/usr/obj &&
+    mkdir /mnt/var/tmp &&
+    mkdir /mnt/var/crash &&
+    mount_null /mnt/pfs/var.tmp /mnt/var/tmp &&
+    mount_null /mnt/pfs/var.crash /mnt/var/crash &&
+    mount_null /mnt/pfs/usr.obj /mnt/usr/obj &&
+    chmod 1777 /mnt/tmp &&
+    chmod 1777 /mnt/var/tmp &&
+    cpdup -o / /mnt &&
+    cpdup -o /boot /mnt/boot &&
+    cpdup -o /usr /mnt/usr &&
+    cpdup -o /usr/local/etc /mnt/usr/local/etc &&
+    cpdup -o /var /mnt/var &&
+    cpdup -i0 /etc.hdd /mnt/etc &&
+    chflags -R nohistory /mnt/tmp &&
+    chflags -R nohistory /mnt/var/tmp &&
+    chflags -R nohistory /mnt/var/crash &&
+    chflags -R nohistory /mnt/usr/obj &&
+    cat >/mnt/etc/fstab <<EOF
+# Device		Mountpoint	FStype	Options		Dump	Pass#
+/dev/${disk}s1d		/		hammer	rw		1	1
+/dev/${disk}s1a		/boot		ufs	rw		1	1
+/dev/${disk}s1b		none		swap	sw		0	0
+/pfs/usr		/usr		null	rw		0	0
+/pfs/var		/var		null	rw		0	0
+/pfs/tmp		/tmp		null	rw		0	0
+/pfs/home		/home		null	rw		0	0
+/pfs/var.tmp		/var/tmp	null	rw		0	0
+/pfs/usr.obj		/usr/obj	null	rw		0	0
+/pfs/var.crash		/var/crash	null	rw		0	0
+proc			/proc		procfs	rw		0	0
+EOF
+
+cat >/mnt/boot/loader.conf <<EOF
+kernel_options=""
+autoboot_delay="1"
+vfs.root.mountfrom="hammer:${disk}s1d"
+EOF
+
+# Configure basic networking
+
+cp /etc/resolv.conf /mnt/etc/ &&
+    adapter="$(route -n get default | fgrep interface | awk '{ print $2; }')" &&
+    cat >/mnt/etc/rc.conf <<EOF
+ifconfig_${adapter}="DHCP"
+sshd_enable="YES"
+dntpd_enable="YES"
+hostname="${hostname}"
+dumpdev="/dev/${disk}s1b"
+EOF
+
+# Configure vagrant user for sudo
+
+echo 'vagrant' | pw -V /mnt/etc useradd vagrant -h 0 -s /bin/sh -G wheel -d /home/vagrant -c vagrant &&
+    mkdir -p /mnt/home/vagrant &&
+    chown 1001:1001 /mnt/home/vagrant &&
+    sed -i -e 's/^PasswordAuthentication.*/PasswordAuthentication yes/' /mnt/etc/ssh/sshd_config &&
+    chroot /mnt pkg update &&
+    chroot /mnt pkg install -y sudo &&
+    sed -i -e 's/.*%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mnt/usr/local/etc/sudoers
+
+# Configure NTP
+
+chroot /mnt pkg install -y ntp
