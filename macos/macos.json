@@ -8,8 +8,6 @@
       "iso_url": "macos-10.13.iso",
       "iso_checksum_type": "sha512",
       "iso_checksum_url": "file:///tmp/macos-10.13.iso.sha512",
-      "tools_upload_flavor": "darwin",
-      "tools_upload_path": "/Users/vagrant/darwin.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
