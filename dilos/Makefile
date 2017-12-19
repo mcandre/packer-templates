@@ -4,11 +4,11 @@ all: install-boxes
 
 install-boxes: install-box-virtualbox
 
-install-box-virtualbox: freebsd-virtualbox.box
-	vagrant box add -f --name mcandre/freebsd --provider virtualbox freebsd-virtualbox.box
+install-box-virtualbox: dilos-virtualbox.box
+	vagrant box add -f --name mcandre/dilos --provider virtualbox dilos-virtualbox.box
 
-freebsd-virtualbox.box: freebsd.json http/installerconfig *.sh Vagrantfile
-	PACKER_LOG=1 time packer build -force -only virtualbox-iso freebsd.json
+dilos-virtualbox.box: dilos.json http/postseed.sh *.sh Vagrantfile
+	PACKER_LOG=1 time packer build -force -only virtualbox-iso dilos.json
 
 clean: clean-boxes clean-artifacts
 

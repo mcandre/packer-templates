@@ -8,7 +8,7 @@ install-box-virtualbox: dragonflybsd-virtualbox.box
 	vagrant box add -f --name mcandre/dragonflybsd --provider virtualbox dragonflybsd-virtualbox.box
 
 dragonflybsd-virtualbox.box: dragonflybsd.json http/install.sh *.sh Vagrantfile
-	time packer build -force -only virtualbox-iso dragonflybsd.json
+	PACKER_LOG=1 time packer build -force -only virtualbox-iso dragonflybsd.json
 
 clean: clean-boxes clean-artifacts
 
