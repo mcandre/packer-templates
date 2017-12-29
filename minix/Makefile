@@ -10,7 +10,7 @@ install-box-virtualbox: minix-virtualbox.box
 	vagrant box add -f mcandre/minix $(BOX)
 
 minix-virtualbox.box: minix.json *.sh $(ISO) Vagrantfile
-	PACKER_LOG=1 time packer build -force -only virtualbox-iso minix.json
+	PACKER_LOG=1 packer build -force -only virtualbox-iso minix.json
 
 $(ISO).bz2:
 	wget http://download.minix3.org/iso/snapshot/minix_R3.4.0rc6-d5e4fc0.iso.bz2

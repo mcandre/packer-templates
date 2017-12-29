@@ -8,11 +8,15 @@ https://app.vagrantup.com/mcandre
 
 ```console
 $ cd debian
-$ make install-box-virtualbox
-time packer build -force -only virtualbox-iso debian.json
+$ time make install-box-virtualbox
+packer build -force -only virtualbox-iso debian.json
+
 ...
+
       529.04 real        20.08 user        11.78 sys
+
 vagrant box add -f --name mcandre/debian --provider virtualbox debian-virtualbox.box
+
 ...
 
 $ vagrant box list

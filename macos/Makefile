@@ -14,7 +14,7 @@ tmp-checksum: $(ISO_CHECKSUM)
 	cp $(ISO_CHECKSUM) /tmp/$(ISO_CHECKSUM)
 
 macos-vmware.box: macos.json tmp-checksum *.sh
-	PACKER_LOG=1 time packer build -force -only vmware-iso macos.json
+	PACKER_LOG=1 packer build -force -only vmware-iso macos.json
 
 clean: clean-boxes clean-artifacts
 
