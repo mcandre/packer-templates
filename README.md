@@ -43,6 +43,8 @@ Some packer templates support multiple hypervisor options. By default, Packer wi
 
 Regardless of provider, be sure to change directory to the guest OS desired (e.g. `debian/`), as Packer builds are relative to the current working directory, rather than relative to the packer JSON directory.
 
+Note that many packer hypervisors deliver build keystrokes via host-timed keyup, keydown pairs. This means that if your host is overloaded (CPU, RAM, HD), then packer will deliver spurious keyboard activity to the VM during a build. In particular, this often looks like repeatttttttttttted keystrokes, as the keydown event is sent too slowly to faithfully execute the `boot_command`. So whichever machine is packing VMs should have sufficient spare capacity to build: few running applications, and plenty of CPU speed, RAM, and available HD space.
+
 ### VirtualBox
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
