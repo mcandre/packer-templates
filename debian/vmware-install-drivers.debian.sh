@@ -18,4 +18,5 @@ apt-get update &&
     rm -rf vmware-tools-distrib &&
     umount /tmp/VMware &&
     rmdir /tmp/VMware &&
+    rm /home/vagrant/linux.iso &&
     apt-get purge -y "linux-headers-$(uname -r)" build-essential
