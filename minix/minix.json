@@ -9,7 +9,7 @@
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "1800s",
-      "disk_size": 1000,
+      "disk_size": 8000,
       "guest_additions_mode": "disable",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"]
@@ -17,7 +17,7 @@
       "guest_additions_mode": "disable",
       "virtualbox_version_file": "",
       "boot_command": [
-        "<enter><wait10><wait10><wait10><wait10>",
+        "<enter><wait10><wait10><wait10><wait10><wait10><wait10>",
         "root<enter><wait>",
         "setup<enter><enter><wait>",
         "<enter><enter><wait10><wait10>",
@@ -26,7 +26,12 @@
         "yes<enter><wait10><wait10><wait10>",
         "<enter><wait>",
         "<enter><wait>",
-        "<enter><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
@@ -52,6 +57,8 @@
       "execute_command": "su root -c 'env {{ .Vars }} sh {{.Path}}'",
       "scripts": [
         "ssh-configure-vagrant-key.minix.sh",
+        "add-sudo-shim.minix.sh",
+        "fix-synced-folders.minix.sh",
         "cleanup.minix.sh"
       ]
     }
