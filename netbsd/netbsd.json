@@ -1,0 +1,72 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "NetBSD_64",
+      "vm_name": "netbsd",
+      "iso_url": "https://iso.netbsd.org/pub/NetBSD/iso/7.1.1/NetBSD-7.1.1-amd64.iso",
+      "iso_checksum_type": "md5",
+      "iso_checksum": "01baf20a3c6c514aaef38020871d971c",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"]
+      ],
+      "http_directory": "http",
+      "boot_command": [
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<down><enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<down><enter><wait>",
+        "<enter><wait>",
+        "<down><enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<down><enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "b<enter><wait>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "d<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "dhcpcd<enter><wait10>",
+        "ftp http://{{.HTTPIP}}:{{.HTTPPort}}/postseed.sh<enter><wait5>",
+        "sh postseed.sh<enter>"
+      ],
+      "shutdown_command": "su root -c '/sbin/halt -p'"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "su root -c 'env {{ .Vars }} sh {{.Path}}'",
+      "scripts": [
+        "ssh-configure-vagrant-key.netbsd.sh",
+        "add-sudo-shim.netbsd.sh",
+        "cleanup.netbsd.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "netbsd-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ]
+}
