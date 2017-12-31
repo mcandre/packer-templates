@@ -20,6 +20,7 @@
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
         "fix-vagrant-ssh.debian.sh",
+        "passwordless-sudo.sh",
         "cleanup.debian.sh"
       ]
     }
