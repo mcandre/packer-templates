@@ -10,13 +10,15 @@
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
-    "shutdown_command": "sudo halt -p"
+    "ssh_pty": "true",
+    "shutdown_command": "echo 'vagrant' | su root -c 'halt -p'"
   },
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "{{ .Vars }} sudo -E sh {{.Path}}",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} su root -c 'sh {{.Path}}'",
       "scripts": [
+        "fix-sudo.debian.sh",
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
         "fix-vagrant-ssh.debian.sh",
@@ -49,6 +51,7 @@
       "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
       "http_directory": "{{ user `http_directory` }}",
       "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+      "ssh_pty": "{{ user `ssh_pty` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
     },
     {
@@ -67,6 +70,7 @@
       "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
       "http_directory": "{{ user `http_directory` }}",
       "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+      "ssh_pty": "{{ user `ssh_pty` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
     },
     {
@@ -82,6 +86,7 @@
       "qemuargs": [ ["-m", "{{ user `ram_MiB` }}"] ],
       "http_directory": "http",
       "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+      "ssh_pty": "{{ user `ssh_pty` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
   ]
