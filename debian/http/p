@@ -5,7 +5,6 @@ d-i passwd/username string vagrant
 d-i passwd/user-fullname string vagrant
 d-i passwd/user-password password vagrant
 d-i passwd/user-password-again password vagrant
-d-i passwd/user-default-groups string vagrant wheel
 d-i user-setup/encrypt-home boolean false
 d-i time/zone string UTC
 d-i clock-setup/utc boolean true
