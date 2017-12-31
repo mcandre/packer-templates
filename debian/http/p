@@ -5,6 +5,7 @@ d-i passwd/username string vagrant
 d-i passwd/user-fullname string vagrant
 d-i passwd/user-password password vagrant
 d-i passwd/user-password-again password vagrant
+d-i passwd/user-default-groups string wheel
 d-i user-setup/encrypt-home boolean false
 d-i time/zone string UTC
 d-i clock-setup/utc boolean true
@@ -38,9 +39,6 @@ d-i grub-installer/only_debian boolean true
 d-i grub-installer/bootdev string default
 d-i finish-install/keep-consoles boolean true
 d-i finish-install/reboot_in_progress note
-d-i preseed/late_command string \
-    echo "vagrant ALL=(ALL:ALL) NOPASSWD:ALL" > /target/etc/sudoers.d/vagrant && \
-    in-target chmod 0440 /etc/sudoers.d/vagrant
 tasksel tasksel/first multiselect ssh-server
 apt-cdrom-setup apt-setup/cdrom/set-first boolean false
 apt-mirror-setup apt-setup/use_mirror boolean true

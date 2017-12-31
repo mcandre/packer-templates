@@ -11,13 +11,14 @@
     "ram_MiB": "1024",
     "http_directory": "http",
     "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
-    "shutdown_command": "sudo halt -p"
+    "shutdown_command": "su root -c 'halt -p'"
   },
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+      "execute_command": "su root -c 'env {{ .Vars }} sh {{.Path}}'",
       "scripts": [
+        "fix-sudo.debian.sh",
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
         "ssh-add-vagrant-key.debian.sh",
