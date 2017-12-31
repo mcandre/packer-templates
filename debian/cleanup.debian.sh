@@ -3,7 +3,6 @@
 export DEBIAN_FRONTEND=noninteractive
 
 # Remove non-critical packages and clear cache
-
 apt-mark manual openssh-server &&
 apt-get purge -y \
     tasksel \
@@ -59,7 +58,6 @@ apt-get purge -y \
         /var/cache/apt/srcpkgcache.bin
 
 # Delete leftover documentation
-
 find /usr/share/doc -depth -type f ! -name copyright |
     xargs rm ||
     echo 'Deleted non-copyright documentation' &&
@@ -74,7 +72,6 @@ find /usr/share/doc -depth -type f ! -name copyright |
         /var/cache/man/*
 
 # Clear network cache, help DHCP load, accelerate vagrant ssh, accelerate GRUB
-
 mkdir /etc/udev/rules.d/70-persistent-net.rules &&
     rm -rf /dev/.udev \
         /var/lib/dhcp/* \
@@ -85,15 +82,12 @@ mkdir /etc/udev/rules.d/70-persistent-net.rules &&
     grub-mkconfig -o /boot/grub/grub.cfg
 
 # Clear log files
-
 find /var/log -type f | xargs truncate -s 0
 
 # Clear temporary files
-
 rm -rf /tmp/*
 
 # Shrink rootfs
-
 count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count - 1))" &&
     dd if=/dev/zero of=/tmp/whitespace bs=1024 count="$count" ||
@@ -101,7 +95,6 @@ count="$(df --sync -kP / | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     rm /tmp/whitespace
 
 # Shrink boot partition
-
 count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     count="$(($count - 1))" &&
     dd if=/dev/zero of=/boot/whitespace bs=1024 count="$count" ||
@@ -109,7 +102,6 @@ count="$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{ print $4 }')" &&
     rm /boot/whitespace
 
 # Shrink swap space
-
 swapuuid="$(/sbin/blkid -o value -l -s UUID -t TYPE=swap)" &&
     swappart="$(readlink -f "/dev/disk/by-uuid/${swapuuid}")" &&
     /sbin/swapoff "$swappart" &&
@@ -118,7 +110,6 @@ swapuuid="$(/sbin/blkid -o value -l -s UUID -t TYPE=swap)" &&
     /sbin/mkswap -U "$swapuuid" "$swappart"
 
 # Shrink root partition and persist disks
-
 dd if=/dev/zero of=/whitespace bs=1M ||
     echo 'Zeroed disk' &&
     rm -f /whitespace &&

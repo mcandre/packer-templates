@@ -1,110 +1,26 @@
 {
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "guest_os_type": "Debian_64",
-      "vm_name": "debian",
-      "iso_url": "http://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/debian-9.3.0-amd64-netinst.iso",
-      "iso_checksum_type": "sha512",
-      "iso_checksum": "8775231d6f56a3d8f116eb64fe048f5cbd2ea0f8c092a1cb7608bcb4106f9c85cb69ce68f53bd381019ab40f1c0316843036daf3fd9107c81c58a240334cc747",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "1800s",
-      "disk_size": 8000,
-      "guest_additions_mode": "upload",
-      "guest_additions_path": "VBoxGuestAdditions.iso",
-      "virtualbox_version_file": "",
-      "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "1024"]
-      ],
-      "http_directory": "http",
-      "boot_command": [
-        "<esc><wait>",
-        "install ",
-        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
-        "locale=en_US ",
-        "kbd-chooser/method=us ",
-        "keyboard-configuration/xkb-keymap=us ",
-        "netcfg/get_hostname={{.Name}} ",
-        "netcfg/get_domain=vagrantup.com ",
-        "debconf/frontend=noninteractive ",
-        "fb=false ",
-        "<enter><wait>"
-      ],
-      "shutdown_command": "sudo halt -p"
-    },
-    {
-      "type": "vmware-iso",
-      "guest_os_type": "debian9-64",
-      "vm_name": "debian",
-      "iso_url": "http://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/debian-9.3.0-amd64-netinst.iso",
-      "iso_checksum_type": "sha512",
-      "iso_checksum": "8775231d6f56a3d8f116eb64fe048f5cbd2ea0f8c092a1cb7608bcb4106f9c85cb69ce68f53bd381019ab40f1c0316843036daf3fd9107c81c58a240334cc747",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "1800s",
-      "disk_size": 8000,
-      "tools_upload_flavor": "linux",
-      "tools_upload_path": "linux.iso",
-      "vmx_data": {
-        "memsize": "1024"
-      },
-      "http_directory": "http",
-      "boot_command": [
-        "<esc><wait>",
-        "install ",
-        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
-        "locale=en_US ",
-        "kbd-chooser/method=us ",
-        "keyboard-configuration/xkb-keymap=us ",
-        "netcfg/get_hostname={{.Name}} ",
-        "netcfg/get_domain=vagrantup.com ",
-        "debconf/frontend=noninteractive ",
-        "fb=false",
-        "<enter><wait>"
-      ],
-      "shutdown_command": "sudo halt -p"
-    },
-    {
-      "type": "qemu",
-      "vm_name": "debian",
-      "iso_url": "http://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/debian-9.3.0-amd64-netinst.iso",
-      "iso_checksum_type": "sha512",
-      "iso_checksum": "8775231d6f56a3d8f116eb64fe048f5cbd2ea0f8c092a1cb7608bcb4106f9c85cb69ce68f53bd381019ab40f1c0316843036daf3fd9107c81c58a240334cc747",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "11400s",
-      "disk_size": 8000,
-      "qemuargs": [
-        ["-m", "1024M"]
-      ],
-      "http_directory": "http",
-      "boot_command": [
-        "<esc><wait>",
-        "install ",
-        "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
-        "locale=en_US ",
-        "kbd-chooser/method=us ",
-        "keyboard-configuration/xkb-keymap=us ",
-        "netcfg/get_hostname={{.Name}} ",
-        "netcfg/get_domain=vagrantup.com ",
-        "debconf/frontend=noninteractive ",
-        "fb=false",
-        "<enter><wait>"
-      ],
-      "shutdown_command": "sudo halt -p"
-    }
-  ],
+  "variables": {
+    "vm_name": "debian",
+    "iso_url": "https://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/debian-9.3.0-amd64-netinst.iso",
+    "iso_checksum_type": "sha512",
+    "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/SHA512SUMS",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "1800s",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "http_directory": "http",
+    "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+    "shutdown_command": "sudo halt -p"
+  },
   "provisioners": [
     {
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
       "scripts": [
-        "debconf-fix.sh",
-        "ssh-configure-vagrant-key.debian.sh",
-        "virtualbox-install-drivers.debian.sh",
-        "vmware-install-drivers.debian.sh",
-        "fix-libvirt-networking.debian.sh",
+        "fix-debconf.debian.sh",
+        "fix-virtual-drivers.gnulinux.sh",
+        "ssh-add-vagrant-key.debian.sh",
         "cleanup.debian.sh"
       ]
     }
@@ -112,9 +28,62 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "debian-{{.Provider}}.box",
-      "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Debian_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": {{ user `disk_size_MB` }},
+      "guest_additions_mode": "upload",
+      "guest_additions_path": "VBoxGuestAdditions.iso",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "http_directory": "{{ user `http_directory` }}",
+      "boot_command": [ "{{ user `boot_command` }}" ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    },
+    {
+      "type": "vmware-iso",
+      "guest_os_type": "debian9-64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": {{ user `disk_size_MB` }},
+      "tools_upload_flavor": "linux",
+      "tools_upload_path": "linux.iso",
+      "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
+      "http_directory": "{{ user `http_directory` }}",
+      "boot_command": [ "{{ user `boot_command` }}" ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    },
+    {
+      "type": "qemu",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": {{ user `disk_size_MB` }},
+      "qemuargs": [ ["-m", "{{ user `ram_MiB` }}"] ],
+      "http_directory": "http",
+      "boot_command": [ "{{ user `boot_command` }}" ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
     }
   ]
 }
