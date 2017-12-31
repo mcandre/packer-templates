@@ -10,12 +10,12 @@
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
-    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+    "shutdown_command": "sudo halt -p"
   },
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "execute_command": "{{ .Vars }} sudo -E sh {{.Path}}",
       "scripts": [
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
