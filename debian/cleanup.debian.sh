@@ -32,6 +32,7 @@ apt-get purge -y \
     tcpd \
     busybox \
     installation-report \
+    wget \
     wireless-tools \
     wpasupplicant &&
     dpkg --list |
