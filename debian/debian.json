@@ -10,7 +10,6 @@
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
-    "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
     "shutdown_command": "su root -c 'halt -p'"
   },
   "provisioners": [
@@ -50,7 +49,7 @@
       "virtualbox_version_file": "",
       "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
       "http_directory": "{{ user `http_directory` }}",
-      "boot_command": [ "{{ user `boot_command` }}" ],
+      "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
       "shutdown_command": "{{ user `shutdown_command` }}"
     },
     {
@@ -68,7 +67,7 @@
       "tools_upload_path": "linux.iso",
       "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
       "http_directory": "{{ user `http_directory` }}",
-      "boot_command": [ "{{ user `boot_command` }}" ],
+      "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
       "shutdown_command": "{{ user `shutdown_command` }}"
     },
     {
@@ -83,7 +82,7 @@
       "disk_size": "{{ user `disk_size_MB` }}",
       "qemuargs": [ ["-m", "{{ user `ram_MiB` }}"] ],
       "http_directory": "http",
-      "boot_command": [ "{{ user `boot_command` }}" ],
+      "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
   ]
