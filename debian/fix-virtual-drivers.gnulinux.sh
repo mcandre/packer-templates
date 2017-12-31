@@ -3,7 +3,7 @@
 export DEBIAN_FRONTEND=noninteractive
 
 case "$PACKER_BUILDER_TYPE" in
-    virtualbox-*)
+    virtualbox*)
         # Install VirtualBox drivers
         apt-get update &&
             apt-get install -y "linux-headers-$(uname -r)" build-essential &&
