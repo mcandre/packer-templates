@@ -13,13 +13,13 @@ install-box-vmware: debian-vmware.box
 install-box-libvirt: debian-libvirt.box
 	vagrant box add -f --name mcandre/debian --provider libvirt debian-libvirt.box
 
-debian-virtualbox.box: debian.json http/preseed.cfg *.sh
+debian-virtualbox.box: debian.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso debian.json
 
-debian-vmware.box: debian.json http/preseed.cfg *.sh
+debian-vmware.box: debian.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only vmware-iso debian.json
 
-debian-libvirt.box: debian.json http/preseed.cfg *.sh
+debian-libvirt.box: debian.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian.json
 
 clean: clean-boxes clean-artifacts
