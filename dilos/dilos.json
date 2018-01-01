@@ -48,8 +48,8 @@
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
-        "curl -O http://{{.HTTPIP}}:{{.HTTPPort}}/postseed.sh<enter><wait5>",
-        "echo 'vagrant' | sudo -S sh postseed.sh<enter><wait10><wait10><wait10>",
+        "curl -O http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "echo 'vagrant' | sudo -S sh p<enter><wait10><wait10><wait10>",
         "exit<enter><wait5>"
       ],
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -y -i 5 -g 0"

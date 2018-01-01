@@ -7,7 +7,7 @@ install-boxes: install-box-virtualbox
 install-box-virtualbox: dilos-virtualbox.box
 	vagrant box add -f --name mcandre/dilos --provider virtualbox dilos-virtualbox.box
 
-dilos-virtualbox.box: dilos.json http/postseed.sh *.sh Vagrantfile
+dilos-virtualbox.box: dilos.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso dilos.json
 
 clean: clean-boxes clean-artifacts
