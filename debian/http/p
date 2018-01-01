@@ -1,5 +1,3 @@
-d-i passwd/root-password password vagrant
-d-i passwd/root-password-again password vagrant
 d-i passwd/root-login boolean false
 d-i passwd/username string vagrant
 d-i passwd/user-fullname string vagrant
@@ -42,9 +40,6 @@ tasksel tasksel/first multiselect ssh-server
 apt-cdrom-setup apt-setup/cdrom/set-first boolean false
 apt-mirror-setup apt-setup/use_mirror boolean true
 popularity-contest popularity-contest/participate boolean false
-d-i preseed/late_command string \
-  in-target echo "vagrant ALL=(ALL:ALL) NOPASSWD:ALL" >>/etc/sudoers.d/vagrant; \
-  in-target chmod 0440 /etc/sudoers.d/vagrant
 
 # Exclude old VirtualBox drivers
 d-i preseed/early_command string sed -i '/in-target/idiscover(){/sbin/discover|grep -v VirtualBox;}' /usr/lib/pre-pkgsel.d/20install-hwpackages
