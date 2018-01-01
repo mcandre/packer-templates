@@ -43,3 +43,6 @@ popularity-contest popularity-contest/participate boolean false
 
 # Exclude old VirtualBox drivers
 d-i preseed/early_command string sed -i '/in-target/idiscover(){/sbin/discover|grep -v VirtualBox;}' /usr/lib/pre-pkgsel.d/20install-hwpackages
+
+# Configure sudo for automation
+d-i preseed/late_command string sed -i -E -e 's/%sudo[[:space:]]+ALL=\(ALL:ALL\)[[:space:]]+ALL/%sudo ALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers
