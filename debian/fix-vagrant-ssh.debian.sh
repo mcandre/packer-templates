@@ -9,4 +9,6 @@ apt-get update &&
     chown -R vagrant:vagrant /home/vagrant/.ssh &&
     chmod 0700 /home/vagrant/.ssh &&
     chmod 0600 /home/vagrant/.ssh/authorized_keys &&
+    echo 'Defaults !requiretty' >>/etc/sudoers &&
+    chmod 0440 /etc/sudoers &&
     apt-get purge -y ca-certificates
