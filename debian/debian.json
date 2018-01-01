@@ -10,16 +10,17 @@
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
-    "shutdown_command": "sudo halt -p"
+    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
   },
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "{{ .Vars }} sudo -E sh {{.Path}}",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
       "scripts": [
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
         "fix-vagrant-ssh.debian.sh",
+        "fix-sudo.gnulinux.sh",
         "cleanup.debian.sh"
       ]
     }

@@ -45,9 +45,7 @@ popularity-contest popularity-contest/participate boolean false
 d-i preseed/late_command string \
   in-target groupadd wheel; \
   in-target usermod -G wheel root; \
-  in-target usermod -G wheel vagrant; \
-  in-target printf "%%wheel ALL=(ALL:ALL) NOPASSWD:ALL\nDefaults !requiretty\n" >>/etc/sudoers; \
-  in-target chmod 0440 /etc/sudoers
+  in-target usermod -G wheel vagrant
 
 # Exclude old VirtualBox drivers
 d-i preseed/early_command string sed -i '/in-target/idiscover(){/sbin/discover|grep -v VirtualBox;}' /usr/lib/pre-pkgsel.d/20install-hwpackages
