@@ -20,7 +20,6 @@
         "fix-debconf.debian.sh",
         "fix-virtual-drivers.gnulinux.sh",
         "fix-vagrant-ssh.debian.sh",
-        "fix-sudo.gnulinux.sh",
         "cleanup.debian.sh"
       ]
     }
