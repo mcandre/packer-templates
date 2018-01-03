@@ -1,4 +1,4 @@
-ISO=dfly-x86_64-5.0.1_REL.iso.bz2
+ISO=dfly-x86_64-5.0.1_REL.iso
 
 .PHONY: install-boxes install-box-virtualbox
 
