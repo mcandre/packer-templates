@@ -21,8 +21,8 @@
         "<enter><wait>",
         "mdmfs -s 100m md1 /tmp<enter><wait>",
         "dhclient -p /tmp/dhclient.pid -l /tmp/dhclient.lease em0<enter><wait5>",
-        "fetch -o /tmp/installerconfig http://{{ .HTTPIP }}:{{ .HTTPPort }}/installerconfig<enter><wait>",
-        "bsdinstall script /tmp/installerconfig && reboot<enter>"
+        "fetch -o /tmp/p http://{{ .HTTPIP }}:{{ .HTTPPort }}/p<enter><wait5>",
+        "bsdinstall script /tmp/p && reboot<enter>"
       ],
       "shutdown_command": "sudo halt -p"
     }

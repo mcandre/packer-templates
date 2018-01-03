@@ -7,7 +7,7 @@ install-boxes: install-box-virtualbox
 install-box-virtualbox: freebsd-virtualbox.box
 	vagrant box add -f --name mcandre/freebsd --provider virtualbox freebsd-virtualbox.box
 
-freebsd-virtualbox.box: freebsd.json http/installerconfig *.sh Vagrantfile
+freebsd-virtualbox.box: freebsd.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso freebsd.json
 
 clean: clean-boxes clean-artifacts
