@@ -17,6 +17,7 @@ test-sync-host-to-guest:
 
 test-sync-guest-to-host: clean-greeting
 	vagrant ssh -c "echo 'howdy' >/vagrant/greeting.txt"
+	vagrant rsync-back
 	cat greeting.txt | grep 'howdy'
 
 clean-greeting:
