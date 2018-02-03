@@ -81,3 +81,19 @@ In addition, libvirt requires additional manual configuration in order to correc
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
 * [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
+
+# TESTING
+
+These boxes are designed as minimal bases for constructing build bot virtual machines, so that [mcandre/tonixxx](tonixxx) can use the boxes to conveniently cross-compile applications for many different kernels. The boxes are expected to feature:
+
+* working package manager, for installation of devopment tools like gcc, curl, lua, etc.
+* bidirectional-capable host->guest and guest->host synced folders, for copying source code to the box and copying artifacts back to the host, via [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
+
+The best way to ensure that the boxes are suitable for this development workflow is to attempt to install some package, and to check that files can be copied from the host and guest and back again. This workflow is automated in a testing script. Example:
+
+```console
+$ cd debian/test
+$ vagrant up
+$ make test
+...
+```
