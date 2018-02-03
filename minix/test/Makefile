@@ -5,7 +5,7 @@ all: test
 test: test-flag test-bootstrap test-sync
 
 test-flag:
-	vagrant ssh -c 'cat $$HOME/flag.txt' | grep 'all ur base are belong to us'
+	vagrant ssh -c "cat \$$HOME/flag.txt | grep 'all ur base are belong to us'"
 
 test-bootstrap:
 	vagrant ssh -c 'curl --version'
@@ -13,7 +13,7 @@ test-bootstrap:
 test-sync: test-sync-host-to-guest test-sync-guest-to-host
 
 test-sync-host-to-guest:
-	vagrant ssh -c 'cat /vagrant/.node-version' | grep -- '-1'
+	vagrant ssh -c "cat /vagrant/.node-version | grep -- '-1'"
 
 test-sync-guest-to-host: clean-greeting
 	vagrant ssh -c "echo 'howdy' >/vagrant/greeting.txt"
