@@ -6,7 +6,7 @@
     "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/9.3.0/amd64/iso-cd/SHA512SUMS",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
-    "ssh_wait_timeout": "11400s",
+    "ssh_wait_timeout": "6h",
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
