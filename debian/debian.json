@@ -28,7 +28,8 @@
     {
       "type": "vagrant",
       "output": "{{ user `vm_name` }}-{{.Provider}}.box",
-      "compression_level": "9"
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
     }
   ],
   "builders": [
@@ -43,8 +44,7 @@
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
       "disk_size": "{{ user `disk_size_MB` }}",
-      "guest_additions_mode": "upload",
-      "guest_additions_path": "VBoxGuestAdditions.iso",
+      "guest_additions_mode": "disable",
       "virtualbox_version_file": "",
       "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
       "http_directory": "{{ user `http_directory` }}",
@@ -62,8 +62,6 @@
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
       "disk_size": "{{ user `disk_size_MB` }}",
-      "tools_upload_flavor": "linux",
-      "tools_upload_path": "linux.iso",
       "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
       "http_directory": "{{ user `http_directory` }}",
       "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
