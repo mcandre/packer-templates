@@ -138,21 +138,6 @@
         "<tab><tab><tab><spacebar>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<leftCtrlOn><f2><leftCtrlOff><right><right><right><right><right><down><down><down><down><down><down><down><down><down><down><down><down><spacebar><wait5>",
-        "Terminal<wait>",
-        "<leftSuperOn>o<leftSuperOff><wait10><wait10><wait10>",
-        "curl -o /Users/vagrant/com.vmware.fusion.tools.darwin.zip.tar http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/10.0.1/6754183/packages/com.vmware.fusion.tools.darwin.zip.tar<enter><wait10>",
-        "tar xvf /Users/vagrant/com.vmware.fusion.tools.darwin.zip.tar<enter><wait5>",
-        "unzip com.vmware.fusion.tools.darwin.zip<enter><wait5>",
-        "MOUNT=\"$(mktemp -d /tmp/vmware-tools)\"<enter><wait>",
-        "hdiutil attach /Users/vagrant/payload/darwin.iso -mountpoint \"$MOUNT\"<enter><wait5>",
-        "echo 'vagrant' | sudo -S installer -pkg \"${MOUNT}/Install VMware Tools.app/Contents/Resources/VMware Tools.pkg\" -target /<enter>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<leftCtrlOn><f2><leftCtrlOff><right><down><down><down><down><down><down><down><down><spacebar><wait5>",
         "<leftCtrlOn><f2><leftCtrlOff><down><down><down><down><down><down><down><down><spacebar><wait>",
         "<spacebar><tab><tab><spacebar>",
         "<leftSuperOn><rOn><wait>",
@@ -457,8 +442,6 @@
         "<leftSuperOn><rOn><wait>",
         "<rOff><leftSuperOff>",
         "<leftCtrlOn><f2><leftCtrlOff><right><right><right><right><down><down><down><down><spacebar><wait10><wait10><wait10>",
-        "KEXT_ID=\"$(sqlite3 '/Volumes/Macintosh HD/var/db/SystemPolicyConfiguration/KextPolicy' 'SELECT * FROM kext_policy;' | awk -F '|' '{ print $1 }')\"<enter><wait>",
-        "spctl kext-consent add \"$KEXT_ID\"<enter><wait>",
         "csrutil disable<enter><wait>",
         "/usr/libexec/PlistBuddy -c 'Set Disabled FALSE' '/Volumes/Macintosh HD/System/Library/LaunchDaemons/ssh.plist'<enter><wait>",
         "<leftCtrlOn><f2><leftCtrlOff><down><down><down><spacebar>"
@@ -473,7 +456,6 @@
       "scripts": [
         "elevate.macos.sh",
         "fix-networking.macos.sh",
-        "fix-vmware-tools.macos.sh",
         "ssh-configure-vagrant-key.macos.sh",
         "strip-services.macos.sh",
         "cleanup.macos.sh"
@@ -484,7 +466,8 @@
     {
       "type": "vagrant",
       "output": "macos-{{.Provider}}.box",
-      "compression_level": "9"
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
     }
   ]
 }
