@@ -19,7 +19,6 @@
       "type": "powershell",
       "execute_command": "powershell -ExecutionPolicy Bypass \"& { {{ .Vars }} {{.Path}}; exit $LastExitCode}\"",
       "scripts": [
-        "fix-virtual-drivers.ps1",
         "install-chocolatey.ps1",
         "fix-vagrant-ssh.ps1",
         "fix-synced-folders.ps1",
@@ -48,7 +47,7 @@
       "winrm_password": "{{ user `winrm_password` }}",
       "winrm_timeout": "{{ user `winrm_timeout` }}",
       "disk_size": "{{ user `disk_size_MB` }}",
-      "guest_additions_mode": "attach",
+      "guest_additions_mode": "disable",
       "virtualbox_version_file": "",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"],
