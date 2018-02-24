@@ -37,6 +37,8 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
 
+Note: Windows hosts are affected by a packer bug where attempts to kill a packer process by sending a Control+C signal, result in a half-dead packer that often awakes during subsequent builds, corrupting them. Task Manager is your friend.
+
 ## Providers/Hypervisors
 
 Some packer templates support multiple hypervisor options. By default, Packer will attempt to target all configured hypervisors. Or, if you are interested in merely a subset of the hypervisors, ensure that the `-only <comma,separated,providers>` flag is specified to the `packer build`... command.
@@ -78,6 +80,7 @@ In addition, libvirt requires additional manual configuration in order to correc
 
 ## Optional
 
+* a keyboard cover, in case of nearby cats that may scamper around and corrupt sensitive boot commands
 * [Taurine](https://itunes.apple.com/us/app/taurine/id960276676) (macOS), [Caffeine](http://www.zhornsoftware.co.uk/caffeine/) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) are recommended for disabling hibernation during packing
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)

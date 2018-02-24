@@ -1,0 +1,72 @@
+#!/bin/sh
+
+usage() {
+    echo "$0 [<OPTION>] <command>"
+    echo "Options:"
+    echo "-u <user> Specify a delegate username"
+    echo "-E Preserve environment variables (always on in this shim)"
+    echo "-S Read password from STDIN"
+    echo "-h Show usage information"
+    echo "-V Show version information"
+}
+
+VERSION='0.0.1'
+USER='root'
+PASSWORD=''
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+    -u)
+        if [ -z "$2" ]; then
+            usage
+            exit 1
+        fi
+
+        USER="$2"
+        shift
+        ;;
+    -E)
+        ;;
+    -S)
+        read PASSWORD
+        ;;
+    -h)
+        usage
+        exit
+        ;;
+    -V)
+        echo "$VERSION"
+        exit
+        ;;
+    *)
+        break
+        ;;
+    esac
+
+    shift
+done
+
+PASSWORD_SHUNT=''
+SU='su'
+SUBCOMMAND="$*"
+LOG_SHUNT=''
+
+grep SmartOS /etc/release >/dev/null
+
+if [ "$?" -eq 0 ]; then
+    PASSWORD_SHUNT="print \".\\n$PASSWORD\\n\""
+    SU='/usr/lib/embedded_su'
+    LOG_SHUNT='tail -n+6 -f'
+fi
+
+COMMAND="$COMMAND $SU $USER -c \"$SUBCOMMAND\""
+
+if [ ! -z "$PASSWORD_SHUNT" ]; then
+    COMMAND="$PASSWORD_SHUNT | $COMMAND"
+fi
+
+if [ ! -z "$LOG_SHUNT" ]; then
+    COMMAND="$COMMAND | $LOG_SHUNT"
+fi
+
+eval "$COMMAND"

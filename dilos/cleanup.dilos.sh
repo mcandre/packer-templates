@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Remove leftover files
-rm /export/home/vagrant/p
-
 # Clear package cache
 apt-get autoclean -y &&
     apt-get clean -y &&

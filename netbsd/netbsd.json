@@ -12,6 +12,7 @@
       "ssh_wait_timeout": "1800s",
       "disk_size": 8000,
       "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"]
       ],
@@ -44,8 +45,8 @@
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "root<enter><wait>",
         "dhcpcd<enter><wait10>",
-        "ftp http://{{.HTTPIP}}:{{.HTTPPort}}/postseed.sh<enter><wait5>",
-        "sh postseed.sh<enter>"
+        "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter>"
       ],
       "shutdown_command": "su root -c '/sbin/halt -p'"
     }
