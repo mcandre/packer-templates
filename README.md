@@ -78,7 +78,7 @@ In addition, libvirt requires additional manual configuration in order to correc
 
 ## Optional
 
-* [Taurine](https://itunes.apple.com/us/app/taurine/id960276676) (macOS), [Caffeine](http://www.zhornsoftware.co.uk/caffeine/) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) are recommended for disabling hibernation during packing
+* [Taurine](https://itunes.apple.com/us/app/taurine/id960276676) (macOS), [Caffeine](http://www.zhornsoftware.co.uk/caffeine/) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) are recommended for disabling hibernation during packing and uploading
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
 * [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
