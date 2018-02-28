@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Remove leftover files
-rm /export/home/vagrant/postseed.sh
-
 # Clear package cache
 apt-get autoclean -y &&
     apt-get clean -y &&

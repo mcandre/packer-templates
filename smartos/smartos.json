@@ -1,0 +1,70 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "OpenSolaris_64",
+      "vm_name": "smartos",
+      "iso_url": "https://us-east.manta.joyent.com/Joyent_Dev/public/builds/smartos/release-20180201-20180203T031130Z/smartos/smartos-20180203T031130Z.iso",
+      "iso_checksum_type": "md5",
+      "iso_checksum_url": "https://us-east.manta.joyent.com/Joyent_Dev/public/builds/smartos/release-20180201-20180203T031130Z/smartos/md5sums.txt",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"]
+      ],
+      "bundle_iso": true,
+      "http_directory": "http",
+      "boot_command": [
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "dhcp<enter><wait>",
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "packer<enter><wait>",
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait5>",
+        "<enter><wait10>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "vagrant<enter><wait5>",
+        "curl -o /opt/sudo http://{{.HTTPIP}}:{{.HTTPPort}}/sudo<enter><wait5>",
+        "chmod a+x /opt/sudo<enter><wait>",
+        "curl -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter><wait10>",
+        "reboot<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>"
+      ],
+      "shutdown_command": "print \".\nvagrant\n\" | /usr/lib/embedded_su root -c 'shutdown -y -g 0 -i 5'"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "print \".\nvagrant\n\" | /usr/lib/embedded_su root -c 'env {{ .Vars }} sh {{.Path}}'",
+      "scripts": [
+        "ssh-configure-vagrant-key.smartos.sh",
+        "fix-vagrant-rsync.smartos.sh",
+        "cleanup.smartos.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "smartos-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+#!/bin/sh
+mkdir -p /opt/custom/smf &&
+    curl -kLo /opt/custom/smf/mount_usbkey_userfiles.xml https://gist.githubusercontent.com/mcandre/24a7c52ea27a219ff3a70d0830ce9e10/raw/fcb562651829b41c2ce25c32ebe579fd2c0faf1d/mount_usbkey_userfiles.xml
+    digest -a md5 /opt/custom/smf/mount_usbkey_userfiles.xml | grep '60fb659172d3102085907a2a7538e88d' >/dev/null &&
+    curl -kLo /opt/custom/smf/mount_usbkey_userfiles https://gist.githubusercontent.com/mcandre/24a7c52ea27a219ff3a70d0830ce9e10/raw/fcb562651829b41c2ce25c32ebe579fd2c0faf1d/mount_usbkey_userfiles &&
+    digest -a md5 /opt/custom/smf/mount_usbkey_userfiles | grep '7404438e4ccdbf4a70690006d05a16b0' >/dev/null &&
+    chmod 755 /opt/custom/smf/mount_usbkey_userfiles &&
+    curl -kLo /opt/usurp https://raw.githubusercontent.com/mcandre/usurp/master/lib/usurp &&
+    digest -a md5 /opt/usurp | grep 'afa6ad29b88ca7ff6f1cdff30edaa183' >/dev/null &&
+    chmod a+x /opt/usurp &&
+    svccfg import /opt/custom/smf/mount_usbkey_userfiles.xml &&
+    svcadm disable mount_usbkey_userfiles &&
+    groupadd vagrant &&
+    groupadd wheel &&
+    mkdir -p /opt/home &&
+    useradd -m -d /opt/home/vagrant -g staff -G wheel vagrant &&
+    usermod -G vagrant vagrant &&
+    usermod -G wheel vagrant &&
+    svcadm enable mount_usbkey_userfiles &&
+    USERNAME=root PASSWORD="$(/usr/lib/cryptpass vagrant)" /opt/usurp </etc/shadow |
+    USERNAME=vagrant PASSWORD="$(/usr/lib/cryptpass vagrant)" /opt/usurp >/tmp/shadow.new &&
+    socat -u OPEN:/tmp/shadow.new,rdonly OPEN:/etc/shadow,wronly,trunc
