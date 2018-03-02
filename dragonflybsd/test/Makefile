@@ -2,7 +2,10 @@
 
 all: test
 
-test: test-flag test-bootstrap test-sync
+test: test-boot test-flag test-bootstrap test-sync test-shutdown
+
+test-boot:
+	vagrant up
 
 test-flag:
 	vagrant ssh -c "cat \$$HOME/flag.txt | grep 'all ur base are belong to us'"
@@ -19,6 +22,9 @@ test-sync-guest-to-host: clean-greeting
 	vagrant ssh -c "echo 'howdy' >/vagrant/greeting.txt"
 	vagrant rsync-back
 	cat greeting.txt | grep 'howdy'
+
+test-shutdown:
+	vagrant halt
 
 clean-greeting:
 	-rm greeting.txt

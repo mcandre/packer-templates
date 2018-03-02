@@ -16,7 +16,6 @@
         ["modifyvm", "{{.Name}}", "--memory", "1024"]
       ],
       "bundle_iso": true,
-      "http_directory": "http",
       "boot_command": [
         "<enter><wait10><wait10><wait10>",
         "<enter><wait>",
@@ -37,24 +36,33 @@
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "root<enter><wait>",
         "vagrant<enter><wait5>",
-        "curl -o /opt/sudo http://{{.HTTPIP}}:{{.HTTPPort}}/sudo<enter><wait5>",
-        "chmod a+x /opt/sudo<enter><wait>",
-        "curl -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
-        "sh /tmp/p<enter><wait10>",
-        "reboot<enter>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>"
+        "curl -kLO https://github.com/mcandre/manray/releases/download/v0.0.1/manray-0.0.1.tgz<enter><wait5>",
+        "digest -a md5 manray-0.0.1.tgz | grep '76a64e2b8944035c8cf0c031d7266a26' >/dev/null && tar xzvf manray-0.0.1.tgz -C /<enter><wait5>",
+        "svccfg import /opt/custom/smf/manray-load.xml<enter><wait5>",
+        "svccfg import /opt/custom/smf/manray-persist.xml<enter><wait5>",
+        "svcadm disable -s manray-persist<enter><wait5>",
+        "groupadd vagrant<enter><wait>",
+        "mkdir -p /opt/home<enter><wait>",
+        "useradd -m -d /opt/home/vagrant -g staff -G vagrant vagrant<enter><wait>",
+        "echo 'vagrant::::profiles=Primary Administrator' >>/etc/user_attr<enter><wait>",
+        "passwd<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "passwd vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "svcadm enable -s manray-persist<enter><wait5>",
+        "exit<enter><wait>"
       ],
-      "shutdown_command": "print \".\nvagrant\n\" | /usr/lib/embedded_su root -c 'shutdown -y -g 0 -i 5'"
+      "shutdown_command": "pfexec shutdown -y -g 0 -i 5"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "print \".\nvagrant\n\" | /usr/lib/embedded_su root -c 'env {{ .Vars }} sh {{.Path}}'",
+      "execute_command": "pfexec env {{ .Vars }} sh {{.Path}}",
       "scripts": [
         "ssh-configure-vagrant-key.smartos.sh",
-        "fix-vagrant-rsync.smartos.sh",
         "cleanup.smartos.sh"
       ]
     }
