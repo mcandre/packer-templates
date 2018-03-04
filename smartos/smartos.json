@@ -36,8 +36,8 @@
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "root<enter><wait>",
         "vagrant<enter><wait5>",
-        "curl -kLO https://github.com/mcandre/manray/releases/download/v0.0.1/manray-0.0.1.tgz<enter><wait5>",
-        "digest -a md5 manray-0.0.1.tgz | grep '76a64e2b8944035c8cf0c031d7266a26' >/dev/null && tar xzvf manray-0.0.1.tgz -C /<enter><wait5>",
+        "curl -kLO https://github.com/mcandre/manray/releases/download/v0.0.2/manray-0.0.2.tgz<enter><wait5>",
+        "digest -a md5 manray-0.0.2.tgz | grep '42dcccf3b0a28d02d8917946fff6637d' >/dev/null && tar xzvf manray-0.0.2.tgz -C /<enter><wait5>",
         "svccfg import /opt/custom/smf/manray-load.xml<enter><wait5>",
         "svccfg import /opt/custom/smf/manray-persist.xml<enter><wait5>",
         "svcadm disable -s manray-persist<enter><wait5>",
@@ -51,8 +51,7 @@
         "passwd vagrant<enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
-        "svcadm enable -s manray-persist<enter><wait5>",
-        "exit<enter><wait>"
+        "svcadm enable -s manray-persist<enter><wait5>"
       ],
       "shutdown_command": "pfexec shutdown -y -g 0 -i 5"
     }
