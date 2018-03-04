@@ -10,16 +10,13 @@ install-box-virtualbox: smartos-virtualbox.box
 smartos-virtualbox.box: smartos.json *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso smartos.json
 
-clean: clean-boxes clean-artifacts clean-keys
+clean: clean-boxes clean-artifacts
 
 clean-boxes:
 	-rm *.box
 
 clean-artifacts:
 	-rm -rf packer_cache
-
-clean-keys:
-	-rm -rf http/*.pub
 
 lint: packer-validate shfmt
 
