@@ -7,7 +7,7 @@ install-boxes: install-box-virtualbox
 install-box-virtualbox: netbsd-virtualbox.box
 	vagrant box add -f --name mcandre/netbsd --provider virtualbox netbsd-virtualbox.box
 
-netbsd-virtualbox.box: netbsd.json http/postseed.sh *.sh Vagrantfile
+netbsd-virtualbox.box: netbsd.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso netbsd.json
 
 clean: clean-boxes clean-artifacts
