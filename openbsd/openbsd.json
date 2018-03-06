@@ -1,0 +1,78 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "OpenBSD_64",
+      "vm_name": "openbsd",
+      "iso_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.2/amd64/install62.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.2/amd64/SHA256",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"]
+      ],
+      "http_directory": "http",
+      "boot_wait": "30s",
+      "boot_command": [
+        "i<enter><wait>",
+        "<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "no<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "yes<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait10><wait10><wait10>",
+        "reboot<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "vagrant<enter><wait>",
+        "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter><wait10><wait10><wait10>"
+      ],
+      "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-key.openbsd.sh",
+        "cleanup.openbsd.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "openbsd-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ]
+}
