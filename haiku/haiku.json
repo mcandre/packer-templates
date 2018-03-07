@@ -1,0 +1,90 @@
+{
+  "variables": {
+    "vm_name": "haiku",
+    "iso_url": "haiku-blobs/haiku-r1alpha4.iso",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "dd62d141b031630e9eb16683149d6de7",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "shutdown_command": "su user -c shutdown"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "su user -c '{{ .Vars }} sh {{.Path}}'",
+      "scripts": [
+        "fix-vagrant-ssh.haiku.sh",
+        "fix-vagrant-rsync.haiku.sh",
+        "cleanup.haiku.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Other",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"]
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "http_directory": "http",
+      "boot_command": [
+        "<tab><tab><tab><spacebar><wait5>",
+        "<tab><tab><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<tab><tab><tab><tab><spacebar><wait5>",
+        "<down><up><wait>",
+        "<leftAltOn><esc><leftAltOff><wait>",
+        "<right><down><right><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<tab><tab><tab><tab><tab><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<leftAltOn>w<leftAltOff><wait5>",
+        "<tab><tab><wait>",
+        "<spacebar>h<esc><wait>",
+        "<tab><tab><tab><spacebar>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<spacebar>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "h<enter><wait5>",
+        "system<enter><wait5>",
+        "apps<enter><wait5>",
+        "Terminal<enter><wait5>",
+        "mkdir /boot/vagrant<enter><wait>",
+        "useradd -d /boot/vagrant vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "curl -o /tmp/Bootscript.patch http://{{.HTTPIP}}:{{.HTTPPort}}/Bootscript.patch<enter><wait5>",
+        "curl -o /tmp/profile.patch http://{{.HTTPIP}}:{{.HTTPPort}}/profile.patch<enter><wait5>",
+        "curl -o /tmp/start-ssh.sh http://{{.HTTPIP}}:{{.HTTPPort}}/start-ssh.sh<enter><wait5>",
+        "curl -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter><wait5>",
+        "shutdown -r<enter>"
+      ]
+    }
+  ]
+}
