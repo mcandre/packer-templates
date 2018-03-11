@@ -11,7 +11,7 @@ haiku-blobs/haiku-r1alpha4.1-iso.zip:
 	mkdir -p haiku-blobs
 	wget -O haiku-blobs/haiku-r1alpha4.1-iso.zip "http://haiku.osuosl.org/releases/r1alpha4.1/haiku-r1alpha4.1-iso.zip"
 
-haiku-blobs/haiku-r1alpha4.iso:
+haiku-blobs/haiku-r1alpha4.iso: haiku-blobs/haiku-r1alpha4.1-iso.zip
 	sh -c "cd haiku-blobs && unzip haiku-r1alpha4.1-iso.zip"
 
 haiku-virtualbox.box: haiku-blobs/haiku-r1alpha4.iso http/*.patch http/*.sh http/p haiku.json *.sh Vagrantfile
