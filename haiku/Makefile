@@ -14,7 +14,7 @@ haiku-blobs/haiku-r1alpha4.1-iso.zip:
 haiku-blobs/haiku-r1alpha4.iso: haiku-blobs/haiku-r1alpha4.1-iso.zip
 	sh -c "cd haiku-blobs && unzip haiku-r1alpha4.1-iso.zip"
 
-haiku-virtualbox.box: haiku-blobs/haiku-r1alpha4.iso http/*.patch http/*.sh http/p haiku.json *.sh Vagrantfile
+haiku-virtualbox.box: haiku-blobs/haiku-r1alpha4.iso http/shutdown http/*.patch http/*.sh http/p haiku.json *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso haiku.json
 
 clean: clean-boxes clean-artifacts clean-blobs

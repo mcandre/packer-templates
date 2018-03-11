@@ -80,6 +80,7 @@
         "vagrant<enter><wait>",
         "curl -o /tmp/Bootscript.patch http://{{.HTTPIP}}:{{.HTTPPort}}/Bootscript.patch<enter><wait5>",
         "curl -o /tmp/profile.patch http://{{.HTTPIP}}:{{.HTTPPort}}/profile.patch<enter><wait5>",
+        "curl -o /tmp/shutdown http://{{.HTTPIP}}:{{.HTTPPort}}/shutdown<enter><wait5>",
         "curl -o /tmp/start-ssh.sh http://{{.HTTPIP}}:{{.HTTPPort}}/start-ssh.sh<enter><wait5>",
         "curl -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
         "sh /tmp/p<enter><wait5>",

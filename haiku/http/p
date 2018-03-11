@@ -1,6 +1,9 @@
 #!/bin/sh
 patch /boot/system/boot/Bootscript /tmp/Bootscript.patch &&
   patch /etc/profile /tmp/profile.patch &&
+  mv /bin/shutdown /bin/shutdown-actual &&
+  cp /tmp/shutdown /bin/shutdown &&
+  chmod a+x /bin/shutdown &&
   mkdir -p /boot/home/config/boot/launch &&
   cp /tmp/start-ssh.sh /boot/home/config/boot/launch &&
   chmod a+x /boot/home/config/boot/launch/start-ssh.sh &&

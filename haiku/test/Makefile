@@ -23,10 +23,8 @@ test-sync-guest-to-host: clean-greeting
 	vagrant rsync-back
 	cat greeting.txt | grep 'howdy'
 
-# Exit status of `vagrant halt` ignored for now,
-# as this status is incorrectly calculated for Haiku guests.
 test-shutdown:
-	-vagrant halt
+	vagrant halt
 
 clean-greeting:
 	-rm greeting.txt
