@@ -7,7 +7,7 @@
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_timeout": "2h",
-    "disk_size_MB": "20000",
+    "disk_size_MB": "40000",
     "ram_MiB": "4096",
     "vram_MiB": "32",
     "cpus": "2",
