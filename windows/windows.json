@@ -17,7 +17,7 @@
   "provisioners": [
     {
       "type": "powershell",
-      "execute_command": "powershell -ExecutionPolicy Bypass \"& { {{ .Vars }} {{.Path}}; exit $LastExitCode}\"",
+      "execute_command": "powershell -ExecutionPolicy Bypass -Command \"{{.Path}}\"",
       "scripts": [
         "install-chocolatey.ps1",
         "fix-vagrant-ssh.ps1",
