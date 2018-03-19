@@ -1,19 +1,22 @@
-.PHONY: install-boxes install-box-vmware tmp-checksum
+.PHONY: install-boxes install-box-vmware
 
-ISO=macos-10.13.iso
-ISO_CHECKSUM=macos-10.13.iso.sha512
+ISO=/tmp/macos-10.13.iso
+ISO_CHECKSUM=/tmp/macos-10.13.iso.sha512
 
 all: install-boxes
 
-install-boxes: install-box-vmware
+install-boxes: install-box-virtualbox install-box-vmware
+
+install-box-virtualbox: macos-virtualbox.box
+	vagrant box add -f --name mcandre/macos --provider virtualbox macos-virtualbox.box
 
 install-box-vmware: macos-vmware.box
 	vagrant box add -f --name mcandre/macos --provider vmware_desktop macos-vmware.box
 
-tmp-checksum: $(ISO_CHECKSUM)
-	cp $(ISO_CHECKSUM) /tmp/$(ISO_CHECKSUM)
+macos-virtualbox.box: macos.json $(ISO) $(ISO_CHECKSUM) *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso macos.json
 
-macos-vmware.box: macos.json tmp-checksum *.sh
+macos-vmware.box: macos.json $(ISO) $(ISO_CHECKSUM) *.sh
 	PACKER_LOG=1 packer build -force -only vmware-iso macos.json
 
 clean: clean-boxes clean-artifacts

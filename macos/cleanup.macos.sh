@@ -58,4 +58,4 @@ launchctl unload /System/Library/LaunchDaemons/com.apple.dynamic_pager.plist && 
     rm -f /private/var/vm/swap*
 
 # Shrink root partition
-diskutil secureErase freespace 0 /dev/disk1s1
+diskutil secureErase freespace 0 '/Volumes/Macintosh HD'
