@@ -1,0 +1,34 @@
+DISTRIBUTIONS='kernel.txz base.txz'
+HOSTNAME='hardenedbsd'
+
+for device in vtbd0 ada0 da0; do
+    if [ -e "/dev/${device}" ]; then
+        PARTITIONS="$device"
+        break
+    fi
+done
+
+#!/bin/sh
+
+# Enable DHCP for default network adapter
+echo 'nameserver 8.8.8.8' >/etc/resolv.conf &&
+    adapter="$(ifconfig -l | cut -d' ' -f1)" &&
+    sysrc "ifconfig_${adapter}"="dhcp"
+
+# Configure NTP
+ASSUME_ALWAYS_YES=yes pkg update &&
+    pkg install -y ntp &&
+    sysrc ntpd_enable="YES" &&
+    sysrc ntpdate_enable="YES"
+
+# Configure vagrant user for sudo
+pkg install -y sudo &&
+    echo 'vagrant' | pw useradd vagrant -h 0 -m &&
+    pw group mod wheel -m vagrant &&
+    echo 'Defaults:vagrant !requiretty' >>/usr/local/etc/sudoers &&
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/usr/local/etc/sudoers
+
+# Enable SSH server
+sysrc sshd_enable="YES"
+
+reboot
