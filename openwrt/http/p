@@ -1,0 +1,11 @@
+#!/bin/sh
+cp /tmp/shutdown /bin/shutdown &&
+    opkg update &&
+    opkg install shadow-useradd shadow-groupadd sudo &&
+    groupadd --system wheel &&
+    mkdir /home &&
+    useradd -m -G wheel -s /bin/ash vagrant &&
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/etc/sudoers &&
+    /etc/init.d/dropbear restart &&
+    printf "config rule\n\toption src\t\tlan\n\toption proto\t\ttcp\n\toption dest_port\t22\n\toption target\t\tACCEPT\n" >>/etc/config/firewall &&
+    /etc/init.d/firewall restart

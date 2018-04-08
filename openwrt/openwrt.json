@@ -1,0 +1,68 @@
+{
+  "variables": {
+    "vm_name": "openwrt",
+    "ovf_file": "openwrt.ovf",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "ram_MiB": "1024",
+    "http_directory": "http",
+    "shutdown_command": "echo 'vagrant' | sudo -S halt"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-ssh.openwrt.sh",
+        "fix-vagrant-rsync.openwrt.sh",
+        "cleanup.openwrt.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "vm_name": "{{ user `vm_name` }}",
+      "source_path": "{{ user `ovf_file` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "http_directory": "{{ user `http_directory` }}",
+      "boot_wait": "30s",
+      "boot_command": [
+        "<enter><wait>",
+        "passwd<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "uci set network.lan.proto=dhcp<enter><wait>",
+        "uci delete network.lan.type<enter><wait>",
+        "uci delete network.lan.ipaddr<enter><wait>",
+        "uci delete network.lan.netmask<enter><wait>",
+        "uci delete network.lan.ip6assign<enter><wait>",
+        "uci commit<enter><wait>",
+        "ifdown lan<enter><wait5>",
+        "ifup lan<enter><wait5>",
+        "wget -O /tmp/shutdown http://{{.HTTPIP}}:{{.HTTPPort}}/shutdown<enter><wait5>",
+        "chmod a+x /tmp/shutdown<enter><wait>",
+        "wget -O /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter><wait10><wait10><wait10>",
+        "passwd vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-.PHONY: install-boxes install-box-vmware
+.PHONY: install-boxes
 
 ISO=/tmp/macos-10.13.iso
 ISO_CHECKSUM=/tmp/macos-10.13.iso.sha512
