@@ -1,7 +1,7 @@
 .PHONY: install-boxes install-box-vmware
 
-IMAGE_IMG=lede-17.01.4-x86-64-combined-ext4.img
-IMAGE_ARCHIVE=lede-17.01.4-x86-64-combined-ext4.img.gz
+IMAGE_IMG=openwrt-15.05.1-x86-64-combined-ext4.img
+IMAGE_ARCHIVE=openwrt-15.05.1-x86-64-combined-ext4.img.gz
 IMAGE_ARCHIVE_CHECKSUMS=sha256sums
 IMAGE_VMDK=openwrt-disk001.vmdk
 
@@ -13,10 +13,10 @@ install-box-virtualbox: openwrt-virtualbox.box
 	vagrant box add -f --name mcandre/openwrt --provider virtualbox openwrt-virtualbox.box
 
 $(IMAGE_ARCHIVE):
-	curl -LO "https://downloads.openwrt.org/releases/17.01.4/targets/x86/64/lede-17.01.4-x86-64-combined-ext4.img.gz"
+	curl -LO "http://archive.openwrt.org/chaos_calmer/15.05.1/x86/64/openwrt-15.05.1-x86-64-combined-ext4.img.gz"
 
 $(IMAGE_ARCHIVE_CHECKSUMS):
-	curl -LO "https://downloads.openwrt.org/releases/17.01.4/targets/x86/64/sha256sums"
+	curl -LO "http://archive.openwrt.org/chaos_calmer/15.05.1/x86/64/sha256sums"
 
 $(IMAGE_IMG): $(IMAGE_ARCHIVE) $(IMAGE_ARCHIVE_CHECKSUMS)
 	shasum $(IMAGE_ARCHIVE_CHECKSUMS)
