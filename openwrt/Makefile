@@ -28,27 +28,20 @@ $(IMAGE_VMDK): $(IMAGE_IMG)
 openwrt-virtualbox.box: openwrt.json openwrt.ovf $(IMAGE_VMDK) http/shutdown http/p *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-ovf openwrt.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
 
-clean-vmdks:
+clean-vagrant:
+	-rm -rf .vagrant
+
+clean-artifacts:
 	-rm -f *.vmdk
-
-clean-images:
 	-rm -f *.img
-
-clean-checksums:
 	-rm -f $(IMAGE_ARCHIVE_CHECKSUMS)
-
-clean-archives:
 	-rm -f *.gz
-
-clean-packer-cache:
 	-rm -rf packer_cache
-
-clean-artifacts: clean-vmdks clean-images clean-checksums clean-archives clean-packer-cache
 
 lint: packer-validate shfmt
 

@@ -17,10 +17,13 @@ haiku-blobs/haiku-r1alpha4.iso: haiku-blobs/haiku-r1alpha4.1-iso.zip
 haiku-virtualbox.box: haiku-blobs/haiku-r1alpha4.iso http/shutdown http/*.patch http/*.sh http/p haiku.json *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso haiku.json
 
-clean: clean-boxes clean-artifacts clean-blobs
+clean: clean-boxes clean-vagrant clean-artifacts clean-blobs
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

@@ -10,10 +10,13 @@ install-box-virtualbox: netbsd-virtualbox.box
 netbsd-virtualbox.box: netbsd.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso netbsd.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

@@ -18,10 +18,13 @@ $(ISO).bz2:
 $(ISO): $(ISO).bz2
 	bunzip2 -k $(ISO).bz2
 
-clean: clean-boxes clean-artifacts clean-isos
+clean: clean-boxes clean-vagrant clean-artifacts clean-isos
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

@@ -22,10 +22,13 @@ debian-vmware.box: debian.json http/p *.sh
 debian-libvirt.box: debian.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

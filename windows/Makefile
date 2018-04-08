@@ -10,10 +10,13 @@ install-box-virtualbox: windows-virtualbox.box
 windows-virtualbox.box: windows.json *.ps1 Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso windows.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

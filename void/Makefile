@@ -10,10 +10,13 @@ install-box-virtualbox: void-virtualbox.box
 void-virtualbox.box: void.json *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso void.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

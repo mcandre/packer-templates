@@ -18,10 +18,13 @@ $(ISO): $(ISO).bz2
 dragonflybsd-virtualbox.box: dragonflybsd.json $(ISO) http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso dragonflybsd.json
 
-clean: clean-boxes clean-artifacts clean-isos
+clean: clean-boxes clean-vagrant clean-artifacts clean-isos
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf packer_cache

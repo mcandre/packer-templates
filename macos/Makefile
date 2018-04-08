@@ -19,10 +19,13 @@ macos-virtualbox.box: macos.json $(ISO) $(ISO_CHECKSUM) *.sh
 macos-vmware.box: macos.json $(ISO) $(ISO_CHECKSUM) *.sh
 	PACKER_LOG=1 packer build -force -only vmware-iso macos.json
 
-clean: clean-boxes clean-artifacts
+clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
 	-rm *.box
+
+clean-vagrant:
+	-rm -rf .vagrant
 
 clean-artifacts:
 	-rm -rf *.sha512
