@@ -1,9 +1,5 @@
 .PHONY: install-boxes install-box-vmware
 
-IMAGE_IMG=openwrt-15.05.1-x86-64-combined-ext4.img
-IMAGE_ARCHIVE=openwrt-15.05.1-x86-64-combined-ext4.img.gz
-IMAGE_ARCHIVE_CHECKSUMS=sha256sums
-IMAGE_VMDK=openwrt-disk001.vmdk
 
 all: install-boxes
 
@@ -12,21 +8,8 @@ install-boxes: install-box-virtualbox
 install-box-virtualbox: openwrt-virtualbox.box
 	vagrant box add -f --name mcandre/openwrt --provider virtualbox openwrt-virtualbox.box
 
-$(IMAGE_ARCHIVE):
-	curl -LO "http://archive.openwrt.org/chaos_calmer/15.05.1/x86/64/openwrt-15.05.1-x86-64-combined-ext4.img.gz"
-
-$(IMAGE_ARCHIVE_CHECKSUMS):
-	curl -LO "http://archive.openwrt.org/chaos_calmer/15.05.1/x86/64/sha256sums"
-
-$(IMAGE_IMG): $(IMAGE_ARCHIVE) $(IMAGE_ARCHIVE_CHECKSUMS)
-	shasum $(IMAGE_ARCHIVE_CHECKSUMS)
-	gunzip -fk $(IMAGE_ARCHIVE)
-
-$(IMAGE_VMDK): $(IMAGE_IMG)
-	VBoxManage convertfromraw --format VMDK $(IMAGE_IMG) $(IMAGE_VMDK)
-
-openwrt-virtualbox.box: openwrt.json openwrt.ovf $(IMAGE_VMDK) http/shutdown http/p *.sh
-	PACKER_LOG=1 packer build -force -only virtualbox-ovf openwrt.json
+openwrt-virtualbox.box: openwrt.json http/shutdown http/p1 http/p2
+	PACKER_LOG=1 packer build -force -only virtualbox-iso openwrt.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 
@@ -37,10 +20,6 @@ clean-vagrant:
 	-rm -rf .vagrant
 
 clean-artifacts:
-	-rm -f *.vmdk
-	-rm -f *.img
-	-rm -f $(IMAGE_ARCHIVE_CHECKSUMS)
-	-rm -f *.gz
 	-rm -rf packer_cache
 
 lint: packer-validate shfmt

@@ -1,0 +1,7 @@
+#!/bin/sh
+cp /tmp/shutdown /bin/shutdown &&
+    opkg update &&
+    opkg install shadow-useradd shadow-groupadd sudo &&
+    groupadd --system wheel &&
+    mkdir /home &&
+    useradd -m -G wheel -s /bin/ash vagrant

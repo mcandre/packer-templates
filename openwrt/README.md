@@ -7,9 +7,6 @@
 
 * [VirtualBox](https://www.virtualbox.org/) Player)
 * [packer](https://www.packer.io/) 1.2.0+
-* [curl](https://curl.haxx.se/)
-* [coreutils](https://www.gnu.org/software/coreutils/coreutils.html) (gzip)
-* [shasum](https://linux.die.net/man/1/shasum)
 
 ## Recommended extras
 

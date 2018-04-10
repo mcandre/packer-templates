@@ -1,0 +1,26 @@
+#!/bin/sh
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/etc/sudoers &&
+    /etc/init.d/dropbear restart &&
+    printf "config rule\n\toption src\t\tlan\n\toption proto\t\ttcp\n\toption dest_port\t22\n\toption target\t\tACCEPT\n" >>/etc/config/firewall &&
+    /etc/init.d/firewall restart &&
+    opkg install rsync wget libustream-openssl ca-certificates &&
+    mkdir -p /home/vagrant/.ssh &&
+    wget -O /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub &&
+    chown -R vagrant:vagrant /home/vagrant/.ssh &&
+    chmod 0700 /home/vagrant/.ssh &&
+    chmod 0600 /home/vagrant/.ssh/authorized_keys &&
+    mkdir /vagrant &&
+    chown vagrant:vagrant /vagrant &&
+    opkg remove --autoremove wget libustream-openssl ca-certificates
+
+# Clear log files
+find /var/log -type f -print |
+while read f; do
+    dd if=/dev/null of="$f"
+done
+
+# Shrink root partition and persist disks
+dd if=/dev/zero of=/whitespace bs=1M ||
+echo 'Zeroed disk' &&
+rm -f /whitespace &&
+sync
