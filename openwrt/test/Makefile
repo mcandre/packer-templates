@@ -16,6 +16,8 @@ test-bootstrap:
 test-sync: test-sync-host-to-guest test-sync-guest-to-host
 
 test-sync-host-to-guest:
+	vagrant ssh -c "sudo find /vagrant -exec chown vagrant:vagrant {} +"
+	vagrant ssh -c "! ls -Ahl /vagrant | grep root"
 	vagrant ssh -c "cat /vagrant/.node-version | grep -- '-1'"
 
 test-sync-guest-to-host: clean-greeting

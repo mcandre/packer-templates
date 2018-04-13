@@ -3,6 +3,14 @@
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](https://www.vagrantup.com/)
 
+## Synced folders note
+
+This box requires an additional explicit chown to fix guest file permissions:
+
+```console
+$ vagrant ssh -c "sudo find /vagrant -exec chown vagrant:vagrant {} +"
+```
+
 # BUILDTIME REQUIREMENTS
 
 * [VirtualBox](https://www.virtualbox.org/) Player)
