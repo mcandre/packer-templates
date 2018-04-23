@@ -1,0 +1,80 @@
+{
+  "variables": {
+    "vm_name": "void-amd64",
+    "iso_url": "https://repo.voidlinux.eu/live/current/void-live-x86_64-musl-20171007.iso",
+    "iso_checksum_type": "sha256",
+    "iso_checksum_url": "https://repo.voidlinux.eu/live/current/sha256sums.txt",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "1800s",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "http_directory": "http",
+    "shutdown_command": "echo 'vagrant' | sudo -S shutdown -h now"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-ssh.void.sh",
+        "fix-vagrant-rsync.void.sh",
+        "fix-vagrant-provisioning.void.sh",
+        "cleanup.void.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Linux26_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "boot_wait": "30s",
+      "boot_command": [
+        "root<enter><wait>",
+        "voidlinux<enter><wait>",
+        "void-installer<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "u<down><down><down><down><down><down><down><enter><wait>",
+        "<enter><wait><enter><wait><enter><wait10><enter><wait>",
+        "<enter><wait><enter><wait>",
+        "<enter><wait>vagrant<enter><wait>",
+        "<down><enter><end><up><up><up><up><enter><wait>",
+        "<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><bs><bs><bs><bs>vagrant<enter><wait>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs>Vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "<enter><enter><right><enter><wait>",
+        "<enter><wait><enter><wait><enter><wait><down><enter><wait><enter><wait><enter><wait><enter><wait><right><right><right><enter><wait>yes<enter><wait><left><left><left><enter><wait>",
+        "<enter><wait><enter><wait>e<down><down><enter><wait>/<enter><wait><enter><wait><right><enter><wait>",
+        "<down><enter><wait><enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter>"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}

@@ -12,9 +12,7 @@
       "ssh_wait_timeout": "1800s",
       "disk_size": 8000,
       "guest_additions_mode": "disable",
-      "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "1024"]
-      ],
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "1024"] ],
       "bundle_iso": true,
       "boot_command": [
         "<enter><wait10><wait10><wait10>",

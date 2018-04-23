@@ -1,14 +1,20 @@
-.PHONY: install-boxes install-box-virtualbox
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox
 
 all: install-boxes
 
-install-boxes: install-box-virtualbox
+install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox
 
-install-box-virtualbox: void-virtualbox.box
-	vagrant box add -f --name mcandre/void --provider virtualbox void-virtualbox.box
+install-box-amd64-virtualbox: void-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/void-amd64 --provider virtualbox void-amd64-virtualbox.box
 
-void-virtualbox.box: void.json *.sh
-	PACKER_LOG=1 packer build -force -only virtualbox-iso void.json
+install-box-i386-virtualbox: void-i386-virtualbox.box
+	vagrant box add -f --name mcandre/void-i386 --provider virtualbox void-i386-virtualbox.box
+
+void-amd64-virtualbox.box: void-amd64.json *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso void-amd64.json
+
+void-i386-virtualbox.box: void-i386.json *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso void-i386.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 

@@ -1,15 +1,21 @@
-.PHONY: install-boxes install-box-vmware
+.PHONY: install-boxes install-box-amd64-vmware install-box-i386-vmware
 
 
 all: install-boxes
 
-install-boxes: install-box-virtualbox
+install-boxes: install-box-amd64-virtualbox install-box-i386-vmware
 
-install-box-virtualbox: openwrt-virtualbox.box
-	vagrant box add -f --name mcandre/openwrt --provider virtualbox openwrt-virtualbox.box
+install-box-amd64-virtualbox: openwrt-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/openwrt-amd64 --provider virtualbox openwrt-amd64-virtualbox.box
 
-openwrt-virtualbox.box: openwrt.json http/shutdown http/p1 http/p2
-	PACKER_LOG=1 packer build -force -only virtualbox-iso openwrt.json
+install-box-i386-virtualbox: openwrt-i386-virtualbox.box
+	vagrant box add -f --name mcandre/openwrt-i386 --provider virtualbox openwrt-i386-virtualbox.box
+
+openwrt-amd64-virtualbox.box: openwrt-amd64.json http/shutdown http/p1 http/p2
+	PACKER_LOG=1 packer build -force -only virtualbox-iso openwrt-amd64.json
+
+openwrt-i386-virtualbox.box: openwrt-i386.json http/shutdown http/p1 http/p2
+	PACKER_LOG=1 packer build -force -only virtualbox-iso openwrt-i386.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 

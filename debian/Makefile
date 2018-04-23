@@ -1,26 +1,44 @@
-.PHONY: install-boxes install-box-virtualbox install-box-vmware install-box-libvirt
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt
 
 all: install-boxes
 
-install-boxes: install-box-virtualbox install-box-vmware install-box-libvirt
+install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt
 
-install-box-virtualbox: debian-virtualbox.box
-	vagrant box add -f --name mcandre/debian --provider virtualbox debian-virtualbox.box
+install-box-amd64-virtualbox: debian-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/debian-amd64 --provider virtualbox debian-amd64-virtualbox.box
 
-install-box-vmware: debian-vmware.box
-	vagrant box add -f --name mcandre/debian --provider vmware_desktop debian-vmware.box
+install-box-i386-virtualbox: debian-i386-virtualbox.box
+	vagrant box add -f --name mcandre/debian-i386 --provider virtualbox debian-i386-virtualbox.box
 
-install-box-libvirt: debian-libvirt.box
-	vagrant box add -f --name mcandre/debian --provider libvirt debian-libvirt.box
+install-box-amd64-vmware: debian-amd64-vmware.box
+	vagrant box add -f --name mcandre/debian-amd64 --provider vmware_desktop debian-amd64-vmware.box
 
-debian-virtualbox.box: debian.json http/p *.sh
-	PACKER_LOG=1 packer build -force -only virtualbox-iso debian.json
+install-box-i386-vmware: debian-i386-vmware.box
+	vagrant box add -f --name mcandre/debian-i386 --provider vmware_desktop debian-i386-vmware.box
 
-debian-vmware.box: debian.json http/p *.sh
-	PACKER_LOG=1 packer build -force -only vmware-iso debian.json
+install-box-amd64-libvirt: debian-amd64-libvirt.box
+	vagrant box add -f --name mcandre/debian-amd64 --provider libvirt debian-amd64-libvirt.box
 
-debian-libvirt.box: debian.json http/p *.sh
-	PACKER_LOG=1 packer build -force -only qemu debian.json
+install-box-i386-libvirt: debian-i386-libvirt.box
+	vagrant box add -f --name mcandre/debian-i386 --provider libvirt debian-i386-libvirt.box
+
+debian-amd64-virtualbox.box: debian-amd64.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso debian-amd64.json
+
+debian-i386-virtualbox.box: debian-i386.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso debian-i386.json
+
+debian-amd64-vmware.box: debian-amd64.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only vmware-iso debian-amd64.json
+
+debian-i386-vmware.box: debian-i386.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only vmware-iso debian-i386.json
+
+debian-amd64-libvirt.box: debian-amd64.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only qemu debian-amd64.json
+
+debian-i386-libvirt.box: debian-i386.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only qemu debian-i386.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 

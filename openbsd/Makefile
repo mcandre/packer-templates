@@ -1,14 +1,20 @@
-.PHONY: install-boxes install-box-virtualbox
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox
 
 all: install-boxes
 
-install-boxes: install-box-virtualbox
+install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox
 
-install-box-virtualbox: openbsd-virtualbox.box
-	vagrant box add -f --name mcandre/openbsd --provider virtualbox openbsd-virtualbox.box
+install-box-amd64-virtualbox: openbsd-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/openbsd-amd64 --provider virtualbox openbsd-amd64-virtualbox.box
 
-openbsd-virtualbox.box: openbsd.json http/p *.sh Vagrantfile
-	PACKER_LOG=1 packer build -force -only virtualbox-iso openbsd.json
+install-box-i386-virtualbox: openbsd-i386-virtualbox.box
+	vagrant box add -f --name mcandre/openbsd-i386 --provider virtualbox openbsd-i386-virtualbox.box
+
+openbsd-amd64-virtualbox.box: openbsd-amd64.json http/p *.sh Vagrantfile
+	PACKER_LOG=1 packer build -force -only virtualbox-iso openbsd-amd64.json
+
+openbsd-i386-virtualbox.box: openbsd-i386.json http/p *.sh Vagrantfile
+	PACKER_LOG=1 packer build -force -only virtualbox-iso openbsd-i386.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 

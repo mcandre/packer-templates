@@ -1,4 +1,4 @@
 #!/bin/sh
 echo 'ftp://ftp4.usa.openbsd.org/pub/OpenBSD' >>/etc/installurl &&
-    pkg_add sudo-1.8.21.2 &&
+    pkg_add sudo-1.8.22 &&
     echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/etc/sudoers

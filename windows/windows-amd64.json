@@ -1,0 +1,66 @@
+{
+  "variables": {
+    "vm_name": "windows-amd64",
+    "iso_url": "http://download.microsoft.com/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+    "iso_checksum_type": "sha512",
+    "iso_checksum": "d0f26073fedb71119f47a0d3c61491d44d59425e9ae1f10c29146a58416598fb5623f4cebc324b634e9c3c90d856853cfd94af75ba1f42f9f7288b8cb427e082",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "2h",
+    "disk_size_MB": "40000",
+    "ram_MiB": "4096",
+    "vram_MiB": "32",
+    "cpus": "2",
+    "http_directory": "http",
+    "shutdown_command": "shutdown /s /t 0 /f"
+  },
+  "provisioners": [
+    {
+      "type": "powershell",
+      "execute_command": "powershell -ExecutionPolicy Bypass -Command \"{{.Path}}\"",
+      "scripts": [
+        "install-chocolatey.ps1",
+        "fix-vagrant-ssh.ps1",
+        "fix-synced-folders.ps1",
+        "cleanup.ps1"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Windows10_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "communicator": "winrm",
+      "winrm_username": "{{ user `winrm_username` }}",
+      "winrm_password": "{{ user `winrm_password` }}",
+      "winrm_timeout": "{{ user `winrm_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"],
+        ["modifyvm", "{{.Name}}", "--vram", "{{ user `vram_MiB` }}"],
+        ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
+      ],
+      "http_directory": "{{ user `http_directory` }}",
+      "floppy_files": [
+        "amd64/Autounattend.xml",
+        "update.ps1",
+        "fix-winrm.ps1"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}

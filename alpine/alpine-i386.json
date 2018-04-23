@@ -1,0 +1,82 @@
+{
+  "variables": {
+    "vm_name": "alpine-i386",
+    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.7/releases/x86/alpine-virt-3.7.0-x86.iso",
+    "iso_checksum_type": "sha256",
+    "iso_checksum_url": "http://dl-cdn.alpinelinux.org/alpine/v3.7/releases/x86/alpine-virt-3.7.0-x86.iso.sha256",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "shutdown_command": "echo 'vagrant' | su root -c poweroff"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | su root -c 'sh {{.Path}}'",
+      "scripts": [
+        "fix-vagrant-ssh.alpine.sh",
+        "fix-vagrant-rsync.alpine.sh",
+        "fix-vagrant-halt.alpine.sh",
+        "cleanup.alpine.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Linux26",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "boot_wait": "30s",
+      "boot_command": [
+        "root<enter><wait>",
+        "setup-alpine<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait10>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait5>",
+        "<enter><wait>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait10>",
+        "<enter><wait10><wait10><wait10>",
+        "sda<enter><wait>",
+        "sys<enter><wait10>",
+        "y<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "reboot<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "vagrant<enter><wait>",
+        "adduser vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter>"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}
