@@ -1,3 +1,3 @@
 #!/bin/sh
 pkgman refresh &&
-    pkgman install -y rsync
+    pkgman install -y lua

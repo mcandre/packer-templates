@@ -1,4 +1,0 @@
-88d87
-< 	chmod a+rwx $TMPDIR
-92a92
-> chmod a+rwx $TMPDIR

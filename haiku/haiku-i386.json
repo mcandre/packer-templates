@@ -1,0 +1,90 @@
+{
+  "variables": {
+    "vm_name": "haiku-i386",
+    "iso_url": "haiku-blobs-i386/haiku-nightly-anyboot.iso",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "c9fbeffc505433b119be40eff56bc1a5",
+    "ssh_username": "user",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "shutdown_command": "shutdown -q"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-rsync.haiku.sh",
+        "cleanup.haiku.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Other",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"],
+        ["modifyvm", "{{.Name}}", "--nictype1", "Am79C970A"]
+      ],
+      "ssh_pty": true,
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "http_directory": "http",
+      "boot_wait": "30s",
+      "boot_command": [
+        "<tab><wait><tab><spacebar><wait5>",
+        "<tab><wait><tab><wait><spacebar><wait5>",
+        "<tab><wait><spacebar><wait5>",
+        "<tab><wait><tab><wait><tab><wait><tab><wait><spacebar><wait5>",
+        "<down><up><wait>",
+        "<leftAltOn><esc><leftAltOff><wait>",
+        "<right><down><right><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<tab>Haiku<wait>",
+        "<tab><tab><tab><tab><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<tab><spacebar><wait5>",
+        "<leftAltOn>w<leftAltOff><wait5>",
+        "<tab><tab><wait>",
+        "<spacebar>h<esc><wait>",
+        "<tab><tab><tab><spacebar>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<spacebar>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "h<enter><wait5>",
+        "system<enter><wait5>",
+        "apps<enter><wait5>",
+        "Terminal<enter><wait5>",
+        "passwd<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "curl -o /tmp/pfexec http://{{.HTTPIP}}:{{.HTTPPort}}/pfexec<enter><wait5>",
+        "curl -o /tmp/sudo http://{{.HTTPIP}}:{{.HTTPPort}}/sudo<enter><wait5>",
+        "curl -o /tmp/profile.patch http://{{.HTTPIP}}:{{.HTTPPort}}/profile.patch<enter><wait5>",
+        "curl -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+        "sh /tmp/p<enter><wait10><wait10><wait10>",
+        "shutdown -q -r<enter>"
+      ]
+    }
+  ]
+}

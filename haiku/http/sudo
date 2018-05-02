@@ -1,0 +1,3 @@
+#!/bin/sh
+# Assume root-level privileges and avoid PTY's
+"$@"

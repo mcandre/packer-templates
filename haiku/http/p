@@ -1,11 +1,23 @@
 #!/bin/sh
-patch /boot/system/boot/Bootscript /tmp/Bootscript.patch &&
-  patch /etc/profile /tmp/profile.patch &&
-  mv /bin/shutdown /bin/shutdown-actual &&
-  cp /tmp/shutdown /bin/shutdown &&
-  chmod a+x /bin/shutdown &&
-  mkdir -p /boot/home/config/boot/launch &&
-  cp /tmp/start-ssh.sh /boot/home/config/boot/launch &&
-  chmod a+x /boot/home/config/boot/launch/start-ssh.sh &&
-  echo 'vagrant:x:200:vagrant' >>/etc/group &&
-  chown vagrant /boot/vagrant
+git clone https://github.com/mcandre/shun.git /boot/home/shun &&
+    ln -s /boot/home/shun/lib/shutdown /boot/system/non-packaged/bin/shutdown &&
+    git clone https://github.com/mcandre/useless.git /boot/home/useless &&
+    groupadd user &&
+    USERNAME=user GROUP=user awk -f /boot/home/useless/lib/useless.awk </etc/group >/etc/group.new &&
+    mv /etc/group.new /etc/group &&
+    cp /tmp/pfexec /boot/system/non-packaged/bin/pfexec &&
+    chmod a+x /boot/system/non-packaged/bin/pfexec &&
+    cp /tmp/sudo /boot/system/non-packaged/bin/sudo &&
+    chmod a+x /boot/system/non-packaged/bin/sudo &&
+    patch /etc/profile </tmp/profile.patch &&
+    echo "export PATH=\"/boot/system/non-packaged/bin:\$PATH\"" >/boot/home/.bashrc &&
+    chmod a+rwx /boot/system/cache/tmp &&
+    mkdir -p /boot/home/.ssh &&
+    curl -Lo /boot/home/.ssh/authorized_keys 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub' &&
+    chmod 0600 /boot/home/.ssh/authorized_keys &&
+    chmod 0700 /boot/home/.ssh &&
+    mkdir -p /boot/home/config/settings &&
+    ln -s /boot/home/.ssh /boot/home/config/settings/ssh &&
+    mkdir /boot/vagrant-src &&
+    echo 'PermitRootLogin yes' >>/system/settings/ssh/sshd_config &&
+    useradd sshd

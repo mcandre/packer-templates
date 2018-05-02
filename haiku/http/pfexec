@@ -1,0 +1,10 @@
+#!/bin/sh
+# Intercept SmartOS shutdown command.
+case "$*" in
+    /usr/sbin/poweroff)
+        shutdown
+        ;;
+    *)
+      "$@"
+      ;;
+esac
