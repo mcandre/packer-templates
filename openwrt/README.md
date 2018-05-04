@@ -13,7 +13,7 @@ $ vagrant ssh -c "sudo find /vagrant -exec chown vagrant:vagrant {} +"
 
 # BUILDTIME REQUIREMENTS
 
-* [VirtualBox](https://www.virtualbox.org/) Player)
+* [VirtualBox](https://www.virtualbox.org/)
 * [packer](https://www.packer.io/) 1.2.0+
 
 ## Recommended extras

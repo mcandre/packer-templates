@@ -1,11 +1,11 @@
 # RUNTIME REQUIREMENTS
 
-* [VMware](https://www.vmware.com/) (e.g. Fusion, Workstation, Player)
+* [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](https://www.vagrantup.com/) 2.0.2+
 
 # BUILDTIME REQUIREMENTS
 
-* [VMware](https://www.vmware.com/) (e.g. Fusion, Workstation, Player)
+* [VirtualBox](https://www.virtualbox.org/)
 * [packer](https://www.packer.io/) with [patches](https://github.com/mcandre/packer/tree/fix-6001) for key overwrite bug
 
 ## Recommended extras
