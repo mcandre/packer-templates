@@ -7,8 +7,8 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "1800s",
-    "disk_size_MB": "8000",
-    "ram_MiB": "1024",
+    "disk_size_MB": "16000",
+    "ram_MiB": "2048",
     "http_directory": "http",
     "shutdown_command": "echo 'vagrant' | sudo -S shutdown -h now"
   },
@@ -17,6 +17,7 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
       "scripts": [
+        "increase-tmp-size.void.sh",
         "fix-vagrant-ssh.void.sh",
         "fix-vagrant-rsync.void.sh",
         "fix-vagrant-provisioning.void.sh",
