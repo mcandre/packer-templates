@@ -11,7 +11,7 @@ test-flag:
 	vagrant ssh -c "cat \$$HOME/flag.txt | grep 'all ur base are belong to us'"
 
 test-bootstrap:
-	vagrant ssh -c 'curl --version'
+	vagrant ssh -c 'wget --version'
 
 test-sync: test-sync-host-to-guest test-sync-guest-to-host
 
