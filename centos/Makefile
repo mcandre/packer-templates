@@ -1,12 +1,20 @@
-.PHONY: install-box-virtualbox
+.PHONY: boxes install-box-amd64-virtualbox install-box-i386-virtualbox
 
-all: install-box-virtualbox
+all: boxes
 
-install-box-virtualbox: centos-virtualbox.box
-	vagrant box add -f --name mcandre/centos --provider virtualbox centos-virtualbox.box
+boxes: install-box-amd64-virtualbox install-box-i386-virtualbox
 
-centos-virtualbox.box: centos.json http/ks.cfg *.sh
-	PACKER_LOG=1 packer build -force -only virtualbox-iso centos.json
+install-box-amd64-virtualbox: centos-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/centos-amd64 --provider virtualbox centos-amd64-virtualbox.box
+
+install-box-i386-virtualbox: centos-i386-virtualbox.box
+	vagrant box add -f --name mcandre/centos-i386 --provider virtualbox centos-i386-virtualbox.box
+
+centos-amd64-virtualbox.box: centos-amd64.json http/ks.cfg *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso centos-amd64.json
+
+centos-i386-virtualbox.box: centos-i386.json http/ks.cfg *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso centos-i386.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 
