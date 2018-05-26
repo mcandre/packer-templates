@@ -1,0 +1,112 @@
+{
+  "variables": {
+    "vm_name": "plan9",
+    "iso_url": "plan9.iso",
+    "iso_checksum_type": "sha512",
+    "iso_checksum": "2a5cd223d63ec494b51479a31878b76dd2476cf16c4a8f0ab5fc30390346a2ad06586564ca52ef2af85a9bb13f1f4ab3ffd4ed16e53db66ff6d23367d0e283ad",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "http_directory": "http",
+    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-ssh.plan9.sh",
+        "cleanup.plan9.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Other_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "http_directory": "{{ user `http_directory` }}",
+      "boot_command": [
+        "1<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait5>",
+        "<enter><wait>",
+        "sdC0<enter><wait>",
+        "y<enter><wait>",
+        "w<enter><wait>",
+        "q<enter><wait5>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "w<enter><wait>",
+        "q<enter><wait5>",
+        "<enter><wait>",
+        "<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "net<enter><wait10>",
+        "<enter><wait>",
+        "ether<enter><wait>",
+        "dhcp<enter><wait>",
+        "vagrant<enter><wait10><wait10><wait10>",
+        "<enter><wait10><wait10><wait10>",
+        "<enter><wait10>",
+        "/dev/sdC1/data<enter><wait>",
+        "<enter><wait>",
+        "exit<enter><wait10>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait5>",
+        "plan9<enter><wait>",
+        "y<enter><wait10>",
+
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}
