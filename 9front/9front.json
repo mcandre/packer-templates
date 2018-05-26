@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "vm_name": "9front",
+    "iso_url": "9front-6517.dcfbb100317e.iso",
+    "iso_checksum_type": "sha512",
+    "iso_checksum": "d8acb02d28a5971f665b5125293563bf2949c49459b56a111c76eaa310a4410d8b3ecc9ec32982050f249d00743ce1c4b4e03d721a9c4bd9cbc21daebdb63ffa",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "http_directory": "http",
+    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-ssh.9front.sh",
+        "cleanup.9front.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Other_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "http_directory": "{{ user `http_directory` }}",
+      "boot_command": [
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        ""
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}
