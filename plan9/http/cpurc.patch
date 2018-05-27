@@ -1,0 +1,13 @@
+--- /rc/bin/cpurc	Wed Apr 18 16:25:17 2012
++++ /rc/bin/cpurc.new	Sun May 27 16:20:32 2018
+@@ -38,8 +38,8 @@
+ 
+ # If you are on an auth server, start these before listening:
+ #
+-# auth/keyfs -wp -m /mnt/keys /adm/keys >/dev/null >[2=1]
+-# auth/cron >>/sys/log/cron >[2=1] &
++auth/keyfs -wp -m /mnt/keys /adm/keys >/dev/null >[2=1]
++auth/cron >>/sys/log/cron >[2=1] &
+ 
+ # keep other bootes processes from creating capabilities
+ rm -f '#¤/caphash'

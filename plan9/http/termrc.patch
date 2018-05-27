@@ -1,0 +1,12 @@
+--- /tmp/termrc	Mon Nov 29 12:33:01 2010
++++ /tmp/termrc.new	Sun May 27 11:23:58 2018
+@@ -42,8 +42,8 @@
+ #
+ # If your site provides DHCP service,
+ #
+-#if(! test -e /net/ipifc/0/ctl)
+-#	ip/ipconfig
++if(!test -e /net/ipifc/0/ctl)
++	ip/ipconfig
+ # Otherwise, see /cfg/$sysname/termrc (/cfg/example/termrc is an example).
+ 

@@ -14,7 +14,7 @@ $(ISO_ARCHIVE):
 $(ISO): $(ISO_ARCHIVE)
 	bunzip2 -k $(ISO_ARCHIVE)
 
-plan9-virtualbox.box: $(ISO) plan9.json http/p *.sh
+plan9-virtualbox.box: $(ISO) plan9.json http/p http/*.patch http/cpustart *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso plan9.json
 
 clean: clean-boxes clean-vagrant clean-artifacts clean-isos

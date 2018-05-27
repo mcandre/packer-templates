@@ -1,3 +1,12 @@
-#!/bin/sh
+#!/bin/rc
 
-# ...
+cp /bin/termrc /tmp/termrc
+ape/patch -p0 </tmp/termrc.patch
+cp /tmp/termrc /bin/termrc
+
+ape/patch -p0 </tmp/cpurc.patch
+
+mkdir /cfg/$sysname
+dircp /cfg/example /cfg/$sysname
+cp cpustart /cfg/$sysname/cpustart
+mv /rc/bin/service.auth/authsrv.tcp567 /rc/bin/service.auth/tcp567
