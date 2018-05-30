@@ -44,7 +44,10 @@
       "disk_size": "{{ user `disk_size_MB` }}",
       "guest_additions_mode": "disable",
       "virtualbox_version_file": "",
-      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"],
+        ["modifyvm", "{{.Name}}", "--ioapic", "off"]
+      ],
       "http_directory": "{{ user `http_directory` }}",
       "boot_command": [
         "<enter><wait>",
