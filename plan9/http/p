@@ -6,6 +6,9 @@ cp /tmp/termrc /bin/termrc
 
 ape/patch -p0 </tmp/cpurc.patch
 
+9fat:
+ape/patch -p0 </tmp/plan9.ini.patch
+
 mkdir /cfg/$sysname
 dircp /cfg/example /cfg/$sysname
 cp cpustart /cfg/$sysname/cpustart

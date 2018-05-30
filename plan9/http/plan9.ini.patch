@@ -1,0 +1,11 @@
+--- /n/9fat/plan9.ini	Sun May 27 05:44:36 2018
++++ /n/9fat/plan9.ini.new	Tue May 29 23:30:57 2018
+@@ -1,6 +1,6 @@
+ bootfile=sdC0!9fat!9pcf
+ bootargs=local!#S/sdC0/fossil
+ bootdisk=local!#S/sdC0/fossil
++nobootprompt=local!#S/sdC0/fossil
++user=glenda
+ 
+ # *debugload=1
+ # *noahciload=1
