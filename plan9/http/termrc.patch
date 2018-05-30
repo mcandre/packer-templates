@@ -6,7 +6,8 @@
  #
 -#if(! test -e /net/ipifc/0/ctl)
 -#	ip/ipconfig
-+if(!test -e /net/ipifc/0/ctl)
++if(! test -e /net/ipifc/0/ctl)
 +	ip/ipconfig
+ #
  # Otherwise, see /cfg/$sysname/termrc (/cfg/example/termrc is an example).
  

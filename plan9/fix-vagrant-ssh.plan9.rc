@@ -1,0 +1,4 @@
+#!/bin/rc
+hget -o /tmp/vagrant.pub https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub
+auth/pemdecode 'RSA PUBLIC KEY' /tmp/vagrant.pub | auth/asn12rsa >/tmp/vagrant.rsa
+read -m /tmp/vagrant.rsa >/mnt/factotum/ctl

@@ -11,3 +11,21 @@
  
  # keep other bootes processes from creating capabilities
  rm -f '#¤/caphash'
+@@ -53,11 +53,15 @@
+ # mv /rc/bin/service/tcp567 /rc/bin/service/_tcp567
+ # }
+ 
+-# netssh
++# netssh -k -s ssh
+ 
+ # start listeners if it hasn't already been done (dicey check)
+-if(! netstat -n | grep -s 'tcp.*Listen.* (7|9|21|22|23|25|110|113|565|993|17007|17009|17010) .*')
++if(! netstat -n | grep -s 'tcp.*Listen.* (7|9|21|22|23|25|110|113|565|993|17007|17009|17010) .*') {
+ 	aux/listen -q tcp
++
++	if(test -x /rc/bin/service.auth/ssh22)
++		aux/listen -t /rc/bin/service.auth -d /rc/bin/service ssh
++}
+ # we don't use IL, maybe you do
+ if(! netstat -n | grep -v 17008 | grep -s il.*Listen)
+ 	aux/listen -q il

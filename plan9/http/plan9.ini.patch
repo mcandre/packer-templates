@@ -1,6 +1,6 @@
 --- /n/9fat/plan9.ini	Sun May 27 05:44:36 2018
 +++ /n/9fat/plan9.ini.new	Tue May 29 23:30:57 2018
-@@ -22,4,6 +22,5 @@
+@@ -22,4 +22,5 @@
  mouseport=ps2
  monitor=xga
  vgasize=640x480x8

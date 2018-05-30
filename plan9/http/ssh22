@@ -1,0 +1,2 @@
+#!/bin/rc
+exec aux/sshsession $3 >>/sys/log/sshdebug >[2=1]

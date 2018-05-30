@@ -1,0 +1,11 @@
+#!/bin/rc
+PATCH=libsec-x509-sha256rsa
+9fs sources
+mkdir -p $home/patch/$PATCH
+bind -bc $home/patch/$PATCH /n/sources/patch/$PATCH
+patch/apply $PATCH
+cd /sys/src/libsec
+mk -e
+cd /sys/src/cmd
+mk -e hget
+cp hget /bin/hget

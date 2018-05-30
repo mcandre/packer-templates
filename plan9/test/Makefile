@@ -8,7 +8,7 @@ test-boot:
 	vagrant up
 
 test-flag:
-	vagrant ssh -c "cat \$$HOME/flag.txt | grep 'all ur base are belong to us'"
+	vagrant ssh -c "cat \$$home/flag.txt | grep 'all ur base are belong to us'"
 
 test-bootstrap:
 	vagrant ssh -c 'curl --version'

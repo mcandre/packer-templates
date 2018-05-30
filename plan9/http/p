@@ -1,15 +1,17 @@
 #!/bin/rc
 
+# Enable DHCP client on boot
 cp /bin/termrc /tmp/termrc
 ape/patch -p0 </tmp/termrc.patch
 cp /tmp/termrc /bin/termrc
 
+# Enable auth service
 ape/patch -p0 </tmp/cpurc.patch
-
-9fat:
-ape/patch -p0 </tmp/plan9.ini.patch
-
 mkdir /cfg/$sysname
 dircp /cfg/example /cfg/$sysname
-cp cpustart /cfg/$sysname/cpustart
+cp /tmp/cpustart /cfg/$sysname/cpustart
 mv /rc/bin/service.auth/authsrv.tcp567 /rc/bin/service.auth/tcp567
+
+# Disable boot prompts
+9fat:
+ape/patch -p0 </tmp/plan9.ini.patch

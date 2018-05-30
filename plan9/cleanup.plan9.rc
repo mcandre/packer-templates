@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/rc
 
 # Clear temporary files
 rm -rf /tmp/*

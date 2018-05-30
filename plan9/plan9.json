@@ -5,20 +5,21 @@
     "iso_checksum_type": "sha512",
     "iso_checksum": "2a5cd223d63ec494b51479a31878b76dd2476cf16c4a8f0ab5fc30390346a2ad06586564ca52ef2af85a9bb13f1f4ab3ffd4ed16e53db66ff6d23367d0e283ad",
     "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
+    "ssh_password": "vagrantvagrant",
     "ssh_wait_timeout": "6h",
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
     "http_directory": "http",
-    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+    "shutdown_command": "halt -p"
   },
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "execute_command": "rc {{.Path}}",
       "scripts": [
-        "fix-vagrant-ssh.plan9.sh",
-        "cleanup.plan9.sh"
+        "fix-hget.plan9.rc",
+        "fix-vagrant-ssh.plan9.rc",
+        "cleanup.plan9.rc"
       ]
     }
   ],
@@ -78,7 +79,7 @@
         "vagrant<enter><wait10><wait10><wait10>",
         "<enter><wait10><wait10><wait10>",
         "<enter><wait10>",
-        "/dev/sdD0/data<enter><wait>",
+        "/dev/sdC1/data<enter><wait>",
         "<enter><wait>",
         "exit<enter><wait10>",
         "<enter>",
@@ -89,7 +90,7 @@
         "y<enter><wait10><wait10><wait10>",
         "<enter><wait10>",
         "<reboot>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
         "<enter><wait>",
         "glenda<enter><wait10>",
         "ip/ipconfig<enter><wait10><wait10><wait10>",
@@ -100,8 +101,11 @@
         "chmod a+x /tmp/cpustart<enter><wait>",
         "hget -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
         "rc /tmp/p<enter><wait10><wait10><wait10>",
+
+        "echo howdy<enter><wait>",
+
         "fshalt -r<enter>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>",
         "<enter><wait>",
         "glenda<enter><wait10>",
         "con -l /srv/fscons<enter><wait>",
@@ -137,9 +141,10 @@
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
-        "9fs sources<enter><wait10>",
-        "/n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib<enter><wait5>",
-        "contrib/install vagrant/openssh"
+        "hget -o /tmp/ssh22 http://{{.HTTPIP}}:{{.HTTPPort}}/ssh22<enter><wait5>",
+        "chmod a+x /tmp/ssh22<enter><wait>",
+        "cp /tmp/ssh22 /rc/bin/service.auth/ssh22<enter><wait>",
+        "fshalt -r<enter>"
       ],
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
