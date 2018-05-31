@@ -12,6 +12,9 @@ dircp /cfg/example /cfg/$sysname
 cp /tmp/cpustart /cfg/$sysname/cpustart
 mv /rc/bin/service.auth/authsrv.tcp567 /rc/bin/service.auth/tcp567
 
+# Enable secstore service
+echo 'auth/secstored' >>/cfg/$sysname/cpurc
+
 # Disable boot prompts
 9fat:
 ape/patch -p0 </tmp/plan9.ini.patch
