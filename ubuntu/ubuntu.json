@@ -1,0 +1,74 @@
+{
+  "variables": {
+    "vm_name": "ubuntu",
+    "iso_url": "http://releases.ubuntu.com/18.04/ubuntu-18.04-live-server-amd64.iso",
+    "iso_checksum_type": "sha256",
+    "iso_checksum_url": "http://releases.ubuntu.com/18.04/SHA256SUMS",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "6h",
+    "disk_size_MB": "8000",
+    "ram_MiB": "1024",
+    "boot_wait": "60s",
+    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+      "scripts": [
+        "fix-vagrant-ssh.ubuntu.sh",
+        "fix-sudo.ubuntu.sh",
+        "cleanup.ubuntu.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Ubuntu_64",
+      "vm_name": "{{ user `vm_name` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+      "disk_size": "{{ user `disk_size_MB` }}",
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+      "boot_wait": "{{ user `boot_wait` }}",
+      "boot_command": [
+        "<enter><wait>",
+        "<enter><wait10>",
+        "<enter><wait>",
+        "<enter><wait5>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<down><wait>",
+        "<enter><wait>",
+        "Vagrant<tab>",
+        "vagrant<tab>",
+        "{{ user `ssh_username` }}<tab>",
+        "{{ user `ssh_password` }}<tab>",
+        "{{ user `ssh_password` }}<tab>",
+        "<tab><enter>",
+        "<wait300>",
+        "<enter><wait10>",
+        "<enter>"
+      ],
+      "shutdown_command": "{{ user `shutdown_command` }}"
+    }
+  ]
+}
