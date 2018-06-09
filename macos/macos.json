@@ -7,7 +7,7 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "1800s",
-    "disk_size_MB": "20000",
+    "disk_size_MB": "40000",
     "ram_MiB": "2048",
     "num_cpus": "2",
     "boot_wait": "6m",
