@@ -1,7 +1,5 @@
 #!/bin/sh
 
-export DEBIAN_FRONTEND=noninteractive
-
 # Remove non-critical packages and clear cache
 apt-mark manual openssh-server &&
 apt-get purge -y \
@@ -57,6 +55,10 @@ apt-get purge -y \
     rm -rf /var/lib/apt/lists/* \
         /var/cache/apt/pkgcache.bin \
         /var/cache/apt/srcpkgcache.bin
+
+# Prevent scheduled apt executions from colliding with manual apt executions
+systemctl disable apt-daily.service &&
+    systemctl disable apt-daily.timer
 
 # Delete leftover documentation
 find /usr/share/doc -depth -type f ! -name copyright |
