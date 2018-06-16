@@ -110,6 +110,11 @@
           <Description>Enable WinRM</Description>
           <Order>2</Order>
         </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
+          <Description>Disable password expiration</Description>
+          <Order>3</Order>
+        </SynchronousCommand>
       </FirstLogonCommands>
       <OOBE>
         <NetworkLocation>Work</NetworkLocation>

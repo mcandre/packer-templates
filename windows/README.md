@@ -17,6 +17,8 @@ Note that Vagrant support for Windows guests exhibits quirks of varying disquiet
 * `vagrant ssh --no-tty -c "powershell -NoLogo -ExecutionPolicy RemoteSigned -File <cygwin-path>-shim.ps1"` can invoke an MS-DOS `.bat`/`.cmd` script using a PowerShell wrapper.
 * `vagrant rsync` uses `/cygdrive/c/...` syntax for cygwin paths
 * `vagrant ssh --no-tty -c` and bash.exe use `/c/...` syntax for cygwin paths
+* `vagrant ssh --no-tty -c "echo"`... often fails to recognize either cygwin or Windows paths; Use `vagrant ssh --no-tty -c "powershell -Command \"echo`...`\""` instead.
+* Powershell's echo inserts Unicode BOMs into text, which corrupts grep and other common POSIX tools. Such files should be searched with [ripgrep](https://github.com/BurntSushi/ripgrep) instead.
 
 # CROSS-PLATFORM BUILD ADVICE
 
