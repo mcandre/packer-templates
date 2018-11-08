@@ -1,10 +1,13 @@
 {
+  "variables": {
+    "iso": ""
+  },
   "builders": [
     {
       "type": "virtualbox-iso",
       "guest_os_type": "FreeBSD_64",
       "vm_name": "dragonflybsd",
-      "iso_url": "http://mirror-master.dragonflybsd.org/iso-images/dfly-x86_64-5.2.0_REL.iso",
+      "iso_url": "{{user `iso`}}",
       "iso_checksum_type": "md5",
       "iso_checksum_url": "http://avalon.dragonflybsd.org/iso-images/md5.txt",
       "ssh_username": "vagrant",

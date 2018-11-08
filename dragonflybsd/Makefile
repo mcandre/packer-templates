@@ -1,3 +1,5 @@
+ISO=dfly-x86_64-5.2.1_REL.iso
+
 .PHONY: install-boxes install-box-virtualbox
 
 all: install-boxes
@@ -7,8 +9,14 @@ install-boxes: install-box-virtualbox
 install-box-virtualbox: dragonflybsd-virtualbox.box
 	vagrant box add -f --name mcandre/dragonflybsd --provider virtualbox dragonflybsd-virtualbox.box
 
-dragonflybsd-virtualbox.box: dragonflybsd.json http/p *.sh Vagrantfile
-	PACKER_LOG=1 packer build -force -only virtualbox-iso dragonflybsd.json
+$(ISO).bz2:
+	wget https://mirror-master.dragonflybsd.org/iso-images/$(ISO).bz2
+
+$(ISO): $(ISO).bz2
+	bunzip2 $(ISO).bz2
+
+dragonflybsd-virtualbox.box: dragonflybsd.json $(ISO) http/p *.sh Vagrantfile
+	PACKER_LOG=1 packer build -force -only virtualbox-iso -var 'iso=$(ISO)' dragonflybsd.json
 
 clean: clean-boxes clean-vagrant clean-artifacts clean-isos
 
