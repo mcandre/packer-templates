@@ -98,7 +98,3 @@ echo 'vagrant' | pw -V /mnt/etc useradd vagrant -h 0 -s /bin/sh -G wheel -d /hom
     chroot /mnt pkg update &&
     chroot /mnt pkg install -y sudo &&
     sed -i -e 's/.*%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mnt/usr/local/etc/sudoers
-
-# Configure NTP
-
-chroot /mnt pkg install -y ntp
