@@ -1,0 +1,72 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "minix",
+      "iso_url": "minix_R3.4.0rc6-d5e4fc0.iso",
+      "iso_checksum_type": "md5",
+      "iso_checksum": "55f8ca78ee6bdb7c12c02c69a2925439",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1800s",
+      "disk_size": 8000,
+      "guest_additions_mode": "disable",
+      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "1024"] ],
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
+      "boot_command": [
+        "<enter><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "root<enter><wait>",
+        "setup<enter><enter><wait>",
+        "<enter><enter><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait5>",
+        "yes<enter><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "reboot<enter><wait10>",
+        "<enter><wait10><wait10>",
+        "root<enter><wait>",
+        "user add -m -G wheel vagrant<enter><wait>",
+        "passwd vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "yes | pkgin update<enter><wait10>",
+        "yes | pkgin install openssh<enter><wait10>",
+        "mkdir -p /etc/rc.d && cp /usr/pkg/etc/rc.d/sshd /etc/rc.d/ && echo 'sshd=YES' >>/etc/rc.conf<enter><wait>",
+        "sh /usr/pkg/etc/rc.d/sshd onestart<enter>"
+      ],
+      "shutdown_command": "su root -c '/sbin/halt -p'"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "su root -c 'env {{ .Vars }} sh {{.Path}}'",
+      "scripts": [
+        "ssh-configure-vagrant-key.minix.sh",
+        "add-sudo-shim.minix.sh",
+        "fix-synced-folders.minix.sh",
+        "cleanup.minix.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "minix-{{.Provider}}.box",
+      "compression_level": "9",
+      "vagrantfile_template": "Vagrantfile"
+    }
+  ]
+}
