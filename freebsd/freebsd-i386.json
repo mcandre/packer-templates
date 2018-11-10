@@ -1,9 +1,9 @@
 {
   "variables": {
     "vm_name": "freebsd-i386",
-    "iso_url": "https://download.freebsd.org/ftp/releases/i386/i386/ISO-IMAGES/11.1/FreeBSD-11.1-RELEASE-i386-disc1.iso",
+    "iso_url": "https://download.freebsd.org/ftp/snapshots/i386/i386/ISO-IMAGES/11.2/FreeBSD-11.2-STABLE-i386-20181107-r340237-disc1.iso",
     "iso_checksum_type": "sha512",
-    "iso_checksum_url": "https://download.freebsd.org/ftp/releases/i386/i386/ISO-IMAGES/11.1/CHECKSUM.SHA512-FreeBSD-11.1-RELEASE-i386",
+    "iso_checksum_url": "https://download.freebsd.org/ftp/snapshots/i386/i386/ISO-IMAGES/11.2/CHECKSUM.SHA512-FreeBSD-11.2-STABLE-i386-20181107-r340237",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "1800s",
