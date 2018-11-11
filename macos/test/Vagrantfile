@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "mcandre/macos"
+    config.vm.box = "mcandre/macos"
 
-  config.vm.provision "file", source: "flag.txt", destination: "/Users/vagrant/flag.txt"
-  config.vm.provision "shell", path: "bootstrap.sh"
+    config.vm.provision "file", source: "flag.txt", destination: "/Users/vagrant/flag.txt"
+    config.vm.provision "shell", path: "bootstrap.sh"
 end

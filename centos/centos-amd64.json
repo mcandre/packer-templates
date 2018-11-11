@@ -1,53 +1,53 @@
 {
-  "variables": {
-    "vm_name": "centos-amd64",
-    "iso_url": "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso",
-    "iso_checksum_type": "sha256",
-    "iso_checksum_url": "http://mirrors.mit.edu/centos/7/isos/x86_64/sha256sum.txt",
-    "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
-    "ssh_wait_timeout": "6h",
-    "disk_size_MB": "8000",
-    "ram_MiB": "1024",
-    "http_directory": "http",
-    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
-  },
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
-      "scripts": [
-        "fix-vagrant-ssh.centos.sh",
-        "cleanup.centos.sh"
-      ]
-    }
-  ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "{{ user `vm_name` }}-{{.Provider}}.box",
-      "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
-    }
-  ],
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "guest_os_type": "RedHat_64",
-      "vm_name": "{{ user `vm_name` }}",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
-      "ssh_username": "{{ user `ssh_username` }}",
-      "ssh_password": "{{ user `ssh_password` }}",
-      "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
-      "disk_size": "{{ user `disk_size_MB` }}",
-      "guest_additions_mode": "disable",
-      "virtualbox_version_file": "",
-      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
-      "http_directory": "{{ user `http_directory` }}",
-      "boot_command": "<tab> ks=http://{{.HTTPIP}}:{{.HTTPPort}}/ks.cfg<enter>",
-      "shutdown_command": "{{ user `shutdown_command` }}"
-    }
-  ]
+    "variables": {
+        "vm_name": "centos-amd64",
+        "iso_url": "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso",
+        "iso_checksum_type": "sha256",
+        "iso_checksum_url": "http://mirrors.mit.edu/centos/7/isos/x86_64/sha256sum.txt",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "6h",
+        "disk_size_MB": "8000",
+        "ram_MiB": "1024",
+        "http_directory": "http",
+        "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+    },
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+            "scripts": [
+                "fix-vagrant-ssh.centos.sh",
+                "cleanup.centos.sh"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+            "compression_level": "9",
+            "vagrantfile_template": "Vagrantfile"
+        }
+    ],
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "RedHat_64",
+            "vm_name": "{{ user `vm_name` }}",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+            "disk_size": "{{ user `disk_size_MB` }}",
+            "guest_additions_mode": "disable",
+            "virtualbox_version_file": "",
+            "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+            "http_directory": "{{ user `http_directory` }}",
+            "boot_command": "<tab> ks=http://{{.HTTPIP}}:{{.HTTPPort}}/ks.cfg<enter>",
+            "shutdown_command": "{{ user `shutdown_command` }}"
+        }
+    ]
 }

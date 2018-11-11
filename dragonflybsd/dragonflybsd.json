@@ -1,45 +1,45 @@
 {
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "guest_os_type": "FreeBSD_64",
-      "vm_name": "dragonflybsd",
-      "iso_url": "http://mirror-master.dragonflybsd.org/iso-images/dfly-x86_64-5.2.0_REL.iso",
-      "iso_checksum_type": "md5",
-      "iso_checksum_url": "http://avalon.dragonflybsd.org/iso-images/md5.txt",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "boot_wait": "6s",
-      "ssh_wait_timeout": "1800s",
-      "disk_size": 16000,
-      "guest_additions_mode": "disable",
-      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "1024"] ],
-      "http_directory": "http",
-      "boot_command": [
-        "1<wait10><wait10><wait10>",
-        "root<enter><wait>",
-        "dhclient em0<enter><wait5>",
-        "fetch -o /tmp/p http://{{ .HTTPIP }}:{{ .HTTPPort }}/p && sh /tmp/p && reboot<enter>"
-      ],
-      "shutdown_command": "sudo halt -p"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
-      "scripts": [
-        "ssh-configure-vagrant-key.dragonflybsd.sh",
-        "cleanup.dragonflybsd.sh"
-      ]
-    }
-  ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "dragonflybsd-{{.Provider}}.box",
-      "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
-    }
-  ]
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "FreeBSD_64",
+            "vm_name": "dragonflybsd",
+            "iso_url": "http://mirror-master.dragonflybsd.org/iso-images/dfly-x86_64-5.2.0_REL.iso",
+            "iso_checksum_type": "md5",
+            "iso_checksum_url": "http://avalon.dragonflybsd.org/iso-images/md5.txt",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "boot_wait": "6s",
+            "ssh_wait_timeout": "1800s",
+            "disk_size": 16000,
+            "guest_additions_mode": "disable",
+            "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "1024"] ],
+            "http_directory": "http",
+            "boot_command": [
+                "1<wait10><wait10><wait10>",
+                "root<enter><wait>",
+                "dhclient em0<enter><wait5>",
+                "fetch -o /tmp/p http://{{ .HTTPIP }}:{{ .HTTPPort }}/p && sh /tmp/p && reboot<enter>"
+            ],
+            "shutdown_command": "sudo halt -p"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+            "scripts": [
+                "ssh-configure-vagrant-key.dragonflybsd.sh",
+                "cleanup.dragonflybsd.sh"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "dragonflybsd-{{.Provider}}.box",
+            "compression_level": "9",
+            "vagrantfile_template": "Vagrantfile"
+        }
+    ]
 }

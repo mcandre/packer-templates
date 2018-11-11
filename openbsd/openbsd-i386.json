@@ -1,87 +1,87 @@
 {
-  "variables": {
-    "vm_name": "openbsd-i386",
-    "iso_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.3/i386/install63.iso",
-    "iso_checksum_type": "sha256",
-    "iso_checksum_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.3/i386/SHA256",
-    "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
-    "ssh_wait_timeout": "1800s",
-    "disk_size_MB": "8000",
-    "ram_MiB": "1024",
-    "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
-  },
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh {{.Path}}",
-      "scripts": [
-        "fix-vagrant-key.openbsd.sh",
-        "cleanup.openbsd.sh"
-      ]
-    }
-  ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "{{ user `vm_name` }}-{{ .Provider }}.box",
-      "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
-    }
-  ],
-  "builders": [
-    {
-      "vm_name": "{{ user `vm_name` }}",
-      "type": "virtualbox-iso",
-      "guest_os_type": "OpenBSD",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
-      "ssh_username": "{{ user `ssh_username` }}",
-      "ssh_password": "{{ user `ssh_password` }}",
-      "ssh_wait_timeout": "1800s",
-      "disk_size": "{{ user `disk_size_MB` }}",
-      "guest_additions_mode": "disable",
-      "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
-      "http_directory": "http",
-      "boot_wait": "30s",
-      "boot_command": [
-        "i<enter><wait>",
-        "<enter><wait>",
-        "vagrant<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait10>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "vagrant<enter><wait>",
-        "vagrant<enter><wait>",
-        "<enter><wait>",
-        "no<enter><wait>",
-        "vagrant<enter><wait>",
-        "<enter><wait>",
-        "vagrant<enter><wait>",
-        "vagrant<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait10>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "yes<enter>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<enter><wait>",
-        "<enter><wait10><wait10><wait10>",
-        "reboot<enter>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "root<enter><wait>",
-        "vagrant<enter><wait>",
-        "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
-        "sh /tmp/p<enter><wait10><wait10><wait10>"
-      ],
-      "shutdown_command": "{{ user `shutdown_command` }}"
-    }
-  ]
+    "variables": {
+        "vm_name": "openbsd-i386",
+        "iso_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.3/i386/install63.iso",
+        "iso_checksum_type": "sha256",
+        "iso_checksum_url": "https://cloudflare.cdn.openbsd.org/pub/OpenBSD/6.3/i386/SHA256",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "1800s",
+        "disk_size_MB": "8000",
+        "ram_MiB": "1024",
+        "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
+    },
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh {{.Path}}",
+            "scripts": [
+                "fix-vagrant-key.openbsd.sh",
+                "cleanup.openbsd.sh"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box",
+            "compression_level": "9",
+            "vagrantfile_template": "Vagrantfile"
+        }
+    ],
+    "builders": [
+        {
+            "vm_name": "{{ user `vm_name` }}",
+            "type": "virtualbox-iso",
+            "guest_os_type": "OpenBSD",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_wait_timeout": "1800s",
+            "disk_size": "{{ user `disk_size_MB` }}",
+            "guest_additions_mode": "disable",
+            "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+            "http_directory": "http",
+            "boot_wait": "30s",
+            "boot_command": [
+                "i<enter><wait>",
+                "<enter><wait>",
+                "vagrant<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait10>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "vagrant<enter><wait>",
+                "vagrant<enter><wait>",
+                "<enter><wait>",
+                "no<enter><wait>",
+                "vagrant<enter><wait>",
+                "<enter><wait>",
+                "vagrant<enter><wait>",
+                "vagrant<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait10>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "yes<enter>",
+                "<wait10><wait10><wait10><wait10><wait10><wait10>",
+                "<enter><wait>",
+                "<enter><wait10><wait10><wait10>",
+                "reboot<enter>",
+                "<wait10><wait10><wait10><wait10><wait10><wait10>",
+                "<wait10><wait10><wait10><wait10><wait10><wait10>",
+                "root<enter><wait>",
+                "vagrant<enter><wait>",
+                "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+                "sh /tmp/p<enter><wait10><wait10><wait10>"
+            ],
+            "shutdown_command": "{{ user `shutdown_command` }}"
+        }
+    ]
 }

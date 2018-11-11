@@ -37,6 +37,14 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
 
+## Optional
+
+* [make](https://www.gnu.org/software/make/)
+* [GNU findutils](https://www.gnu.org/software/findutils/)
+* [stank](https://github.com/mcandre/stank) (e.g. `go get github.com/mcandre/stank/...`)
+* [Python](https://www.python.org) 3+ (for yamllint)
+* [Node.js](https://nodejs.org/en/) (for eclint)
+
 Note: Windows hosts are affected by a packer bug where attempts to kill a packer process by sending a Control+C signal, result in a half-dead packer that often awakes during subsequent builds, corrupting them. Task Manager is your friend.
 
 ## Providers/Hypervisors
