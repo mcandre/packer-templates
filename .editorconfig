@@ -28,7 +28,7 @@ end_of_line = crlf
 insert_final_newline = false
 
 # Lexer restrictions
-[{Makefile*,GNUMakefile*,*.mf,*.makefile,*.go,*.gitmodules}]
+[{Makefile*,GNUmakefile*,*.mf,*.makefile,*.go,*.gitmodules}]
 indent_style = tab
 
 # Natural HTML nesting
