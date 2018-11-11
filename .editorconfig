@@ -15,7 +15,7 @@ insert_final_newline = none
 indent_size = none
 
 # Freeform text
-[{*.txt,*.md,*.emacs,*.el,*.lisp,*.lsp,*.scm,*.clj,*.rkt,*.ecl,*.sbcl,*.abcl,*.eclrc,*.sbclrc,*.cob,*.snusp}]
+[{*.txt,*.md,*.yaml,*.yml,*.emacs,*.el,*.lisp,*.lsp,*.scm,*.clj,*.rkt,*.ecl,*.sbcl,*.abcl,*.eclrc,*.sbclrc,*.cob,*.snusp}]
 indent_size = none
 
 # Placeholder files
@@ -25,6 +25,7 @@ insert_final_newline = none
 # Windows junk
 [{*.cmd,*.bat,*.reg,*.ps1,*.vbs,*.cs,*.fs,*.fsx,*.ahk}]
 end_of_line = crlf
+insert_final_newline = false
 
 # Lexer restrictions
 [{Makefile*,GNUMakefile*,*.mf,*.makefile,*.go,*.gitmodules}]
@@ -38,7 +39,7 @@ quote_type = single
 [{*.min.*,*-min.*}]
 insert_final_newline = false
 
-# Patch files
+# Potential mixed indentations
 [*.patch]
 trim_trailing_whitespace = false
 indent_style = none
