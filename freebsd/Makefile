@@ -2,7 +2,7 @@
 
 all: install-boxes
 
-# i386 currently broken
+# i386 breaks on initial reboot
 install-boxes: install-box-amd64-virtualbox # install-box-i386-virtualbox
 
 install-box-amd64-virtualbox: freebsd-amd64-virtualbox.box

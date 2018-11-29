@@ -1,9 +1,9 @@
 {
     "variables": {
         "vm_name": "freebsd-amd64",
-        "iso_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/FreeBSD-11.2-STABLE-amd64-20181107-r340237-disc1.iso",
+        "iso_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/FreeBSD-11.2-STABLE-amd64-20181126-r340982-disc1.iso",
         "iso_checksum_type": "sha512",
-        "iso_checksum_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/CHECKSUM.SHA512-FreeBSD-11.2-STABLE-amd64-20181107-r340237",
+        "iso_checksum_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/CHECKSUM.SHA512-FreeBSD-11.2-STABLE-amd64-20181126-r340982",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "1800s",
@@ -42,7 +42,9 @@
             "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
             "disk_size": "{{ user `disk_size_MB` }}",
             "guest_additions_mode": "disable",
-            "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"]
+            ],
             "http_directory": "http",
             "boot_command": [
                 "s<enter><wait10><wait10>",

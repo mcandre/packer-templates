@@ -33,7 +33,7 @@ bootstrap.sh  flag.txt	Vagrantfile
 # REQUIREMENTS
 
 * [Packer](https://www.packer.io/)
-* [Vagrant](https://www.vagrantup.com/)
+* [Vagrant](https://www.vagrantup.com/) 2.2.2+
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
 
