@@ -2,7 +2,8 @@
 
 all: install-boxes
 
-install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox
+# i386 currently broken
+install-boxes: install-box-amd64-virtualbox # install-box-i386-virtualbox
 
 install-box-amd64-virtualbox: freebsd-amd64-virtualbox.box
 	vagrant box add -f --name mcandre/freebsd-amd64 --provider virtualbox freebsd-amd64-virtualbox.box
