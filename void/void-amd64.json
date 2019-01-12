@@ -1,9 +1,9 @@
 {
   "variables": {
     "vm_name": "void-amd64",
-    "iso_url": "https://repo.voidlinux.eu/live/current/void-live-x86_64-musl-20171007.iso",
+    "iso_url": "https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20181111.iso",
     "iso_checksum_type": "sha256",
-    "iso_checksum_url": "https://repo.voidlinux.eu/live/current/sha256sums.txt",
+    "iso_checksum_url": "https://alpha.de.repo.voidlinux.org/live/current/sha256sums.txt",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "1800s",
