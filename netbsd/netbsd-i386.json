@@ -1,9 +1,9 @@
 {
     "variables": {
         "vm_name": "netbsd-i386",
-        "iso_url": "https://iso.netbsd.org/pub/NetBSD/iso/7.1.2/NetBSD-7.1.2-i386.iso",
+        "iso_url": "https://cdn.netbsd.org/pub/NetBSD/NetBSD-8.0/images/NetBSD-8.0-i386.iso",
         "iso_checksum_type": "sha512",
-        "iso_checksum_url": "https://iso.netbsd.org/pub/NetBSD/iso/7.1.2/SHA512",
+        "iso_checksum_url": "http://cdn.netbsd.org/pub/NetBSD/NetBSD-8.0/images/SHA512",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "1800s",
