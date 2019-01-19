@@ -21,6 +21,9 @@ ASSUME_ALWAYS_YES=yes pkg update &&
     sysrc ntpd_enable="YES" &&
     sysrc ntpdate_enable="YES"
 
+# Skip prompts
+echo 'IGNORE_OSVERSION=true;' >>/usr/local/etc/pkg.conf
+
 # Configure vagrant user for sudo
 pkg install -y sudo &&
     echo 'vagrant' | pw useradd vagrant -h 0 -m &&
