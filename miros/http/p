@@ -1,0 +1,2 @@
+#!/bin/sh
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/mnt/etc/sudoers

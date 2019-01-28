@@ -1,0 +1,105 @@
+{
+    "variables": {
+        "vm_name": "miros-i386",
+        "iso_url": "https://www.mirbsd.org/MirOS/v10/i386/cdrom10.iso",
+        "iso_checksum_type": "sha512",
+        "iso_checksum": "c5f839d8228d9df81d132fb3225aa623fd502e515e3188f2f4ae14d365de74d8b1fcffa5bf4244c1e1464c775ebc708a6cfbf74d64d379e1d787cf5c1b69d680",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "1800s",
+        "disk_size_MB": "8000",
+        "ram_MiB": "1024",
+        "shutdown_command": "sudo halt -p"
+    },
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "sudo env {{.Vars}} sh {{.Path}}",
+            "scripts": [
+                "fix-vagrant-key.miros.sh",
+                "cleanup.miros.sh"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box",
+            "compression_level": "9",
+            "vagrantfile_template": "Vagrantfile"
+        }
+    ],
+    "builders": [
+        {
+            "vm_name": "{{ user `vm_name` }}",
+            "type": "virtualbox-iso",
+            "guest_os_type": "OpenBSD",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_wait_timeout": "1800s",
+            "disk_size": "{{ user `disk_size_MB` }}",
+            "guest_additions_mode": "disable",
+            "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
+            "http_directory": "http",
+            "boot_wait": "1m",
+            "boot_command": [
+                "i<enter><wait>",
+                "<enter><wait>",
+                "us<enter><wait>",
+                "yes<enter><wait>",
+                "<enter><wait>",
+                "yes<enter><wait>",
+                "m<enter><wait>",
+                "a<enter><wait>",
+                "4.2BSD<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "/<enter><wait>",
+                "q<enter><wait>",
+                "<enter><wait>",
+                "yes<enter><wait30s>",
+                "vagrant<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "dhcp<enter><wait30s>",
+                "<enter><wait>",
+                "done<enter><wait>",
+                "vagrantup.com<enter><wait>",
+                "8.8.8.8<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait10s>",
+                "shttp<enter><wait>",
+                "<enter><wait>",
+                "www.mirbsd.org<enter><wait>",
+                "MirOS/v10/i386<enter><wait30s>",
+                "pkgutl10.ngz<enter><wait>",
+                "done<enter><wait>",
+                "<enter><wait20m>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "yes<enter><wait>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "{{ user `ssh_username` }}<enter><wait>",
+                "Vagrant<enter><wait>",
+                "<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "yes<enter><wait>",
+                "<enter><wait>",
+                "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
+                "sh /tmp/p<enter>",
+                "reboot<enter>"
+            ],
+            "shutdown_command": "{{ user `shutdown_command` }}"
+        }
+    ]
+}
