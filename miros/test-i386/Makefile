@@ -2,7 +2,7 @@
 
 all: test
 
-test: test-boot test-flag test-bootstrap test-sync test-shutdown
+test: test-boot test-flag test-bootstrap test-sync test-persistence-across-boots test-shutdown
 
 test-boot:
 	vagrant up
@@ -22,6 +22,12 @@ test-sync-guest-to-host: clean-greeting
 	vagrant ssh -c "echo 'howdy' >/vagrant/greeting.txt"
 	vagrant rsync-back
 	cat greeting.txt | grep 'howdy'
+
+test-persistence-across-boots:
+	vagrant ssh -c "echo 'buzz' >/home/vagrant/fizz.txt"
+	vagrant halt
+	vagrant up
+	vagrant ssh -c "cat /home/vagrant/fizz.txt" | grep 'buzz'
 
 test-shutdown:
 	vagrant halt
