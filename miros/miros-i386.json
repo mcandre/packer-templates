@@ -8,19 +8,8 @@
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "1800s",
         "disk_size_MB": "8000",
-        "ram_MiB": "1024",
-        "shutdown_command": "sudo halt -p"
+        "ram_MiB": "1024"
     },
-    "provisioners": [
-        {
-            "type": "shell",
-            "execute_command": "sudo env {{.Vars}} sh {{.Path}}",
-            "scripts": [
-                "fix-vagrant-key.miros.sh",
-                "cleanup.miros.sh"
-            ]
-        }
-    ],
     "post-processors": [
         {
             "type": "vagrant",
@@ -44,6 +33,8 @@
             "guest_additions_mode": "disable",
             "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
             "http_directory": "http",
+            "communicator": "none",
+            "virtualbox_version_file": "",
             "boot_wait": "1m",
             "boot_command": [
                 "i<enter><wait>",
@@ -75,13 +66,13 @@
                 "<enter><wait>",
                 "<enter><wait>",
                 "<enter><wait10s>",
-                "shttp<enter><wait>",
+                "http<enter><wait>",
                 "<enter><wait>",
-                "www.mirbsd.org<enter><wait>",
+                "{{.HTTPIP}}:{{.HTTPPort}}<enter><wait>",
                 "MirOS/v10/i386<enter><wait30s>",
                 "pkgutl10.ngz<enter><wait>",
                 "done<enter><wait>",
-                "<enter><wait20m>",
+                "<enter><wait10s>",
                 "<enter><wait>",
                 "<enter><wait>",
                 "<enter><wait>",
@@ -95,11 +86,14 @@
                 "{{ user `ssh_password` }}<enter><wait>",
                 "yes<enter><wait>",
                 "<enter><wait>",
-                "ftp -o /tmp/p http://{{.HTTPIP}}:{{.HTTPPort}}/p<enter><wait5>",
-                "sh /tmp/p<enter>",
-                "reboot<enter>"
-            ],
-            "shutdown_command": "{{ user `shutdown_command` }}"
+                "ftp -o /tmp/p1 http://{{.HTTPIP}}:{{.HTTPPort}}/p1<enter><wait5>",
+                "sh /tmp/p1<enter><wait5>",
+                "reboot<enter><wait2m>",
+                "{{ user `ssh_username` }}<enter><wait>",
+                "{{ user `ssh_password` }}<enter><wait>",
+                "ftp -o /tmp/p2 http://{{.HTTPIP}}:{{.HTTPPort}}/p2<enter><wait5>",
+                "sh /tmp/p2<enter><wait3m>"
+            ]
         }
     ]
 }

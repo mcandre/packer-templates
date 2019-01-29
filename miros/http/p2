@@ -1,0 +1,14 @@
+#!/bin/sh
+mkdir -p /home/vagrant/.ssh &&
+    ftp -o /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub &&
+    chmod 0700 /home/vagrant/.ssh &&
+    chmod 0600 /home/vagrant/.ssh/authorized_keys &&
+    sudo sh -c "sed -e 's/\:path=\/usr\/bin \/bin \/usr\/sbin \/sbin \/usr\/X11R6\/bin \/usr\/local\/bin \/usr\/mpkg\/bin\:\\\\/:path=\/usr\/bin \/bin \/usr\/sbin \/sbin \/usr\/X11R6\/bin \/usr\/local\/bin \/usr\/mpkg\/bin \/usr\/mkpkg\/sbin:\\\\/' /etc/login.conf >/tmp/login.conf" &&
+    sudo mv /tmp/login.conf /etc/login.conf &&
+    sudo cap_mkdb /etc/login.conf &&
+    sudo env PKG_PATH=https://www.mirbsd.org/MirOS/v10/Pkgs/i386 pkg_add rsync-3.0.2-0 &&
+    sudo mkdir -p /vagrant &&
+    sudo chown vagrant:vagrant /vagrant &&
+    sudo rm -rf /tmp/* &&
+    sudo sh -c "dd if=/dev/zero of=/whitespace bs=1048576 || echo 'Zeroed disk' && rm -f /whitespace && sync" &&
+    sudo shutdown -h -p now
