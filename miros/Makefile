@@ -24,6 +24,7 @@ clean-vagrant:
 clean-artifacts:
 	-rm -rf packer_cache
 	-rm -rf http/MirOS
+	-rm http/robots.txt
 
 lint: packer-validate shfmt
 
