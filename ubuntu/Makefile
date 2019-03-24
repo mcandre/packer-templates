@@ -1,12 +1,20 @@
-.PHONY: install-box-virtualbox
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-arm64-libvirt
 
-all: install-box-virtualbox
+all: install-boxes
 
-install-box-virtualbox: ubuntu-virtualbox.box
-	vagrant box add -f --name mcandre/ubuntu --provider virtualbox ubuntu-virtualbox.box
+install-boxes: install-box-amd64-virtualbox install-box-arm64-libvirt
 
-ubuntu-virtualbox.box: ubuntu.json *.sh
-	PACKER_LOG=1 packer build -force -only virtualbox-iso ubuntu.json
+install-box-amd64-virtualbox: ubuntu-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/ubuntu-amd64 --provider virtualbox ubuntu-amd64-virtualbox.box
+
+install-box-arm64-libvirt: ubuntu-arm64-libvirt.box
+	vagrant box add -f --name mcandre/ubuntu-arm64 --provider libvirt ubuntu-arm64-libvirt.box
+
+ubuntu-amd64-virtualbox.box: ubuntu-amd64.json *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso ubuntu-amd64.json
+
+ubuntu-arm64-libvirt.box: ubuntu-arm64.json *.sh
+	PACKER_LOG=1 packer build -force -only qemu ubuntu-arm64.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 
