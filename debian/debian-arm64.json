@@ -35,7 +35,9 @@
     "builders": [
         {
             "type": "qemu",
-            "machine_type": "virt",
+            "machine_type": "raspi3",
+            "accelerator": "tcg",
+            "net_device": "usb-net",
             "use_default_display": true,
             "vm_name": "{{ user `vm_name` }}",
             "iso_url": "{{ user `iso_url` }}",

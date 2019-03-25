@@ -39,8 +39,10 @@ bootstrap.sh  flag.txt	Vagrantfile
 
 ## Recommended
 
-* [VirtualBox](https://www.virtualbox.org/), [VMware](https://www.vmware.com/), and/or [qemu](https://www.qemu.org/) 2.12+
-* [qemu-kvm](https://wiki.qemu.org/Features/KVM)
+* [VirtualBox](https://www.virtualbox.org/)
+* [VMware](https://www.vmware.com/)
+* [qemu](https://www.qemu.org/) 2.12+
+* [KVM](https://wiki.qemu.org/Features/KVM)
 * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
 * [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 * [make](https://www.gnu.org/software/make/)
