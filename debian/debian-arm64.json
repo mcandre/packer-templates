@@ -35,9 +35,9 @@
     "builders": [
         {
             "type": "qemu",
-            "machine_type": "raspi3",
+            "machine_type": "ast2500-evb",
             "accelerator": "tcg",
-            "net_device": "usb-net",
+            "net_device": "virtio-net",
             "use_default_display": true,
             "vm_name": "{{ user `vm_name` }}",
             "iso_url": "{{ user `iso_url` }}",
