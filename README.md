@@ -43,6 +43,9 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [VMware](https://www.vmware.com/)
 * [qemu](https://www.qemu.org/) 2.12+
 * [KVM](https://wiki.qemu.org/Features/KVM)
+* [OpenBIOS](https://www.openfirmware.info/OpenBIOS)
+* [openhackware](https://github.com/qemu/openhackware)
+* [qemu-skiboot](https://github.com/qemu/skiboot)
 * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
 * [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 * [make](https://www.gnu.org/software/make/)
