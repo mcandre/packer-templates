@@ -57,7 +57,7 @@
                 "c<wait>",
                 "setparams 'Automated install'<enter><wait>",
                 "<enter><wait>",
-                "set options=\" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false\"<enter><wait>",
+                "set options=\" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/vda1\"<enter><wait>",
                 "boot_one<wait>",
                 "<enter><wait>",
                 "boot<enter>"
