@@ -1,6 +1,6 @@
 {
   "variables": {
-    "vm_name": "ubuntu-ppc64el",
+    "vm_name": "ubuntu-amd64",
     "iso_url": "http://cdimage.ubuntu.com/releases/18.10/release/ubuntu-18.10-server-ppc64el.iso",
     "iso_checksum_type": "sha256",
     "iso_checksum_url": "http://cdimage.ubuntu.com/releases/18.10/release/SHA256SUMS",
@@ -9,8 +9,7 @@
     "ssh_wait_timeout": "6h",
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
-    "boot_wait": "20s",
-    "http_directory": "http",
+    "boot_wait": "60s",
     "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
   },
   "provisioners": [
@@ -50,13 +49,28 @@
       "qemuargs": [
           ["-m", "{{ user `ram_MiB` }}"]
       ],
-      "http_directory": "{{ user `http_directory` }}",
       "boot_wait": "{{ user `boot_wait` }}",
       "boot_command": [
-          "e<wait5s>",
-          "<down><down><down><wait>",
-          "<leftCtrlOn>k<leftCtrlOff><wait>",
-          "linux /install/vmlinux file=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/vda1 --<f10>"
+        "<enter><wait1m>",
+        "<enter><wait10s>",
+        "<enter><wait1m>",
+        "<enter><wait10s>",
+        "<enter><wait10s>",
+        "<enter><wait10m>",
+        "<bs><bs><bs><bs><bs><bs><wait>",
+        "vagrant<enter><wait1m>",
+        "Vagrant<enter><wait10s>",
+        "<enter><wait10s>",
+        "{{ user `ssh_password` }}<enter><wait10s>",
+        "{{ user `ssh_password` }}<wait10s>",
+        "<left><enter><wait10s>",
+        "<enter><wait5m>",
+        "<up><up><wait>",
+        "<enter><wait10s>",
+        "<enter><wait5m>",
+        "<left><wait>",
+        "<enter><wait10m>",
+        "<enter>"
       ],
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
