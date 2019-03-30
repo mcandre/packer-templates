@@ -9,7 +9,7 @@
         "ssh_wait_timeout": "6h",
         "disk_size_MB": "8000",
         "ram_MiB": "1024",
-        "boot_wait": "60s",
+        "boot_wait": "1m",
         "http_directory": "http",
         "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
     },
@@ -51,7 +51,7 @@
             "qemuargs": [
                 ["-m", "{{ user `ram_MiB` }}"]
             ],
-            "http_directory": "http",
+            "http_directory": "{{ user `http_directory` }}",
             "boot_wait": "{{ user `boot_wait` }}",
             "boot_command": [
                 "c<wait>",

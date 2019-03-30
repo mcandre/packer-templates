@@ -1,6 +1,6 @@
 {
   "variables": {
-    "vm_name": "ubuntu-amd64",
+    "vm_name": "ubuntu-ppc64el",
     "iso_url": "http://cdimage.ubuntu.com/releases/18.10/release/ubuntu-18.10-server-ppc64el.iso",
     "iso_checksum_type": "sha256",
     "iso_checksum_url": "http://cdimage.ubuntu.com/releases/18.10/release/SHA256SUMS",
@@ -9,7 +9,8 @@
     "ssh_wait_timeout": "6h",
     "disk_size_MB": "8000",
     "ram_MiB": "1024",
-    "boot_wait": "60s",
+    "boot_wait": "20s",
+    "http_directory": "http",
     "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
   },
   "provisioners": [
@@ -49,27 +50,13 @@
       "qemuargs": [
           ["-m", "{{ user `ram_MiB` }}"]
       ],
+      "http_directory": "{{ user `http_directory` }}",
       "boot_wait": "{{ user `boot_wait` }}",
       "boot_command": [
-        "<enter><wait1m>",
-        "<enter><wait10s>",
-        "<enter><wait>",
-        "<enter><wait5s>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<enter><wait>",
-        "<down><wait>",
-        "<enter><wait>",
-        "Vagrant<tab>",
-        "vagrant<tab>",
-        "{{ user `ssh_username` }}<tab>",
-        "{{ user `ssh_password` }}<tab>",
-        "{{ user `ssh_password` }}<tab>",
-        "<tab><enter>",
-        "<wait5m>",
-        "<enter><wait10s>",
-        "<enter>"
+          "e<wait5s>",
+          "<down><down><down><wait>",
+          "<leftCtrlOn>k<leftCtrlOff><wait>",
+          "linux /install/vmlinux file=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/vda1 --<f10>"
       ],
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
