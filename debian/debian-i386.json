@@ -48,7 +48,7 @@
             "virtualbox_version_file": "",
             "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
             "http_directory": "{{ user `http_directory` }}",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
             "shutdown_command": "{{ user `shutdown_command` }}"
         },
         {
@@ -64,7 +64,7 @@
             "disk_size": "{{ user `disk_size_MB` }}",
             "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
             "http_directory": "{{ user `http_directory` }}",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
             "shutdown_command": "{{ user `shutdown_command` }}"
         },
         {
@@ -79,7 +79,7 @@
             "disk_size": "{{ user `disk_size_MB` }}",
             "qemuargs": [ ["-m", "{{ user `ram_MiB` }}"] ],
             "http_directory": "http",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false<enter>",
+            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
             "shutdown_command": "{{ user `shutdown_command` }}"
         }
     ]

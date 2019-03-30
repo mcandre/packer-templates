@@ -28,7 +28,7 @@
       "type": "vagrant",
       "output": "{{ user `vm_name` }}-{{.Provider}}.box",
       "compression_level": "9",
-      "vagrantfile_template": "Vagrantfile"
+      "vagrantfile_template": "ppc64el.Vagrantfile"
     }
   ],
   "builders": [
