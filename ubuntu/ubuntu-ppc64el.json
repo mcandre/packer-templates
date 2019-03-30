@@ -62,7 +62,7 @@
         "Vagrant<enter><wait10s>",
         "<enter><wait10s>",
         "{{ user `ssh_password` }}<enter><wait10s>",
-        "{{ user `ssh_password` }}<wait10s>",
+        "{{ user `ssh_password` }}<enter><wait10s>",
         "<left><enter><wait10s>",
         "<enter><wait5m>",
         "<up><up><wait>",
