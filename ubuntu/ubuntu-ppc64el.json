@@ -51,10 +51,10 @@
       ],
       "boot_wait": "{{ user `boot_wait` }}",
       "boot_command": [
+        "<enter><wait1m>",
+        "<enter><wait10s>",
         "<enter><wait>",
-        "<enter><wait10>",
-        "<enter><wait>",
-        "<enter><wait5>",
+        "<enter><wait5s>",
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
@@ -67,8 +67,8 @@
         "{{ user `ssh_password` }}<tab>",
         "{{ user `ssh_password` }}<tab>",
         "<tab><enter>",
-        "<wait300>",
-        "<enter><wait10>",
+        "<wait5m>",
+        "<enter><wait10s>",
         "<enter>"
       ],
       "shutdown_command": "{{ user `shutdown_command` }}"
