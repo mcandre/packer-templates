@@ -40,7 +40,7 @@
       "vm_name": "{{ user `vm_name` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "iso_checksum_url": "{{ user `iso_checksum` }}",
+      "iso_checksum_url": "{{ user `iso_checksum_url` }}",
       "ssh_username": "{{ user `ssh_username` }}",
       "ssh_password": "{{ user `ssh_password` }}",
       "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
