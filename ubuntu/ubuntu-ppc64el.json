@@ -69,8 +69,13 @@
         "<enter><wait10s>",
         "<enter><wait5m>",
         "<left><wait>",
+        "<enter><wait30m>",
         "<enter><wait10m>",
-        "<enter>"
+        "<enter><wait5m>",
+
+        "<down><down><down><down><down><down><down><wait>",
+        "<spacebar><wait>",
+        "<tab><enter>"
       ],
       "shutdown_command": "{{ user `shutdown_command` }}"
     }
