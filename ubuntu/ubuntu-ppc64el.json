@@ -1,6 +1,6 @@
 {
   "variables": {
-    "vm_name": "ubuntu-amd64",
+    "vm_name": "ubuntu-ppc64el",
     "iso_url": "http://cdimage.ubuntu.com/releases/18.10/release/ubuntu-18.10-server-ppc64el.iso",
     "iso_checksum_type": "sha256",
     "iso_checksum_url": "http://cdimage.ubuntu.com/releases/18.10/release/SHA256SUMS",
