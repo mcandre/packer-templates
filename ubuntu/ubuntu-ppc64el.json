@@ -19,6 +19,7 @@
       "scripts": [
         "fix-vagrant-ssh.ubuntu.sh",
         "fix-sudo.ubuntu.sh",
+        "fix-dhcp.ubuntu.sh",
         "cleanup.ubuntu.sh"
       ]
     }
