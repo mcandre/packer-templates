@@ -47,6 +47,7 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [openhackware](https://github.com/qemu/openhackware)
 * [qemu-skiboot](https://github.com/qemu/skiboot)
 * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
+* [libguestfs-tools](http://libguestfs.org/)
 * [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 * [make](https://www.gnu.org/software/make/)
 * [GNU findutils](https://www.gnu.org/software/findutils/)
