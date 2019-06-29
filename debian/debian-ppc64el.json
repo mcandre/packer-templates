@@ -1,7 +1,7 @@
 {
     "variables": {
         "vm_name": "debian-ppc64el",
-        "iso_url": "https://cdimage.debian.org/debian-cd/current/ppc64el/iso-cd/debian-9.8.0-ppc64el-netinst.iso",
+        "iso_url": "https://cdimage.debian.org/debian-cd/current/ppc64el/iso-cd/debian-9.9.0-ppc64el-netinst.iso",
         "iso_checksum_type": "sha512",
         "iso_checksum_url": "https://cdimage.debian.org/debian-cd/current/ppc64el/iso-cd/SHA512SUMS",
         "ssh_username": "vagrant",

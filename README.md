@@ -95,6 +95,7 @@ In addition, libvirt requires additional manual configuration in order to correc
 * The user running Vagrant must have sufficient permission to access the libvirt socket, such as adding the user to the `libvirtd` UNIX group.
 * Guest operating systems must name their network adapters according to the legacy Linux scheme in order to integrate with vagrant-libvirt and obtain an IP address. See fix-libvirt-networking.debian.sh in debian/ for an example GRUB configuration to enforce this policy in the guest OS at packing time.
 * libvirt may come preconfigured with extraneous networks and volumes that conflict with vagrant-libvirt. See `virsh net-list` and `virsh vol-list --pool default` to examine these resources.
+* Finally, some libvirt guests may do a poor job persisting file changes across `vagrant package` boundaries. To work around this limitation, ensure that the file system is explicitly synchronized at the end of provisioning scripts, e.g. `sync` in GNU/Linux.
 
 ## Optional
 
