@@ -1,6 +1,9 @@
 *.iso
 *.bz2
 output-*/
+*.bin
+*.gz
+vmlinux-*
 # Created by https://www.gitignore.io/api/packer,vagrant,node
 # Edit at https://www.gitignore.io/?templates=packer,vagrant,node
 

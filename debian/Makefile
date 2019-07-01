@@ -1,8 +1,8 @@
-.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt install-box-mips64el-libvirt
 
 all: install-boxes
 
-install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt
+install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt install-box-mips64el-libvirt
 
 install-box-amd64-virtualbox: debian-amd64-virtualbox.box
 	vagrant box add -f --name mcandre/debian-amd64 --provider virtualbox debian-amd64-virtualbox.box
@@ -25,6 +25,9 @@ install-box-i386-libvirt: debian-i386-libvirt.box
 install-box-ppc64el-libvirt: debian-ppc64el-libvirt.box
 	vagrant box add -f --name mcandre/debian-ppc64el --provider libvirt debian-ppc64el-libvirt.box
 
+install-box-mips64el-libvirt: debian-mips64el-libvirt.box
+	vagrant box add -f --name mcandre/debian-mips64el --provider libvirt debian-mips64el-libvirt.box
+
 debian-amd64-virtualbox.box: debian-amd64.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso debian-amd64.json
 
@@ -46,6 +49,18 @@ debian-i386-libvirt.box: debian-i386.json http/p *.sh
 debian-ppc64el-libvirt.box: debian-ppc64el.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian-ppc64el.json
 
+mipsel_bios.bin:
+	dd if=/dev/zero of=mipsel_bios.bin bs=1024 count=128
+
+initrd.gz:
+	wget http://ftp.debian.org/debian/dists/stable/main/installer-mips64el/current/images/malta/netboot/initrd.gz
+
+vmlinux-4.9.0-9-5kc-malta:
+	wget http://ftp.debian.org/debian/dists/stable/main/installer-mips64el/current/images/malta/netboot/vmlinux-4.9.0-9-5kc-malta
+
+debian-mips64el-libvirt.box: mipsel_bios.bin initrd.gz vmlinux-4.9.0-9-5kc-malta debian-mips64el.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only qemu debian-mips64el.json
+
 clean: clean-boxes clean-vagrant clean-artifacts
 
 clean-boxes:
@@ -55,6 +70,9 @@ clean-vagrant:
 	-rm -rf .vagrant
 
 clean-artifacts:
+	-rm -f vmlinux-*
+	-rm -f *.gz
+	-rm -f *.bin
 	-rm -rf packer_cache
 
 lint: packer-validate shfmt
