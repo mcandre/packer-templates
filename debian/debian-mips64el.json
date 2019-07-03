@@ -79,7 +79,16 @@
                 "<enter><wait1m>",
                 "<enter><wait10s>",
                 "<left><enter><wait1h>",
-                "<left><enter>",
+                "<left><enter><wait5m>",
+                "<down><down><down><down><down><down><spacebar><wait>",
+                "<tab><wait>",
+                "<enter><wait1h>",
+                "<enter><wait5m>",
+                "<leftCtrlOn><leftAltOn>2<leftAltOff><leftCtrlOff>",
+                "eject ide1-cd0<enter><wait10s>",
+                "<leftCtrlOn><leftAltOn>3<leftAltOff><leftCtrlOff>",
+                "<enter><wait5m>",
+                "",
 
 
 
