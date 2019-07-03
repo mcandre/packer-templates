@@ -37,7 +37,7 @@
         {
             "type": "qemu",
             "accelerator": "tcg",
-            "machine_type": "mipssim",
+            "machine_type": "malta",
             "use_default_display": true,
             "vm_name": "{{ user `vm_name` }}",
             "iso_url": "{{ user `iso_url` }}",
@@ -51,18 +51,39 @@
             "qemuargs": [
                 ["-m", "{{ user `ram_MiB` }}"],
                 ["-initrd", "initrd.gz"],
-                ["-kernel", "vmlinux-4.9.0-9-5kc-malta"]
+                ["-kernel", "vmlinux-4.9.0-9-5kc-malta"],
+                ["-boot", "d"],
+                ["-cpu", "5KEc"],
+                ["-append", "console=ttyS0 nokaslr"]
             ],
             "http_directory": "{{ user `http_directory` }}",
             "boot_wait": "{{ user `boot_wait` }}",
             "boot_command": [
-                "c<wait>",
-                "setparams 'Automated install'<enter><wait>",
+                "<leftCtrlOn><leftAltOn>3<leftAltOff><leftCtrlOff>",
                 "<enter><wait>",
-                "set options=\" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/vda1\"<enter><wait>",
-                "boot_one<wait>",
+                "<enter><wait2m>",
+                "<end><bs><bs><bs><bs><bs><bs>vagrant<enter><wait>",
+                "vagrantup.com<enter><wait10s>",
                 "<enter><wait>",
-                "boot<enter>"
+                "<enter><wait>",
+                "<enter><wait5m>",
+                "vagrant<enter><wait>",
+                "vagrant<enter><wait>",
+                "Vagrant<enter><wait>",
+                "<enter><wait>",
+                "vagrant<enter><wait>",
+                "vagrant<enter><wait10s>",
+                "<enter><wait2m>",
+                "<enter><wait10s>",
+                "<enter><wait1m>",
+                "<enter><wait1m>",
+                "<enter><wait10s>",
+                "<left><enter><wait1h>",
+
+
+
+
+                "<wait20m>"
             ],
             "shutdown_command": "{{ user `shutdown_command` }}"
         }

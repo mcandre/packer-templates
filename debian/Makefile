@@ -49,16 +49,13 @@ debian-i386-libvirt.box: debian-i386.json http/p *.sh
 debian-ppc64el-libvirt.box: debian-ppc64el.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian-ppc64el.json
 
-mipsel_bios.bin:
-	dd if=/dev/zero of=mipsel_bios.bin bs=1024 count=128
-
 initrd.gz:
 	wget http://ftp.debian.org/debian/dists/stable/main/installer-mips64el/current/images/malta/netboot/initrd.gz
 
 vmlinux-4.9.0-9-5kc-malta:
 	wget http://ftp.debian.org/debian/dists/stable/main/installer-mips64el/current/images/malta/netboot/vmlinux-4.9.0-9-5kc-malta
 
-debian-mips64el-libvirt.box: mipsel_bios.bin initrd.gz vmlinux-4.9.0-9-5kc-malta debian-mips64el.json http/p *.sh
+debian-mips64el-libvirt.box: initrd.gz vmlinux-4.9.0-9-5kc-malta debian-mips64el.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian-mips64el.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
@@ -72,7 +69,6 @@ clean-vagrant:
 clean-artifacts:
 	-rm -f vmlinux-*
 	-rm -f *.gz
-	-rm -f *.bin
 	-rm -rf packer_cache
 
 lint: packer-validate shfmt
