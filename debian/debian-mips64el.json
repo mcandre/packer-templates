@@ -52,9 +52,9 @@
                 ["-m", "{{ user `ram_MiB` }}"],
                 ["-initrd", "initrd.gz"],
                 ["-kernel", "vmlinux-4.9.0-9-5kc-malta"],
-                ["-boot", "d"],
+                ["-boot", "order=c"],
                 ["-cpu", "5KEc"],
-                ["-append", "console=ttyS0 nokaslr"]
+                ["-append", "console=ttyS0 nokaslr root=/dev/vda1"]
             ],
             "http_directory": "{{ user `http_directory` }}",
             "boot_wait": "{{ user `boot_wait` }}",
