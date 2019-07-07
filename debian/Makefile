@@ -58,7 +58,10 @@ vmlinux-4.9.0-9-5kc-malta:
 debian-mips64el-libvirt.box: initrd.gz vmlinux-4.9.0-9-5kc-malta debian-mips64el.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian-mips64el.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box
