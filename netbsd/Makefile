@@ -16,7 +16,10 @@ netbsd-amd64-virtualbox.box: netbsd-amd64.json http/p *.sh Vagrantfile
 netbsd-i386-virtualbox.box: netbsd-i386.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso netbsd-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

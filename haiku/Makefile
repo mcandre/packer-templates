@@ -30,7 +30,10 @@ haiku-amd64-virtualbox.box: haiku-blobs-amd64/haiku-nightly-anyboot.iso http/*.p
 haiku-i386-virtualbox.box: haiku-blobs-i386/haiku-nightly-anyboot.iso http/*.patch http/pfexec http/sudo http/p haiku-i386.json *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso haiku-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts clean-blobs
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts clean-blobs
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

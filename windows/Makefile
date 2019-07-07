@@ -16,7 +16,10 @@ windows-amd64-virtualbox.box: windows-amd64.json amd64/Autounattend.xml *.ps1 Va
 windows-i386-virtualbox.box: windows-i386.json i386/Autounattend.xml *.ps1 Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso windows-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

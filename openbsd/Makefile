@@ -16,7 +16,10 @@ openbsd-amd64-virtualbox.box: openbsd-amd64.json http/p *.sh Vagrantfile
 openbsd-i386-virtualbox.box: openbsd-i386.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso openbsd-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

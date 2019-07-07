@@ -13,7 +13,10 @@ http/MirOS/v10/i386/base10.ngz:
 miros-i386-virtualbox.box: miros-i386.json http/p1 http/p2 Vagrantfile http/MirOS/v10/i386/base10.ngz
 	PACKER_LOG=1 packer build -force -only virtualbox-iso miros-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

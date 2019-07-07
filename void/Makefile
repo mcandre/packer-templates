@@ -16,7 +16,10 @@ void-amd64-virtualbox.box: void-amd64.json *.sh
 void-i386-virtualbox.box: void-i386.json *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso void-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

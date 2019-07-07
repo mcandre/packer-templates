@@ -18,7 +18,10 @@ $(ISO).bz2:
 $(ISO): $(ISO).bz2
 	bunzip2 -k $(ISO).bz2
 
-clean: clean-boxes clean-vagrant clean-artifacts clean-isos
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts clean-isos
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

@@ -16,7 +16,10 @@ centos-amd64-virtualbox.box: centos-amd64.json http/ks.cfg *.sh
 centos-i386-virtualbox.box: centos-i386.json http/ks.cfg *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso centos-i386.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

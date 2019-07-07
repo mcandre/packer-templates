@@ -10,7 +10,10 @@ install-box-virtualbox: dilos-virtualbox.box
 dilos-virtualbox.box: dilos.json http/p *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso dilos.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box

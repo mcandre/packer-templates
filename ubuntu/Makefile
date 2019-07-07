@@ -16,7 +16,10 @@ ubuntu-amd64-virtualbox.box: ubuntu-amd64.json *.sh
 ubuntu-ppc64el-libvirt.box: ubuntu-ppc64el.json *.sh
 	PACKER_LOG=1 packer build -force -only qemu ubuntu-ppc64el.json
 
-clean: clean-boxes clean-vagrant clean-artifacts
+clean: clean-packer clean-boxes clean-vagrant clean-artifacts
+
+clean-packer:
+	-rm crash.log
 
 clean-boxes:
 	-rm *.box
