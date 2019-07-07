@@ -49,16 +49,24 @@
             "disk_size": "{{ user `disk_size_MB` }}",
             "qemu_binary": "qemu-system-mips64el",
             "qemuargs": [
+                ["-cpu", "5KEc"],
                 ["-m", "{{ user `ram_MiB` }}"],
                 ["-initrd", "initrd.gz"],
                 ["-kernel", "vmlinux-4.9.0-9-5kc-malta"],
-                ["-boot", "order=c"],
-                ["-cpu", "5KEc"],
-                ["-append", "console=ttyS0 nokaslr root=/dev/vda1"]
+                ["-append", "nokaslr console=ttyS0 root=/dev/vda1"]
             ],
             "http_directory": "{{ user `http_directory` }}",
             "boot_wait": "{{ user `boot_wait` }}",
             "boot_command": [
+
+
+
+
+                "<wait20m>",
+
+
+
+
                 "<leftCtrlOn><leftAltOn>3<leftAltOff><leftCtrlOff>",
                 "<enter><wait>",
                 "<enter><wait2m>",
