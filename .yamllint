@@ -2,10 +2,10 @@
 extends: default
 
 rules:
-    comments: disable
-    comments-indentation: disable
-    line-length: disable
+  comments: disable
+  comments-indentation: disable
+  line-length: disable
 
 ignore: |
-    node_modules
-    vendor
+  node_modules
+  vendor
