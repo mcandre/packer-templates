@@ -1,8 +1,8 @@
-.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt
+.PHONY: install-boxes install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt install-boxes install-box-sid-amd64-virtualbox
 
 all: install-boxes
 
-install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt
+install-boxes: install-box-amd64-virtualbox install-box-i386-virtualbox install-box-amd64-vmware install-box-i386-vmware install-box-amd64-libvirt install-box-i386-libvirt install-box-ppc64el-libvirt install-box-sid-amd64-virtualbox
 
 install-box-amd64-virtualbox: debian-amd64-virtualbox.box
 	vagrant box add -f --name mcandre/debian-amd64 --provider virtualbox debian-amd64-virtualbox.box
@@ -25,6 +25,9 @@ install-box-i386-libvirt: debian-i386-libvirt.box
 install-box-ppc64el-libvirt: debian-ppc64el-libvirt.box
 	vagrant box add -f --name mcandre/debian-ppc64el --provider libvirt debian-ppc64el-libvirt.box
 
+install-box-sid-amd64-virtualbox: debian-sid-amd64-virtualbox.box
+	vagrant box add -f --name mcandre/debian-sid-amd64 --provider virtualbox debian-sid-amd64-virtualbox.box
+
 debian-amd64-virtualbox.box: debian-amd64.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only virtualbox-iso debian-amd64.json
 
@@ -45,6 +48,9 @@ debian-i386-libvirt.box: debian-i386.json http/p *.sh
 
 debian-ppc64el-libvirt.box: debian-ppc64el.json http/p *.sh
 	PACKER_LOG=1 packer build -force -only qemu debian-ppc64el.json
+
+debian-sid-amd64-virtualbox.box: debian-sid-amd64.json http/p *.sh
+	PACKER_LOG=1 packer build -force -only virtualbox-iso debian-sid-amd64.json
 
 clean: clean-boxes clean-vagrant clean-artifacts
 
