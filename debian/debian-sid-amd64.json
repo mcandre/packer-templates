@@ -6,7 +6,7 @@
         "iso_checksum_url": "http://ftp.us.debian.org/debian/dists/unstable/main/installer-amd64/current/images/SHA256SUMS",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
-        "ssh_wait_timeout": "6h",
+        "ssh_wait_timeout": "1h",
         "disk_size_MB": "8000",
         "ram_MiB": "1024",
         "http_directory": "http",
@@ -49,7 +49,10 @@
             "virtualbox_version_file": "",
             "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
             "http_directory": "{{ user `http_directory` }}",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
+            "boot_command": [
+                "<esc><wait>",
+                "install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>"
+            ],
             "shutdown_command": "{{ user `shutdown_command` }}"
         }
     ]
