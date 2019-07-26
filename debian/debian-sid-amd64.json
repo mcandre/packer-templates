@@ -17,6 +17,7 @@
             "type": "shell",
             "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
             "scripts": [
+                "upgrade-to-unstable.debian.sh",
                 "fix-boot.debian.sh",
                 "fix-debconf.debian.sh",
                 "fix-virtual-drivers.gnulinux.sh",
