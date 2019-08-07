@@ -66,7 +66,7 @@ find /usr/share/doc -depth -type f ! -name copyright |
     echo 'Deleted non-copyright documentation' &&
     find /usr/share/doc -empty |
     xargs rmdir ||
-    echo 'Delted empty documentation' &&
+    echo 'Deleted empty documentation' &&
     rm -rf /usr/share/man/* \
         /usr/share/groff/* \
         /usr/share/info/* \
