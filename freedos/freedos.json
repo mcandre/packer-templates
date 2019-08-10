@@ -1,0 +1,115 @@
+{
+    "variables": {
+        "vm_name": "freedos",
+        "iso_url": "http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.2/FD12CD.iso",
+        "iso_checksum_type": "md5",
+        "iso_checksum_url": "http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.2/FD12.md5",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "6h",
+        "disk_size_MB": "8000",
+        "ram_MiB": "1024",
+        "http_directory": "http",
+        "shutdown_command": "reboot"
+    },
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -ES sh {{.Path}}",
+            "scripts": [
+                "fix-vagrant-ssh.freedos.bat"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "{{ user `vm_name` }}-{{.Provider}}.box",
+            "compression_level": "9",
+            "vagrantfile_template": "Vagrantfile"
+        }
+    ],
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "DOS",
+            "vm_name": "{{ user `vm_name` }}",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
+            "disk_size": "{{ user `disk_size_MB` }}",
+            "guest_additions_mode": "disable",
+            "virtualbox_version_file": "",
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"]
+            ],
+            "http_directory": "{{ user `http_directory` }}",
+            "boot_command": [
+                "<tab><wait>",
+                "<spacebar>raw<enter><wait10s>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<up><enter><wait10s>",
+                "<enter><wait10s>",
+                "<tab><wait>",
+                "<spacebar>raw<enter><wait10s>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<up><enter><wait1m>",
+                "<enter><wait>",
+                "<enter><wait>",
+                "<up><enter><wait1m>",
+                "<enter><wait1m>",
+                "fdimples<enter><wait>",
+                "<down><down><down><down><down><down><wait>",
+                "<right><wait>",
+                "<down><down><down><wait>",
+                "<spacebar><wait>",
+                "<tab><tab><wait>",
+                "<enter><wait5s>",
+                "fdimples<enter><wait>",
+                "<down><down><down><down><down><down><wait>",
+                "<right><wait>",
+                "<down><down><down><down><down><down><down><wait>",
+                "<spacebar><wait>",
+                "<tab><tab><wait>",
+                "<enter><wait5s>",
+                "reboot<enter><wait1m>",
+                "fdimples<enter><wait>",
+                "<down><down><down><down><wait>",
+                "<right><wait>",
+                "<down><down><down><down><down><down><down><down><down><wait>",
+                "<spacebar><wait>",
+                "<tab><tab><wait>",
+                "<enter><wait5s>",
+                "C:\\MTCP\\htget -o noise063a2.zip http://www.rahul.net/dkaufman/noise063a2.zip<enter><wait5s>",
+                "unzip noise063a2.zip<enter><wait>",
+                "echo device=c:\\noise\\noise386.sys >>c:\\FDCONFIG.SYS<enter><wait>",
+                "reboot<enter><wait1m>",
+                "del noise063a2.zip<enter><wait>",
+                "mkdir C:\\RMENU<enter><wait>",
+                "C:\\MTCP\\htget -o C:\\RMENU\\rmenu-17.zip http://www.bttr-software.de/products/jhoffmann/rmenu-17.zip<enter><wait5s>",
+                "cd RMENU<enter><wait>",
+                "unzip rmenu-17.zip<enter><wait>",
+                "set PATH=%PATH%;C:\\MTCP >>C:\\AUTOEXEC.BAT<enter><wait>",
+                "echo C:\\RMENU\\RMENU /m6! >>C:\\AUTOEXEC.BAT<enter><wait>",
+                "del rmenu-17.zip<enter><wait>",
+                "cd C:\\<enter><wait>",
+                "mkdir C:\\vagrant<enter><wait>",
+                "touch C:\\MTCP\\FTPSRV.log<enter><wait>",
+                "echo {{ user `ssh_username` }} {{ user `ssh_password` }} /drive_c/vagrant [any] all >C:\\MTCP\\FTPPASS.TXT<enter><wait>",
+                "echo FTPSRV_PASSWORD_FILE C:\\MTCP\\FTPPASS.TXT >C:\\MTCP\\LEADER.CFG<enter><wait>",
+                "echo FTPSRV_LOG_FILE C:\\FTPSRV.log >>C:\\MTCP\\LEADER.CFG<enter><wait>",
+                "echo FTPSRV_EXCLUDE_DRIVES AB >>C:\\MTCP\\LEADER.CFG<enter><wait>",
+                "type C:\\MTCP\\LEADER.CFG C:\\FDOS\\MTCP.CFG >C:\\MTCP\\MTCP.CFG<enter><wait>",
+                "move /y C:\\MTCP\\MTCP.CFG C:\\FDOS\\MTCP.CFG<enter><wait>",
+                "del C:\\MTCP\\LEADER.CFG<enter><wait>",
+                "reboot<enter>"
+            ],
+            "shutdown_command": "{{ user `shutdown_command` }}"
+        }
+    ]
+}
