@@ -8,9 +8,9 @@
     "winrm_password": "vagrant",
     "winrm_timeout": "2h",
     "disk_size_MB": "40000",
-    "ram_MiB": "4096",
+    "ram_MiB": "1024",
     "vram_MiB": "32",
-    "cpus": "2",
+    "cpus": "1",
     "http_directory": "http",
     "shutdown_command": "shutdown /s /t 0 /f"
   },
@@ -35,7 +35,7 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "guest_os_type": "OS2",
+      "guest_os_type": "OS2eCS",
       "vm_name": "{{ user `vm_name` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
