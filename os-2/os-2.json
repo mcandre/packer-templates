@@ -52,7 +52,8 @@
         ["modifyvm", "{{.Name}}", "--vram", "{{ user `vram_MiB` }}"],
         ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"],
         ["storagectl", "{{.Name}}", "--name", "Floppy Controller", "--add", "floppy"],
-        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Installation.img"]
+        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Installation.img"],
+        ["modifyvm", "{{.Name}}", "--boot1", "floppy"]
       ],
       "http_directory": "{{ user `http_directory` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
