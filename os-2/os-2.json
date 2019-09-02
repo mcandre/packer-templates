@@ -53,7 +53,14 @@
         ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"],
         ["storagectl", "{{.Name}}", "--name", "Floppy Controller", "--add", "floppy"],
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Installation.img"],
-        ["modifyvm", "{{.Name}}", "--boot1", "floppy"]
+        ["modifyvm", "{{.Name}}", "--boot1", "floppy"],
+        ["startvm", "{{.Name}}"],
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "20000"],
+        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk01.img"],
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "20000"],
+        ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "120000"],
+        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk02.img"]
       ],
       "http_directory": "{{ user `http_directory` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
