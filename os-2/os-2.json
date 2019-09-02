@@ -74,8 +74,10 @@
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk02.img"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "10000"],
         ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "30000"],
+        ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "300000"],
-        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "none"],
+        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "emptydrive"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "10000"],
         ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"]
       ],
