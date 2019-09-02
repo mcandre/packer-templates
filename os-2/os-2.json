@@ -60,7 +60,8 @@
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "20000"],
         ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "120000"],
-        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk02.img"]
+        ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk02.img"],
+        ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"]
       ],
       "http_directory": "{{ user `http_directory` }}",
       "shutdown_command": "{{ user `shutdown_command` }}"
