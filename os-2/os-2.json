@@ -54,6 +54,7 @@
         ["storagectl", "{{.Name}}", "--name", "Floppy Controller", "--add", "floppy"],
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Installation.img"],
         ["modifyvm", "{{.Name}}", "--boot1", "floppy"],
+        ["modifyvm", "{{.Name}}", "--boot3", "disk"],
         ["startvm", "{{.Name}}"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "10000"],
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk01.img"],
@@ -74,15 +75,47 @@
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "/tmp/Disk02.img"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "10000"],
         ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
-        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "30000"],
-        ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "300000"],
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "emptydrive"],
-        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "10000"],
-        ["controlvm", "{{.Name}}", "keyboardputscancode", "1c"]
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "300000"],
+        ["controlvm", "{{.Name}}", "poweroff"]
       ],
       "http_directory": "{{ user `http_directory` }}",
-      "shutdown_command": "{{ user `shutdown_command` }}"
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "boot_command": [
+          "<tab><spacebar><wait5s>",
+          "<down><tab><tab><spacebar><wait5s>",
+          "<right><spacebar><wait5s>",
+          "<down><tab><spacebar><wait5s>",
+          "<tab><tab><tab><spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "<tab><tab><spacebar><wait5s>",
+          "<tab><spacebar><wait>",
+          "<down><spacebar><wait>",
+          "<tab><tab><spacebar><wait>",
+          "n<wait5s>",
+          "<down><down>n<wait5s>",
+          "<down>n<wait5s>",
+          "<spacebar><wait>",
+          "n<wait5s>",
+          "<tab><tab><tab><tab><tab><tab><tab><enter><wait5s>",
+          "<spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "<enter><wait5s>",
+          "i<wait10m>",
+
+          "<tab><tab><tab><tab><spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "o<enter><wait5s>",
+          "c<enter><wait5s>",
+          "o<enter><wait5s>",
+          "",
+
+
+
+
+          "<wait20m>"
+      ]
     }
   ]
 }
