@@ -78,10 +78,12 @@
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "300000"],
         ["storageattach", "{{.Name}}", "--storagectl", "Floppy Controller", "--port", "0", "--device", "0", "--type", "fdd", "--medium", "emptydrive"],
         ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "300000"],
-        ["controlvm", "{{.Name}}", "poweroff"]
+        ["controlvm", "{{.Name}}", "poweroff"],
+        ["guestproperty", "wait", "{{.Name}}", "goodnight-moon", "--timeout", "30000"]
       ],
       "http_directory": "{{ user `http_directory` }}",
       "shutdown_command": "{{ user `shutdown_command` }}",
+      "boot_wait": "5m",
       "boot_command": [
           "<tab><spacebar><wait5s>",
           "<down><tab><tab><spacebar><wait5s>",
