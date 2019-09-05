@@ -108,6 +108,27 @@
 
           "<tab><tab><tab><tab><spacebar><wait5s>",
           "<spacebar><wait5s>",
+
+
+
+          "w<enter><wait5s>",
+          "<right><enter><wait20s>",
+          "ftp://ftp.netlabs.org/pub/warpin/warpin-1-0-19.exe<enter><wait20s>",
+          "<enter><wait5s>",
+          "warpin.exe<wait>",
+          "<tab><tab><tab><down><up><enter><wait1m>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "<enter><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "",
+
+
+
+          "<wait20m>",
+
+
+
+
           "o<enter><wait5s>",
           "c<enter><wait5s>",
           "o<enter><wait5s>",
