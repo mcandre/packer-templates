@@ -105,12 +105,8 @@
           "<spacebar><wait5s>",
           "<enter><wait5s>",
           "i<wait10m>",
-
           "<tab><tab><tab><tab><spacebar><wait5s>",
           "<spacebar><wait5s>",
-
-
-
           "w<enter><wait5s>",
           "<right><enter><wait20s>",
           "ftp://ftp.netlabs.org/pub/warpin/warpin-1-0-19.exe<enter><wait20s>",
@@ -120,18 +116,56 @@
           "<leftAltOn><f4><leftAltOff><wait5s>",
           "<enter><wait5s>",
           "<leftAltOn><f4><leftAltOff><wait5s>",
-          "",
-
-
-
-          "<wait20m>",
-
-
-
-
           "o<enter><wait5s>",
           "c<enter><wait5s>",
           "o<enter><wait5s>",
+
+          "warpin<enter><wait10s>",
+          "<tab><tab><spacebar><wait5s>",
+          "<tab><tab><spacebar><wait5s>",
+          "<tab><tab><spacebar><wait5s>",
+          "<tab><tab><tab><spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "<spacebar><wait30s>",
+          "<spacebar><wait5s>",
+          "<spacebar><wait5s>",
+          "<leftAltOn><tab><leftAltOff><wait5s>",
+          "del warpin.exe<enter><wait5s>",
+
+          "exit<enter><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+
+          "ww<enter><wait5s>",
+          "<right><enter><wait20s>",
+          "http://rpm.netlabs.org/bootstrap/rpm-yum-bootstrap-1_5-i386.wpi<enter><wait20s>",
+          "<enter><wait5s>",
+          "yum.wpi<wait>",
+          "<tab><tab><tab><down><up><enter><wait5m>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "<enter><wait5s>",
+          "<leftAltOn><f4><leftAltOff><wait5s>",
+          "o<enter><wait5s>",
+          "c<enter><wait5s>",
+          "o<enter><wait5s>",
+
+          "echo ^<?xml version=\"1.0\" encoding=\"UTF-8\"?^> >c:\\wget.xcd<enter><wait>",
+          "echo.>>c:\\wget.xcd<enter><wait>",
+          "echo ^<!DOCTYPE warpincid SYSTEM \"warpincid.dtd\"^> >>c:\\wget.xcd<enter><wait>",
+          "echo.>>c:\\wget.xcd<enter><wait>",
+          "echo ^<warpincid^> >>c:\\wget.xcd<enter><wait>",
+          "echo ^<archive >>c:\\wget.xcd<enter><wait>",
+          "echo     action=\"install\" >>c:\\wget.xcd<enter><wait>",
+          "echo     path=\"C:\\TOOLS\\WGet\" >>c:\\wget.xcd<enter><wait>",
+          "echo     pckid=\"Andreas Ludwig\\GNU WGet\\Base Package\\1\\10\\2\\2328\"/^> >>c:\\wget.xcd<enter><wait>",
+          "echo ^</archive^> >>c:\\wget.xcd<enter><wait>",
+          "echo ^</warpincid^> >>c:\\wget.xcd<enter><wait>",
+
+          "cd c:\\warpin<enter><wait5s>",
+          "",
           "",
 
 
