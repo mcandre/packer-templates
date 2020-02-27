@@ -1,6 +1,11 @@
 #!/bin/sh
 pkg update &&
-    pkg install -y wget ca_root_nss &&
+    pkg \
+        install \
+        -y \
+        rsync \
+        wget \
+        ca_root_nss &&
     mkdir -p /home/vagrant/.ssh &&
     wget -O /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub &&
     chown -R vagrant:vagrant /home/vagrant/.ssh &&
