@@ -1,9 +1,9 @@
 {
     "variables": {
         "vm_name": "freebsd-amd64",
-        "iso_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/FreeBSD-11.2-STABLE-amd64-20181126-r340982-disc1.iso",
+        "iso_url": "https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/12.1/FreeBSD-12.1-RELEASE-amd64-disc1.iso",
         "iso_checksum_type": "sha512",
-        "iso_checksum_url": "https://download.freebsd.org/ftp/snapshots/amd64/amd64/ISO-IMAGES/11.2/CHECKSUM.SHA512-FreeBSD-11.2-STABLE-amd64-20181126-r340982",
+        "iso_checksum_url": "https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/12.1/CHECKSUM.SHA512-FreeBSD-12.1-RELEASE-amd64",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "1800s",
