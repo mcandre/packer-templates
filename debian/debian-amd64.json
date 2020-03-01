@@ -1,9 +1,9 @@
 {
     "variables": {
         "vm_name": "debian-amd64",
-        "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.6.0-amd64-netinst.iso",
+        "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso",
         "iso_checksum_type": "sha512",
-        "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/9.6.0/amd64/iso-cd/SHA512SUMS",
+        "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/10.3.0/amd64/iso-cd/SHA512SUMS",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "6h",
@@ -48,37 +48,6 @@
             "virtualbox_version_file": "",
             "vboxmanage": [ ["modifyvm", "{{.Name}}", "--memory", "{{ user `ram_MiB` }}"] ],
             "http_directory": "{{ user `http_directory` }}",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
-            "shutdown_command": "{{ user `shutdown_command` }}"
-        },
-        {
-            "type": "vmware-iso",
-            "guest_os_type": "debian9-64",
-            "vm_name": "{{ user `vm_name` }}",
-            "iso_url": "{{ user `iso_url` }}",
-            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
-            "ssh_username": "{{ user `ssh_username` }}",
-            "ssh_password": "{{ user `ssh_password` }}",
-            "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
-            "disk_size": "{{ user `disk_size_MB` }}",
-            "vmx_data": { "memsize": "{{ user `ram_MiB` }}" },
-            "http_directory": "{{ user `http_directory` }}",
-            "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
-            "shutdown_command": "{{ user `shutdown_command` }}"
-        },
-        {
-            "type": "qemu",
-            "vm_name": "{{ user `vm_name` }}",
-            "iso_url": "{{ user `iso_url` }}",
-            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
-            "ssh_username": "{{ user `ssh_username` }}",
-            "ssh_password": "{{ user `ssh_password` }}",
-            "ssh_wait_timeout": "{{ user `ssh_wait_timeout` }}",
-            "disk_size": "{{ user `disk_size_MB` }}",
-            "qemuargs": [ ["-m", "{{ user `ram_MiB` }}"] ],
-            "http_directory": "http",
             "boot_command": "<esc><wait>install preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/p locale=en_US kbd-chooser/method=us keyboard-configuration/xkb-keymap=us netcfg/get_hostname={{.Name}} netcfg/get_domain=vagrantup.com debconf/frontend=noninteractive fb=false grub-installer/bootdev=/dev/sda<enter>",
             "shutdown_command": "{{ user `shutdown_command` }}"
         }

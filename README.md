@@ -97,6 +97,8 @@ In addition, libvirt requires additional manual configuration in order to correc
 * libvirt may come preconfigured with extraneous networks and volumes that conflict with vagrant-libvirt. See `virsh net-list` and `virsh vol-list --pool default` to examine these resources.
 * Finally, some libvirt guests may do a poor job persisting file changes across `vagrant package` boundaries. To work around this limitation, ensure that the file system is explicitly synchronized at the end of provisioning scripts, e.g. `sync` in GNU/Linux.
 
+Finally, note that non-VirtualBox hypervisor builds are no longer maintained in this project.
+
 ## Optional
 
 * a keyboard cover, in case of nearby cats that may scamper around and corrupt sensitive boot commands
