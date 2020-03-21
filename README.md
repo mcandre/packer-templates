@@ -57,6 +57,10 @@ bootstrap.sh  flag.txt	Vagrantfile
 
 Note: Windows hosts are affected by a packer bug where attempts to kill a packer process by sending a Control+C signal, result in a half-dead packer that often awakes during subsequent builds, corrupting them. Task Manager is your friend.
 
+## General advice
+
+* Recommend 16 GB or more of guest disk space and 4 GB or more of guest RAM, to account for the girth of modern software development environments.
+
 ## Providers/Hypervisors
 
 Some packer templates support multiple hypervisor options. By default, Packer will attempt to target all configured hypervisors. Or, if you are interested in merely a subset of the hypervisors, ensure that the `-only <comma,separated,providers>` flag is specified to the `packer build`... command.

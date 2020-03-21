@@ -1,13 +1,13 @@
 {
     "variables": {
         "vm_name": "debian-amd64",
-        "iso_url": "https://cdimage.debian.org/cdimage/release/9.4.0/amd64/iso-cd/debian-9.4.0-amd64-netinst.iso",
+        "iso_url": "https://cdimage.debian.org/cdimage/release/10.3.0/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso",
         "iso_checksum_type": "sha512",
-        "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/9.4.0/amd64/iso-cd/SHA512SUMS",
+        "iso_checksum_url": "https://cdimage.debian.org/cdimage/release/10.3.0/amd64/iso-cd/SHA512SUMS",
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_wait_timeout": "6h",
-        "disk_size_MB": "8000",
+        "disk_size_MB": "16000",
         "ram_MiB": "1024",
         "http_directory": "http",
         "shutdown_command": "echo 'vagrant' | sudo -S halt -p"
