@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/etc/sudoers &&
     /etc/init.d/dropbear restart &&
     printf "config rule\n\toption src\t\tlan\n\toption proto\t\ttcp\n\toption dest_port\t22\n\toption target\t\tACCEPT\n" >>/etc/config/firewall &&

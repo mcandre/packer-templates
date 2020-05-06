@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 git clone https://github.com/mcandre/shun.git /boot/home/shun &&
     ln -s /boot/home/shun/lib/shutdown /boot/system/non-packaged/bin/shutdown &&
     git clone https://github.com/mcandre/useless.git /boot/home/useless &&

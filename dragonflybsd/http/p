@@ -1,4 +1,7 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
 
 disk=ad0
 hostname=dragonflybsd

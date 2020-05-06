@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 # Intercept SmartOS shutdown command.
 case "$*" in
     /usr/sbin/poweroff)

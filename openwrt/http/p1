@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 cp /tmp/shutdown /bin/shutdown &&
     opkg update &&
     opkg install shadow-useradd shadow-groupadd sudo &&

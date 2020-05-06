@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 apt-get update &&
     apt-get install -y rsync &&
     groupadd vagrant &&

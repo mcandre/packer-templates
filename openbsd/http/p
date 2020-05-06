@@ -1,4 +1,8 @@
 #!/bin/sh
+set -eu
+IFS="$(printf '%b_' '\n\t ')"
+IFS="${IFS%_}"
+
 echo 'ftp://ftp4.usa.openbsd.org/pub/OpenBSD' >>/etc/installurl &&
     pkg_add sudo-1.8.22 &&
     echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/etc/sudoers

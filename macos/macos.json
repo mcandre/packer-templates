@@ -1568,13 +1568,13 @@
     "provisioners": [
         {
             "type": "shell",
-            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES sh '{{.Path}}'",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -ES {{.Path}}",
             "scripts": [
                 "elevate.macos.sh",
                 "fix-networking.macos.sh",
                 "ssh-configure-vagrant-key.macos.sh",
                 "fix-rsync.macos.sh",
-                "strip-services.macos.sh",
+                "strip-services",
                 "cleanup.macos.sh"
             ]
         }
