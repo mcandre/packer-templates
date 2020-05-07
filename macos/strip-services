@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Disable non-critical macOS services
+unset IFS
 set -eEuo pipefail
-IFS=$'\n\t '
 
 disable_plist() {
     launchctl unload -wF "$1"; \
