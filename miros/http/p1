@@ -1,5 +1,5 @@
 #!/bin/sh
 unset IFS
-set -eu
+set -euf
 
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >>/mnt/etc/sudoers

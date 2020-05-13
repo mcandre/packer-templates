@@ -1,6 +1,6 @@
 #!/bin/sh
 unset IFS
-set -eu
+set -euf
 
 git clone https://github.com/mcandre/shun.git /boot/home/shun &&
     ln -s /boot/home/shun/lib/shutdown /boot/system/non-packaged/bin/shutdown &&

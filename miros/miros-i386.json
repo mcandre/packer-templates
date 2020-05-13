@@ -87,12 +87,14 @@
                 "yes<enter><wait>",
                 "<enter><wait>",
                 "ftp -o /tmp/p1 http://{{.HTTPIP}}:{{.HTTPPort}}/p1<enter><wait5>",
-                "sh /tmp/p1<enter><wait5>",
+                "chmod a+x /tmp/p1<enter><wait>",
+                "/tmp/p1<enter><wait5>",
                 "reboot<enter><wait2m>",
                 "{{ user `ssh_username` }}<enter><wait>",
                 "{{ user `ssh_password` }}<enter><wait>",
                 "ftp -o /tmp/p2 http://{{.HTTPIP}}:{{.HTTPPort}}/p2<enter><wait5>",
-                "sh /tmp/p2<enter><wait3m>"
+                "chmod a+x /tmp/p2<enter><wait>",
+                "/tmp/p2<enter><wait3m>"
             ]
         }
     ]

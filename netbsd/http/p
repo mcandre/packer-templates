@@ -1,6 +1,6 @@
 #!/bin/sh
 unset IFS
-set -eu
+set -euf
 
 echo 'vagrant: :path=/usr/bin /bin /usr/sbin /sbin /usr/X11R7/bin /usr/X11R6/bin /usr/pkg/bin /usr/pkg/sbin /usr/local/bin:' >>/etc/login.conf &&
     cap_mkdb /etc/login.conf &&
