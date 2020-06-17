@@ -51,7 +51,7 @@
                 "<enter><wait>",
                 "mdmfs -s 100m md1 /tmp<enter><wait>",
                 "dhclient -p /tmp/dhclient.pid -l /tmp/dhclient.lease em0<enter><wait5>",
-                "fetch -o /tmp/p http://{{ .HTTPIP }}:{{ .HTTPPort }}/p<enter><wait5>",
+                "fetch -o /tmp/p http://{{ .HTTPIP }}:{{ .HTTPPort }}/p-i386<enter><wait5>",
                 "bsdinstall script /tmp/p<enter>",
                 "<wait10><wait10><wait10><wait10><wait10><wait10>",
                 "reboot<enter>"
