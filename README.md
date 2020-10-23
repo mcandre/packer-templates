@@ -104,7 +104,7 @@ In addition, libvirt requires additional manual configuration in order to correc
 ## Optional
 
 * a keyboard cover, in case of nearby cats that may scamper around and corrupt sensitive boot commands
-* [Taurine](https://itunes.apple.com/us/app/taurine/id960276676) (macOS), [Caffeine](http://www.zhornsoftware.co.uk/caffeine/) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) can prevent hibernation during any long builds
+* [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) (macOS), [NightOwl](https://www.microsoft.com/en-us/p/nightowl/9nmjrl68gzwm?activetab=pivot:overviewtab) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) can prevent hibernation during any long builds
 * [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
 * [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
 * [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
