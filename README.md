@@ -34,14 +34,20 @@ bootstrap.sh  flag.txt	Vagrantfile
 
 * [Packer](https://www.packer.io/)
 * [Vagrant](https://www.vagrantup.com/) 2.2.2+
+* [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 * [bzip2](http://www.bzip.org)
 * [wget](https://www.gnu.org/software/wget/)
+* [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
+* [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
+* [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) (macOS), [The Caffeine](https://www.microsoft.com/store/productId/9PJBW5SCH9LC) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) can prevent hibernation during any long builds
 
 ## Recommended
 
-* [VirtualBox](https://www.virtualbox.org/)
-* [VMware](https://www.vmware.com/)
-* [qemu](https://www.qemu.org/) 2.12+
+* [VirtualBox + extension pack](https://www.virtualbox.org/wiki/Downloads)
+* [VMware](https://www.vmware.com/) (e.g. Player, Fusion, Workstation)
+* [vagrant-vmware-fusion/vagrant-vmware-workstation](https://www.vagrantup.com/docs/vmware/installation.html) with a license installed
+* [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
+* [qemu](https://www.qemu.org/) 2.12+ with SDL(2) enabled
 * [KVM](https://wiki.qemu.org/Features/KVM)
 * [OpenBIOS](https://www.openfirmware.info/OpenBIOS)
 * [openhackware](https://github.com/qemu/openhackware)
@@ -49,11 +55,12 @@ bootstrap.sh  flag.txt	Vagrantfile
 * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
 * [libguestfs-tools](http://libguestfs.org/)
 * [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
-* [make](https://www.gnu.org/software/make/)
+* [gmake](https://www.gnu.org/software/make/)
 * [GNU findutils](https://www.gnu.org/software/findutils/)
 * [stank](https://github.com/mcandre/stank) (e.g. `go get github.com/mcandre/stank/...`)
 * [Python](https://www.python.org) 3+ (for yamllint)
 * [Node.js](https://nodejs.org/en/) (for eclint)
+* a keyboard cover, in case of nearby cats that may scamper around and corrupt sensitive boot commands
 
 Note: Windows hosts are affected by a packer bug where attempts to kill a packer process by sending a Control+C signal, result in a half-dead packer that often awakes during subsequent builds, corrupting them. Task Manager is your friend.
 
@@ -71,21 +78,13 @@ Note that many packer hypervisors deliver build keystrokes via host-timed keyup,
 
 ### VirtualBox
 
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-
 One cleanup tip: As with all Vagrant hypervisors, VirtualBox sometimes leaves virtual machine data around when `vagrant destroy [-f]`, or a signal interrupted `vagrant up` should have deleted these artifacts. When this happens, the user can launch the VirtualBox application and delete these files manually. VirtualBox will likely complain with multiple error prompts, but these can largely be ignored.
 
 ### VMware
 
-* vagrant-vmware-fusion/vagrant-vmware-workstation with a [license](https://www.vagrantup.com/docs/vmware/installation.html) installed
-* [VMware](https://www.vmware.com/) (e.g. Player, Fusion, Workstation)
-
 VMware boxes can be packed without a Vagrant plugin, but running the boxes to test them requires a paid license, even for users who have already paid for VMware. Go figure.
 
 ### qemu/libvirt
-
-* [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
-* [qemu](https://www.qemu.org/) with SDL(2) enabled
 
 qemu AKA libvirt boxes are fragile, requiring more care than VirtualBox or VMware providers. libvirt support for macOS hosts is nascent, so packing and running libvirt boxes is best performed from Linux hosts such as Debian, Ubuntu, or RHEL derivatives. qemu is slower than other hypervisors, especially when KVM is unavailable. This dramatically increases the time required for both packing and running qemu/libvirt boxes. Read: `vagrant up --provider libvirt && vagrant ssh -c 'uname -a'` for mcandre/debian takes several minutes, and `packer build -only qemu debian.json` takes over 3 hours. Speed demon!
 
@@ -101,20 +100,12 @@ In addition, libvirt requires additional manual configuration in order to correc
 * libvirt may come preconfigured with extraneous networks and volumes that conflict with vagrant-libvirt. See `virsh net-list` and `virsh vol-list --pool default` to examine these resources.
 * Finally, some libvirt guests may do a poor job persisting file changes across `vagrant package` boundaries. To work around this limitation, ensure that the file system is explicitly synchronized at the end of provisioning scripts, e.g. `sync` in GNU/Linux.
 
-## Optional
-
-* a keyboard cover, in case of nearby cats that may scamper around and corrupt sensitive boot commands
-* [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12) (macOS), [The Caffeine](https://www.microsoft.com/store/productId/9PJBW5SCH9LC) (Windows), [Caffeine](https://launchpad.net/caffeine) (Linux) can prevent hibernation during any long builds
-* [make](https://www.gnu.org/software/make://www.gnu.org/software/make/)
-* [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
-* [shfmt](https://github.com/mvdan/sh) (e.g. `go get github.com/mvdan/sh/cmd/shfmt`)
-
 # TESTING
 
 These boxes are designed as minimal bases for constructing build bot virtual machines, so that [mcandre/tonixxx](tonixxx) can use the boxes to conveniently cross-compile applications for many different kernels. The boxes are expected to feature:
 
 * working package manager, for installation of devopment tools like gcc, curl, lua, etc.
-* bidirectional-capable host->guest and guest->host synced folders, for copying source code to the box and copying artifacts back to the host, via [vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
+* bidirectional-capable host->guest and guest->host synced folders, for copying source code to the box and copying artifacts back to the host.[vagrant-rsync-back](https://github.com/smerrill/vagrant-rsync-back)
 
 The best way to ensure that the boxes are suitable for this development workflow is to attempt to install some package, and to check that files can be copied from the host and guest and back again. This workflow is automated in a testing script. Example:
 
