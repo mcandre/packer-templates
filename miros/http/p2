@@ -10,5 +10,5 @@ mkdir -p /home/vagrant/.ssh &&
     sudo mkdir -p /vagrant &&
     sudo chown vagrant:vagrant /vagrant &&
     sudo rm -rf /tmp/* &&
-    sudo sh -c "dd if=/dev/zero of=/whitespace bs=1048576 || echo 'Zeroed disk' && rm -f /whitespace && sync" &&
+    sudo su -c "dd if=/dev/zero of=/whitespace bs=1048576 || echo 'Zeroed disk' && rm -f /whitespace && sync" &&
     sudo shutdown -h -p now
