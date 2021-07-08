@@ -11,10 +11,10 @@ install-box-amd64-virtualbox: freebsd-amd64-virtualbox.box
 install-box-i386-virtualbox: freebsd-i386-virtualbox.box
 	vagrant box add -f --name mcandre/freebsd-i386 --provider virtualbox freebsd-i386-virtualbox.box
 
-freebsd-amd64-virtualbox.box: freebsd-amd64.json http/p *.sh Vagrantfile
+freebsd-amd64-virtualbox.box: freebsd-amd64.json http/p-amd64 *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso freebsd-amd64.json
 
-freebsd-i386-virtualbox.box: freebsd-i386.json http/p *.sh Vagrantfile
+freebsd-i386-virtualbox.box: freebsd-i386.json http/p-i386 *.sh Vagrantfile
 	PACKER_LOG=1 packer build -force -only virtualbox-iso freebsd-i386.json
 
 clean: clean-packer clean-boxes clean-vagrant clean-artifacts
